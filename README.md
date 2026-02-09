@@ -4,5 +4,5 @@ Projet web CESI : Conception d'un site Internet de type Job-board (fictif), Fron
 - **Robin PORNIN** : Product Owner
 - **Prisca ROMANOFF** : Developper
 - **Nizar HDIDOU** : Developper
-- **Kenzo SILICI--SIENG** : Scrub-Master
+- **Kenzo SILICI--SIENG** : Scrum-Master
 #
