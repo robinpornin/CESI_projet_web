@@ -1,2 +1,2 @@
-# CESI_projet_web
+# CESI Projet Développement WEB
 Projet web CESI : Conception d'un site Internet de type Job-board (fictif), Front-end &amp; Back-end
