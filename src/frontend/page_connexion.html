@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', Arial, sans-serif;
+      background-color: #ffffff;
+      color: #111111;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* --- HEADER --- */
+    header {
+      background-color: #111111;
+      padding: 18px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #FFD700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    /* --- MAIN --- */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 50px 20px;
+      gap: 30px;
+    }
+
+    /* texte de bienvenue */
+    .bienvenue {
+      text-align: center;
+      max-width: 500px;
+    }
+
+    .bienvenue h1 {
+      font-size: 1.6rem;
+      color: #111111;
+      margin-bottom: 8px;
+    }
+
+    .bienvenue h1 span {
+      color: #FFD700;
+    }
+
+    .bienvenue p {
+      font-size: 0.95rem;
+      color: #444444;
+      line-height: 1.6;
+    }
+
+    /* separateur */
+    .separateur {
+      width: 60px;
+      height: 4px;
+      background-color: #FFD700;
+      border-radius: 2px;
+    }
+
+    /* --- FORMULAIRE --- */
+    .form-section {
+      background-color: #f9f9f9;
+      border: 2px solid #111111;
+      border-radius: 12px;
+      padding: 35px 40px;
+      max-width: 480px;
+      width: 100%;
+    }
+
+    .form-section h2 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #111111;
+      margin-bottom: 22px;
+    }
+
+    /* champs + bouton sur la meme ligne */
+    .form-fields {
+      display: flex;
+      gap: 16px;
+      align-items: flex-end;
+    }
+
+    .inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .input-group label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #111111;
+    }
+
+    .input-group input {
+      padding: 10px 12px;
+      border: 2px solid #111111;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-family: 'Montserrat', sans-serif;
+      outline: none;
+      background-color: #ffffff;
+      transition: border-color 0.2s;
+    }
+
+    .input-group input:focus {
+      border-color: #FFD700;
+    }
+
+    /* bouton connexion */
+    .btn-connexion {
+      background-color: #FFD700;
+      color: #111111;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 900;
+      font-family: 'Montserrat', sans-serif;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: opacity 0.2s, transform 0.2s;
+      white-space: nowrap;
+      align-self: stretch;
+    }
+
+    .btn-connexion:hover {
+      opacity: 0.85;
+      transform: translateY(-2px);
+    }
+
+    /* liens sous le formulaire */
+    .form-links {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .form-links a {
+      font-size: 0.85rem;
+      color: #111111;
+      text-decoration: none;
+      font-weight: 700;
+      border-bottom: 2px solid #FFD700;
+      padding-bottom: 1px;
+      transition: color 0.2s;
+    }
+
+    .form-links a:hover {
+      color: #FFD700;
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      background-color: #111111;
+      color: #aaaaaa;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.85rem;
+    }
+
+    footer span {
+      color: #FFD700;
+      font-weight: bold;
+    }
+
+    /* --- BOUTON RETOUR --- */
+    .btn-retour {
+      position: fixed;
+      bottom: 18px;
+      left: 18px;
+      background-color: #ffffff;
+      color: #111111;
+      border: 2px solid #111111;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    .btn-retour:hover {
+      background-color: #FFD700;
+      border-color: #FFD700;
+    }
+
+    /* responsive */
+    @media (max-width: 480px) {
+      .form-fields {
+        flex-direction: column;
+      }
+      .btn-connexion {
+        width: 100%;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- header -->
+  <header>
+    <div class="logo">CESI-STAGES</div>
+  </header>
+
+  <!-- contenu principal -->
+  <main>
+
+    <!-- bienvenue -->
+    <div class="bienvenue">
+      <h1>Connexion à <span>votre espace</span></h1>
+      <p>Entrez vos identifiants pour accéder à la plateforme CESI-STAGES.</p>
+    </div>
+
+    <div class="separateur"></div>
+
+    <!-- formulaire -->
+    <div class="form-section">
+      <h2>Rentrer les informations suivantes</h2>
+
+      <div class="form-fields">
+        <div class="inputs">
+          <div class="input-group">
+            <label for="email">Identifiant (email)</label>
+            <input type="email" id="email" placeholder="exemple@cesi.fr">
+          </div>
+          <div class="input-group">
+            <label for="password">Mot de passe</label>
+            <input type="password" id="password" placeholder="••••••••">
+          </div>
+        </div>
+        <button class="btn-connexion">Connexion</button>
+      </div>
+
+      <!-- liens -->
+      <div class="form-links">
+        <a href="mot-de-passe-oublie.html">Mot de passe oublié ?</a>
+        <a href="inscription.html">Pas de compte ? S'inscrire</a>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- footer -->
+  <footer>
+    <p>&copy; 2026 <span>CESI-STAGES</span> — Tous droits réservés</p>
+  </footer>
+
+  <!-- bouton retour -->
+  <a href="javascript:history.back()" class="btn-retour">&#8592; Retour</a>
+
+</body>
+</html>
