@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Création Compte Élève</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Montserrat', Arial, sans-serif;
+      background-color: #ffffff;
+      color: #111111;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* --- HEADER --- */
+    header {
+      background-color: #111111;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #FFD700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      flex: 1;
+      text-align: center;
+    }
+
+    .icon-btn {
+      width: 42px;
+      height: 42px;
+      background-color: #FFD700;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      text-decoration: none;
+      transition: opacity 0.2s;
+      color: #111111;
+      font-size: 1.1rem;
+      font-weight: 900;
+      border: none;
+    }
+
+    .icon-btn:hover { opacity: 0.8; }
+
+    .icon-btn svg {
+      width: 22px;
+      height: 22px;
+      fill: #111111;
+    }
+
+    /* --- BANDEAU --- */
+    .bandeau {
+      background: linear-gradient(135deg, #111111 60%, #2a2a2a 100%);
+      border-bottom: 3px solid #FFD700;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .bandeau-icon {
+      width: 48px;
+      height: 48px;
+      background-color: #FFD700;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    .bandeau-info { display: flex; flex-direction: column; gap: 4px; }
+
+    .bandeau-titre {
+      font-size: 1rem;
+      font-weight: 900;
+      color: #ffffff;
+    }
+
+    .bandeau-badge {
+      background-color: #FFD700;
+      color: #111111;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: inline-block;
+      align-self: flex-start;
+    }
+
+    .bandeau-sous {
+      font-size: 0.8rem;
+      color: #aaaaaa;
+    }
+
+    /* --- MAIN --- */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 28px 24px;
+      gap: 20px;
+      max-width: 720px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .separateur {
+      width: 50px;
+      height: 4px;
+      background-color: #FFD700;
+      border-radius: 2px;
+      align-self: center;
+    }
+
+    /* --- FORMULAIRE --- */
+    .form-card {
+      background-color: #f9f9f9;
+      border: 2px solid #e0e0e0;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .form-card-header {
+      background-color: #111111;
+      padding: 14px 22px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .form-card-header-icon { font-size: 1.1rem; }
+
+    .form-card-header-titre {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #FFD700;
+    }
+
+    .form-body {
+      padding: 26px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    /* grille 2 colonnes */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group.full { grid-column: 1 / -1; }
+
+    .form-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #888888;
+      letter-spacing: 0.5px;
+    }
+
+    .form-input, .form-select {
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.86rem;
+      font-family: 'Montserrat', sans-serif;
+      color: #111111;
+      outline: none;
+      background-color: #ffffff;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-input:focus, .form-select:focus {
+      border-color: #FFD700;
+      box-shadow: 0 0 0 3px rgba(255,215,0,0.15);
+    }
+
+    .form-input::placeholder { color: #bbbbbb; font-style: italic; }
+
+    .form-select { cursor: pointer; }
+
+    /* section mot de passe */
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #aaaaaa;
+      letter-spacing: 1px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #eeeeee;
+    }
+
+    /* indicateur force mdp */
+    .mdp-strength {
+      display: flex;
+      gap: 5px;
+      margin-top: 4px;
+    }
+
+    .mdp-bar {
+      flex: 1;
+      height: 4px;
+      border-radius: 2px;
+      background-color: #e0e0e0;
+      transition: background-color 0.3s;
+    }
+
+    .mdp-bar.weak   { background-color: #cc0000; }
+    .mdp-bar.medium { background-color: #ff9900; }
+    .mdp-bar.strong { background-color: #00aa44; }
+
+    .mdp-hint {
+      font-size: 0.7rem;
+      color: #aaaaaa;
+      font-style: italic;
+      margin-top: 2px;
+    }
+
+    /* boutons */
+    .form-actions {
+      display: flex;
+      gap: 12px;
+      padding-top: 6px;
+    }
+
+    .btn-submit {
+      flex: 1;
+      background-color: #FFD700;
+      color: #111111;
+      border: none;
+      padding: 13px;
+      border-radius: 9px;
+      font-size: 0.88rem;
+      font-weight: 900;
+      font-family: 'Montserrat', sans-serif;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .btn-submit:hover { opacity: 0.85; transform: translateY(-2px); }
+
+    .btn-reset {
+      background-color: #ffffff;
+      color: #888888;
+      border: 2px solid #e0e0e0;
+      padding: 13px 20px;
+      border-radius: 9px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      font-family: 'Montserrat', sans-serif;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-reset:hover { border-color: #111111; color: #111111; }
+
+    /* --- FOOTER --- */
+    footer {
+      background-color: #111111;
+      color: #aaaaaa;
+      text-align: center;
+      padding: 18px;
+      font-size: 0.85rem;
+      margin-top: 10px;
+    }
+
+    footer span { color: #FFD700; font-weight: bold; }
+
+    @media (max-width: 500px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .form-group.full { grid-column: 1; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- header -->
+  <header>
+    <a href="javascript:history.back()" class="icon-btn" title="Retour">&#8592;</a>
+    <div class="logo">CESI-STAGES</div>
+    <button class="icon-btn" title="Mon profil">
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+    </button>
+  </header>
+
+  <!-- bandeau -->
+  <div class="bandeau">
+    <div class="bandeau-icon">🎓</div>
+    <div class="bandeau-info">
+      <span class="bandeau-titre">Création d'un compte Élève</span>
+      <span class="bandeau-badge">➕ Nouveau profil</span>
+      <span class="bandeau-sous">Remplissez le formulaire pour créer un nouveau compte élève.</span>
+    </div>
+  </div>
+
+  <!-- main -->
+  <main>
+
+    <div class="separateur"></div>
+
+    <div class="form-card">
+      <div class="form-card-header">
+        <span class="form-card-header-icon">📋</span>
+        <span class="form-card-header-titre">Formulaire de création</span>
+      </div>
+
+      <div class="form-body">
+
+        <!-- identité -->
+        <span class="section-label">👤 Identité</span>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Prénom</label>
+            <input class="form-input" type="text" placeholder="Alice">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Nom</label>
+            <input class="form-input" type="text" placeholder="Martin">
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Email</label>
+            <input class="form-input" type="email" placeholder="alice.martin@viacesi.fr">
+          </div>
+        </div>
+
+        <!-- scolarité -->
+        <span class="section-label">🏫 Scolarité</span>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Centre CESI</label>
+            <input class="form-input" type="text" placeholder="Paris, Lyon…">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Promotion</label>
+            <input class="form-input" type="text" placeholder="2024-2026">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Spécialité</label>
+            <select class="form-select">
+              <option value="">-- Choisir --</option>
+              <option>Informatique</option>
+              <option>Génie Civil</option>
+              <option>Électronique</option>
+              <option>Management</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Statut</label>
+            <select class="form-select">
+              <option value="">-- Choisir --</option>
+              <option>Actif</option>
+              <option>En stage</option>
+              <option>Inactif</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- mot de passe -->
+        <span class="section-label">🔒 Sécurité</span>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Mot de passe</label>
+            <input class="form-input" type="password" id="mdp" placeholder="••••••••" oninput="checkStrength(this.value)">
+            <div class="mdp-strength">
+              <div class="mdp-bar" id="bar1"></div>
+              <div class="mdp-bar" id="bar2"></div>
+              <div class="mdp-bar" id="bar3"></div>
+            </div>
+            <span class="mdp-hint" id="mdpHint">Minimum 8 caractères</span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Confirmer le mot de passe</label>
+            <input class="form-input" type="password" id="mdpConfirm" placeholder="••••••••" oninput="checkMatch()">
+            <span class="mdp-hint" id="matchHint"></span>
+          </div>
+        </div>
+
+        <!-- actions -->
+        <div class="form-actions">
+          <button class="btn-submit" onclick="soumettre()">✅ Créer le compte</button>
+          <button class="btn-reset" onclick="document.querySelector('form') && document.querySelector('form').reset()">🔄 Réinitialiser</button>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- footer -->
+  <footer>
+    <p>&copy; 2026 <span>CESI-STAGES</span> — Tous droits réservés</p>
+  </footer>
+
+  <script>
+    function checkStrength(val) {
+      const b1 = document.getElementById('bar1');
+      const b2 = document.getElementById('bar2');
+      const b3 = document.getElementById('bar3');
+      const hint = document.getElementById('mdpHint');
+      [b1, b2, b3].forEach(b => b.className = 'mdp-bar');
+      if (val.length === 0) { hint.textContent = 'Minimum 8 caractères'; hint.style.color = '#aaaaaa'; return; }
+      const strong = val.length >= 10 && /[A-Z]/.test(val) && /[0-9]/.test(val) && /[^a-zA-Z0-9]/.test(val);
+      const medium = val.length >= 8 && (/[A-Z]/.test(val) || /[0-9]/.test(val));
+      if (strong) {
+        [b1, b2, b3].forEach(b => b.classList.add('strong'));
+        hint.textContent = '✅ Mot de passe fort'; hint.style.color = '#00aa44';
+      } else if (medium) {
+        b1.classList.add('medium'); b2.classList.add('medium');
+        hint.textContent = '⚠️ Mot de passe moyen'; hint.style.color = '#ff9900';
+      } else {
+        b1.classList.add('weak');
+        hint.textContent = '❌ Mot de passe faible'; hint.style.color = '#cc0000';
+      }
+      checkMatch();
+    }
+
+    function checkMatch() {
+      const mdp = document.getElementById('mdp').value;
+      const confirm = document.getElementById('mdpConfirm').value;
+      const hint = document.getElementById('matchHint');
+      if (!confirm) { hint.textContent = ''; return; }
+      if (mdp === confirm) {
+        hint.textContent = '✅ Mots de passe identiques'; hint.style.color = '#00aa44';
+      } else {
+        hint.textContent = '❌ Les mots de passe ne correspondent pas'; hint.style.color = '#cc0000';
+      }
+    }
+
+    function soumettre() {
+      const mdp = document.getElementById('mdp').value;
+      const confirm = document.getElementById('mdpConfirm').value;
+      if (mdp !== confirm) {
+        alert('❌ Les mots de passe ne correspondent pas.');
+        return;
+      }
+      alert('✅ Compte élève créé avec succès !');
+    }
+  </script>
+
+</body>
+</html>
