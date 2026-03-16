@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Offre</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Montserrat', Arial, sans-serif;
+      background-color: #ffffff;
+      color: #111111;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* --- HEADER --- */
+    header {
+      background-color: #111111;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #FFD700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      flex: 1;
+      text-align: center;
+    }
+
+    .icon-btn {
+      width: 42px;
+      height: 42px;
+      background-color: #FFD700;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      text-decoration: none;
+      transition: opacity 0.2s;
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: #111111;
+    }
+
+    .icon-btn:hover { opacity: 0.8; }
+
+    .icon-btn svg {
+      width: 22px;
+      height: 22px;
+      fill: #111111;
+    }
+
+    /* --- BANDEAU INTITULÉ --- */
+    .bandeau-intitule {
+      background-color: #f9f9f9;
+      border-bottom: 3px solid #FFD700;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .intitule-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .intitule-titre {
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: #111111;
+    }
+
+    .intitule-badges {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background-color: #111111;
+      color: #FFD700;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .badge.yellow {
+      background-color: #FFD700;
+      color: #111111;
+    }
+
+    .intitule-meta {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      font-size: 0.82rem;
+      color: #555555;
+      font-weight: 600;
+    }
+
+    /* --- MAIN --- */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 30px 24px;
+      gap: 24px;
+      max-width: 800px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* separateur */
+    .separateur {
+      width: 50px;
+      height: 4px;
+      background-color: #FFD700;
+      border-radius: 2px;
+    }
+
+    /* --- DESCRIPTION --- */
+    .description-bloc {
+      background-color: #f9f9f9;
+      border: 2px solid #111111;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .bloc-header {
+      background-color: #111111;
+      padding: 12px 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #FFD700;
+    }
+
+    .bloc-body {
+      padding: 22px;
+    }
+
+    .description-texte {
+      font-size: 0.92rem;
+      color: #333333;
+      line-height: 1.8;
+    }
+
+    .description-texte p { margin-bottom: 12px; }
+    .description-texte p:last-child { margin-bottom: 0; }
+
+    /* missions */
+    .missions-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .missions-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: #333333;
+      line-height: 1.5;
+    }
+
+    .missions-list li::before {
+      content: "▸";
+      color: #FFD700;
+      font-weight: 900;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* competences */
+    .competences {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .competence-tag {
+      background-color: #fffbea;
+      border: 2px solid #FFD700;
+      color: #111111;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 20px;
+    }
+
+    /* --- INFOS PRATIQUES --- */
+    .infos-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .info-row {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .info-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #888888;
+      letter-spacing: 0.5px;
+    }
+
+    .info-value {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #111111;
+    }
+
+    /* --- BOUTON POSTULER --- */
+    .postuler-section {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-postuler {
+      flex: 1;
+      background-color: #FFD700;
+      color: #111111;
+      border: none;
+      padding: 14px 24px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 900;
+      font-family: 'Montserrat', sans-serif;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: opacity 0.2s, transform 0.2s;
+      text-align: center;
+    }
+
+    .btn-postuler:hover { opacity: 0.85; transform: translateY(-2px); }
+
+    .btn-sauvegarder {
+      background-color: #ffffff;
+      color: #111111;
+      border: 2px solid #111111;
+      padding: 14px 20px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 900;
+      font-family: 'Montserrat', sans-serif;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: background-color 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-sauvegarder:hover { background-color: #f0f0f0; }
+
+    /* --- STATISTIQUES --- */
+    .stats-toggle {
+      background-color: #f9f9f9;
+      border: 2px solid #111111;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .stats-toggle-btn {
+      width: 100%;
+      background-color: #111111;
+      color: #FFD700;
+      border: none;
+      padding: 14px 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      font-family: 'Montserrat', sans-serif;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background-color 0.2s;
+    }
+
+    .stats-toggle-btn:hover { background-color: #222222; }
+
+    .stats-arrow {
+      transition: transform 0.3s;
+      font-size: 1rem;
+    }
+
+    .stats-arrow.open { transform: rotate(180deg); }
+
+    .stats-content {
+      display: none;
+      padding: 22px;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .stats-content.visible { display: flex; }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .stat-card {
+      background-color: #ffffff;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      text-align: center;
+    }
+
+    .stat-icon { font-size: 1.5rem; }
+
+    .stat-value {
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: #111111;
+    }
+
+    .stat-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #888888;
+      letter-spacing: 0.5px;
+    }
+
+    /* barre progression */
+    .progress-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #111111;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background-color: #e0e0e0;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background-color: #FFD700;
+      border-radius: 4px;
+      transition: width 0.6s ease;
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      background-color: #111111;
+      color: #aaaaaa;
+      text-align: center;
+      padding: 18px;
+      font-size: 0.85rem;
+      margin-top: 10px;
+    }
+
+    footer span { color: #FFD700; font-weight: bold; }
+
+    @media (max-width: 540px) {
+      .infos-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- header -->
+  <header>
+    <a href="javascript:history.back()" class="icon-btn" title="Retour">&#8592;</a>
+    <div class="logo">CESI-STAGES</div>
+    <div class="icon-btn" title="Mon profil">
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+    </div>
+  </header>
+
+  <!-- bandeau intitulé -->
+  <div class="bandeau-intitule">
+    <div class="intitule-top">
+      <span class="intitule-titre">Développeur Web Full-Stack</span>
+      <div class="intitule-badges">
+        <span class="badge">6 mois</span>
+        <span class="badge yellow">800 €/mois</span>
+      </div>
+    </div>
+    <div class="intitule-meta">
+      <span>🏢 Capgemini</span>
+      <span>📍 Paris (75009)</span>
+      <span>📅 Début : Septembre 2026</span>
+    </div>
+  </div>
+
+  <!-- main -->
+  <main>
+
+    <div class="separateur"></div>
+
+    <!-- description -->
+    <div class="description-bloc">
+      <div class="bloc-header">📄 Description du stage</div>
+      <div class="bloc-body">
+        <div class="description-texte">
+          <p>
+            Dans le cadre du développement de ses solutions numériques, Capgemini recherche un(e) stagiaire
+            développeur(se) Web Full-Stack motivé(e) pour rejoindre ses équipes techniques à Paris.
+          </p>
+          <p>Vous interviendrez sur des projets clients à forte valeur ajoutée dans un environnement agile.</p>
+        </div>
+
+        <br>
+        <div class="bloc-header" style="margin: 0 -22px; padding: 10px 22px; font-size:0.75rem;">🎯 Missions principales</div>
+        <br>
+        <ul class="missions-list">
+          <li>Développement de nouvelles fonctionnalités front-end (React.js)</li>
+          <li>Conception et maintenance des APIs back-end (Node.js / Express)</li>
+          <li>Participation aux revues de code et aux réunions Scrum</li>
+          <li>Rédaction de tests unitaires et d'intégration</li>
+          <li>Collaboration avec les équipes UX/UI et DevOps</li>
+        </ul>
+
+        <br>
+        <div class="bloc-header" style="margin: 0 -22px; padding: 10px 22px; font-size:0.75rem;">🛠 Compétences requises</div>
+        <br>
+        <div class="competences">
+          <span class="competence-tag">React.js</span>
+          <span class="competence-tag">Node.js</span>
+          <span class="competence-tag">JavaScript</span>
+          <span class="competence-tag">SQL</span>
+          <span class="competence-tag">Git</span>
+          <span class="competence-tag">REST API</span>
+          <span class="competence-tag">Agile / Scrum</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- infos pratiques -->
+    <div class="description-bloc">
+      <div class="bloc-header">ℹ️ Informations pratiques</div>
+      <div class="bloc-body">
+        <div class="infos-grid">
+          <div class="info-row">
+            <span class="info-label">Durée</span>
+            <span class="info-value">6 mois</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Gratification</span>
+            <span class="info-value">800 €/mois</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Date de début</span>
+            <span class="info-value">Septembre 2026</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Télétravail</span>
+            <span class="info-value">Hybride (2j/semaine)</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Niveau requis</span>
+            <span class="info-value">Bac+4 / Bac+5</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Référence</span>
+            <span class="info-value">#CAP-2026-042</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- boutons postuler -->
+    <div class="postuler-section">
+      <button class="btn-postuler">✉️ Postuler à cette offre</button>
+      <button class="btn-sauvegarder">🔖 Sauvegarder</button>
+    </div>
+
+    <!-- statistiques -->
+    <div class="stats-toggle">
+      <button class="stats-toggle-btn" onclick="toggleStats()">
+        <span>📊 Afficher les statistiques de l'offre</span>
+        <span class="stats-arrow" id="statsArrow">▼</span>
+      </button>
+      <div class="stats-content" id="statsContent">
+
+        <!-- chiffres clés -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-icon">👁️</span>
+            <span class="stat-value">142</span>
+            <span class="stat-label">Vues</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon">📨</span>
+            <span class="stat-value">18</span>
+            <span class="stat-label">Candidatures</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon">📅</span>
+            <span class="stat-value">12j</span>
+            <span class="stat-label">Publiée il y a</span>
+          </div>
+        </div>
+
+        <!-- barres progression -->
+        <div class="progress-item">
+          <div class="progress-label">
+            <span>Taux de candidature</span>
+            <span>12,7 %</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:12.7%"></div></div>
+        </div>
+
+        <div class="progress-item">
+          <div class="progress-label">
+            <span>Profil correspondant</span>
+            <span>87 %</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:87%"></div></div>
+        </div>
+
+        <div class="progress-item">
+          <div class="progress-label">
+            <span>Popularité relative</span>
+            <span>74 %</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:74%"></div></div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- footer -->
+  <footer>
+    <p>&copy; 2026 <span>CESI-STAGES</span> — Tous droits réservés</p>
+  </footer>
+
+  <script>
+    function toggleStats() {
+      const content = document.getElementById('statsContent');
+      const arrow = document.getElementById('statsArrow');
+      content.classList.toggle('visible');
+      arrow.classList.toggle('open');
+    }
+  </script>
+
+</body>
+</html>
