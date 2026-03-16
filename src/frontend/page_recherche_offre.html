@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recherche d'Offres</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Montserrat', Arial, sans-serif;
+      background-color: #ffffff;
+      color: #111111;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* --- HEADER --- */
+    header {
+      background-color: #111111;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #FFD700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      flex: 1;
+      text-align: center;
+    }
+
+    .icon-btn {
+      width: 42px;
+      height: 42px;
+      background-color: #FFD700;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      text-decoration: none;
+      transition: opacity 0.2s;
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: #111111;
+    }
+
+    .icon-btn:hover { opacity: 0.8; }
+
+    .icon-btn svg {
+      width: 22px;
+      height: 22px;
+      fill: #111111;
+    }
+
+    /* --- MAIN --- */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 30px 24px;
+      gap: 24px;
+      max-width: 960px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* bienvenue + recherche */
+    .top-section {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .bienvenue h1 {
+      font-size: 1.4rem;
+      color: #111111;
+    }
+
+    .bienvenue h1 span { color: #FFD700; }
+
+    .bienvenue p {
+      font-size: 0.9rem;
+      color: #555555;
+      margin-top: 4px;
+    }
+
+    /* filtres + recherche */
+    .search-bar {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      background-color: #f9f9f9;
+      border: 2px solid #111111;
+      border-radius: 8px;
+      padding: 10px 14px;
+      flex-wrap: wrap;
+    }
+
+    .search-bar input,
+    .search-bar select {
+      flex: 1;
+      min-width: 140px;
+      border: none;
+      outline: none;
+      font-size: 0.88rem;
+      font-family: 'Montserrat', sans-serif;
+      background: transparent;
+      color: #111111;
+    }
+
+    .search-bar input::placeholder { color: #aaaaaa; font-style: italic; }
+
+    .divider-v {
+      width: 1px;
+      height: 22px;
+      background-color: #dddddd;
+    }
+
+    .btn-search {
+      background-color: #FFD700;
+      color: #111111;
+      border: none;
+      padding: 9px 18px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 900;
+      font-family: 'Montserrat', sans-serif;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: opacity 0.2s, transform 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-search:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    /* separateur */
+    .separateur {
+      width: 50px;
+      height: 4px;
+      background-color: #FFD700;
+      border-radius: 2px;
+    }
+
+    /* --- LAYOUT LISTE + FICHE --- */
+    .content-layout {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    /* --- LISTE OFFRES --- */
+    .liste-offres {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .liste-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #111111;
+      margin-bottom: 4px;
+    }
+
+    .offre-card {
+      background-color: #f9f9f9;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 14px 18px;
+      cursor: pointer;
+      transition: border-color 0.2s, background-color 0.2s, transform 0.15s;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .offre-card:hover,
+    .offre-card.active {
+      border-color: #FFD700;
+      background-color: #fffbea;
+      transform: translateX(4px);
+    }
+
+    .offre-card.active {
+      border-left: 4px solid #FFD700;
+    }
+
+    .offre-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .offre-titre {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #111111;
+    }
+
+    .offre-badge {
+      background-color: #111111;
+      color: #FFD700;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 20px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .offre-meta {
+      font-size: 0.78rem;
+      color: #777777;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .offre-meta span::before {
+      margin-right: 3px;
+    }
+
+    /* --- FICHE OFFRE --- */
+    .fiche-offre {
+      flex: 1;
+      background-color: #f9f9f9;
+      border: 2px solid #111111;
+      border-radius: 12px;
+      padding: 20px;
+      position: sticky;
+      top: 20px;
+      min-width: 220px;
+    }
+
+    .fiche-offre h3 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #111111;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #FFD700;
+    }
+
+    .fiche-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 30px 10px;
+      color: #aaaaaa;
+      text-align: center;
+      font-size: 0.82rem;
+      font-style: italic;
+    }
+
+    .fiche-placeholder .icon { font-size: 2rem; }
+
+    .fiche-content { display: none; flex-direction: column; gap: 10px; }
+    .fiche-content.visible { display: flex; }
+
+    .fiche-row {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .fiche-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #888888;
+      letter-spacing: 0.5px;
+    }
+
+    .fiche-value {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #111111;
+    }
+
+    .btn-postuler {
+      margin-top: 10px;
+      width: 100%;
+      background-color: #FFD700;
+      color: #111111;
+      border: none;
+      padding: 11px;
+      border-radius: 7px;
+      font-size: 0.82rem;
+      font-weight: 900;
+      font-family: 'Montserrat', sans-serif;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .btn-postuler:hover { opacity: 0.85; transform: translateY(-2px); }
+
+    .btn-fiche-detail {
+      width: 100%;
+      background-color: #111111;
+      color: #ffffff;
+      border: none;
+      padding: 10px;
+      border-radius: 7px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      font-family: 'Montserrat', sans-serif;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: background-color 0.2s;
+    }
+
+    .btn-fiche-detail:hover { background-color: #333333; }
+
+    /* compteur résultats */
+    .results-count {
+      font-size: 0.78rem;
+      color: #888888;
+      font-style: italic;
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      background-color: #111111;
+      color: #aaaaaa;
+      text-align: center;
+      padding: 18px;
+      font-size: 0.85rem;
+      margin-top: 30px;
+    }
+
+    footer span { color: #FFD700; font-weight: bold; }
+
+    @media (max-width: 600px) {
+      .content-layout { flex-direction: column; }
+      .fiche-offre { position: static; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- header -->
+  <header>
+    <a href="javascript:history.back()" class="icon-btn" title="Retour">&#8592;</a>
+    <div class="logo">CESI-STAGES</div>
+    <div class="icon-btn" title="Mon profil">
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+    </div>
+  </header>
+
+  <!-- main -->
+  <main>
+
+    <!-- top -->
+    <div class="top-section">
+      <div class="bienvenue">
+        <h1>Recherche d'<span>Offres de Stage</span></h1>
+        <p>Parcourez les offres disponibles et postulez en un clic.</p>
+      </div>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Titre, compétence..." oninput="filterOffres()">
+        <div class="divider-v"></div>
+        <select id="filterVille" onchange="filterOffres()">
+          <option value="">📍 Toutes les villes</option>
+          <option value="Paris">Paris</option>
+          <option value="Toulouse">Toulouse</option>
+          <option value="Lyon">Lyon</option>
+          <option value="Bordeaux">Bordeaux</option>
+          <option value="Grenoble">Grenoble</option>
+        </select>
+        <div class="divider-v"></div>
+        <select id="filterDuree" onchange="filterOffres()">
+          <option value="">⏱ Toutes durées</option>
+          <option value="3 mois">3 mois</option>
+          <option value="6 mois">6 mois</option>
+        </select>
+        <button class="btn-search" onclick="filterOffres()">🔍 Rechercher</button>
+      </div>
+    </div>
+
+    <div class="separateur"></div>
+
+    <!-- layout -->
+    <div class="content-layout">
+
+      <!-- liste -->
+      <div class="liste-offres">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div class="liste-title">📋 Liste des offres</div>
+          <span class="results-count" id="resultsCount"></span>
+        </div>
+        <div id="listeContainer"></div>
+      </div>
+
+      <!-- fiche -->
+      <div class="fiche-offre">
+        <h3>Postuler</h3>
+
+        <div class="fiche-placeholder" id="fichePlaceholder">
+          <span class="icon">📄</span>
+          <span>Sélectionnez une offre pour voir les détails</span>
+        </div>
+
+        <div class="fiche-content" id="ficheContent">
+          <div class="fiche-row">
+            <span class="fiche-label">Poste</span>
+            <span class="fiche-value" id="fichePoste">—</span>
+          </div>
+          <div class="fiche-row">
+            <span class="fiche-label">Entreprise</span>
+            <span class="fiche-value" id="ficheEntreprise">—</span>
+          </div>
+          <div class="fiche-row">
+            <span class="fiche-label">Ville</span>
+            <span class="fiche-value" id="ficheVille">—</span>
+          </div>
+          <div class="fiche-row">
+            <span class="fiche-label">Durée</span>
+            <span class="fiche-value" id="ficheDuree">—</span>
+          </div>
+          <div class="fiche-row">
+            <span class="fiche-label">Gratification</span>
+            <span class="fiche-value" id="ficheGrat">—</span>
+          </div>
+          <button class="btn-postuler">✉️ Postuler</button>
+          <button class="btn-fiche-detail">Voir la fiche complète →</button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- footer -->
+  <footer>
+    <p>&copy; 2026 <span>CESI-STAGES</span> — Tous droits réservés</p>
+  </footer>
+
+  <script>
+    const offres = [
+      { poste: "Développeur Web Full-Stack", entreprise: "Capgemini", ville: "Paris", duree: "6 mois", grat: "800 €/mois", domaine: "Informatique" },
+      { poste: "Ingénieur Mécanique", entreprise: "Airbus", ville: "Toulouse", duree: "6 mois", grat: "900 €/mois", domaine: "Aéronautique" },
+      { poste: "Data Analyst", entreprise: "Orange", ville: "Paris", duree: "6 mois", grat: "850 €/mois", domaine: "Informatique" },
+      { poste: "Technicien Électronique", entreprise: "Thales", ville: "Grenoble", duree: "3 mois", grat: "700 €/mois", domaine: "Électronique" },
+      { poste: "Chef de Projet Digital", entreprise: "Renault", ville: "Paris", duree: "6 mois", grat: "820 €/mois", domaine: "Management" },
+      { poste: "Ingénieur Énergie", entreprise: "Schneider Electric", ville: "Grenoble", duree: "6 mois", grat: "880 €/mois", domaine: "Énergie" },
+      { poste: "Développeur Mobile", entreprise: "Capgemini", ville: "Lyon", duree: "3 mois", grat: "750 €/mois", domaine: "Informatique" },
+      { poste: "Chargé de Communication", entreprise: "Orange", ville: "Bordeaux", duree: "3 mois", grat: "680 €/mois", domaine: "Communication" },
+    ];
+
+    let activeIndex = null;
+
+    function renderOffres(list) {
+      const container = document.getElementById('listeContainer');
+      const count = document.getElementById('resultsCount');
+      count.textContent = list.length + ' offre(s) trouvée(s)';
+      container.innerHTML = '';
+      if (list.length === 0) {
+        container.innerHTML = '<p style="color:#aaa;font-style:italic;font-size:0.85rem;padding:10px 0;">Aucune offre trouvée.</p>';
+        return;
+      }
+      list.forEach((o, i) => {
+        const card = document.createElement('div');
+        card.className = 'offre-card' + (activeIndex === i ? ' active' : '');
+        card.innerHTML = `
+          <div class="offre-top">
+            <span class="offre-titre">${o.poste}</span>
+            <span class="offre-badge">${o.duree}</span>
+          </div>
+          <div class="offre-meta">
+            <span>🏢 ${o.entreprise}</span>
+            <span>📍 ${o.ville}</span>
+            <span>💰 ${o.grat}</span>
+          </div>
+        `;
+        card.onclick = () => selectOffre(i, list);
+        container.appendChild(card);
+      });
+    }
+
+    function selectOffre(index, list) {
+      activeIndex = index;
+      const o = list[index];
+      document.getElementById('fichePoste').textContent = o.poste;
+      document.getElementById('ficheEntreprise').textContent = o.entreprise;
+      document.getElementById('ficheVille').textContent = o.ville;
+      document.getElementById('ficheDuree').textContent = o.duree;
+      document.getElementById('ficheGrat').textContent = o.grat;
+      document.getElementById('fichePlaceholder').style.display = 'none';
+      document.getElementById('ficheContent').classList.add('visible');
+      renderOffres(list);
+    }
+
+    function filterOffres() {
+      const q = document.getElementById('searchInput').value.toLowerCase();
+      const ville = document.getElementById('filterVille').value;
+      const duree = document.getElementById('filterDuree').value;
+      const filtered = offres.filter(o =>
+        (o.poste.toLowerCase().includes(q) || o.entreprise.toLowerCase().includes(q) || o.domaine.toLowerCase().includes(q)) &&
+        (ville === '' || o.ville === ville) &&
+        (duree === '' || o.duree === duree)
+      );
+      activeIndex = null;
+      document.getElementById('fichePlaceholder').style.display = 'flex';
+      document.getElementById('ficheContent').classList.remove('visible');
+      renderOffres(filtered);
+    }
+
+    renderOffres(offres);
+  </script>
+
+</body>
+</html>
