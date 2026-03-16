@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Pilote</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', Arial, sans-serif;
+      background-color: #ffffff;
+      color: #111111;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* --- HEADER --- */
+    header {
+      background-color: #111111;
+      padding: 18px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .logo {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #FFD700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      flex: 1;
+      text-align: center;
+    }
+
+    /* icone profil */
+    .profil-icon {
+      width: 44px;
+      height: 44px;
+      background-color: #FFD700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .profil-icon:hover {
+      opacity: 0.8;
+    }
+
+    .profil-icon svg {
+      width: 24px;
+      height: 24px;
+      fill: #111111;
+    }
+
+    /* --- MAIN --- */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 50px 20px;
+      gap: 28px;
+    }
+
+    /* bienvenue */
+    .bienvenue {
+      text-align: center;
+      max-width: 500px;
+    }
+
+    .bienvenue h1 {
+      font-size: 1.6rem;
+      color: #111111;
+      margin-bottom: 8px;
+    }
+
+    .bienvenue h1 span {
+      color: #FFD700;
+    }
+
+    .bienvenue p {
+      font-size: 0.95rem;
+      color: #444444;
+      line-height: 1.6;
+    }
+
+    /* separateur */
+    .separateur {
+      width: 60px;
+      height: 4px;
+      background-color: #FFD700;
+      border-radius: 2px;
+    }
+
+    /* --- BLOC ACTIONS --- */
+    .bloc-actions {
+      background-color: #f9f9f9;
+      border: 2px solid #111111;
+      border-radius: 12px;
+      padding: 28px 35px;
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .bloc-actions h2 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #111111;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    /* lignes de recherche */
+    .search-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .search-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background-color: #ffffff;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 12px 14px;
+      transition: border-color 0.2s;
+    }
+
+    .search-row:focus-within {
+      border-color: #FFD700;
+    }
+
+    .search-row input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 0.9rem;
+      font-family: 'Montserrat', sans-serif;
+      color: #111111;
+      background: transparent;
+    }
+
+    .search-row input::placeholder {
+      color: #aaaaaa;
+      font-style: italic;
+    }
+
+    /* bouton rechercher */
+    .btn-rechercher {
+      background-color: #111111;
+      color: #ffffff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      font-family: 'Montserrat', sans-serif;
+      cursor: pointer;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition: background-color 0.2s, transform 0.2s;
+      flex-shrink: 0;
+    }
+
+    .btn-rechercher:hover {
+      background-color: #FFD700;
+      color: #111111;
+      transform: translateY(-2px);
+    }
+
+    /* label au dessus de chaque ligne */
+    .search-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .search-item label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #111111;
+    }
+
+    .search-item .hint {
+      font-size: 0.75rem;
+      color: #888888;
+      font-style: italic;
+      margin-top: 2px;
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      background-color: #111111;
+      color: #aaaaaa;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.85rem;
+    }
+
+    footer span {
+      color: #FFD700;
+      font-weight: bold;
+    }
+
+    /* --- BOUTON RETOUR --- */
+    .btn-retour {
+      position: fixed;
+      bottom: 18px;
+      left: 18px;
+      background-color: #ffffff;
+      color: #111111;
+      border: 2px solid #111111;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    .btn-retour:hover {
+      background-color: #FFD700;
+      border-color: #FFD700;
+    }
+
+    @media (max-width: 480px) {
+      .bloc-actions {
+        padding: 20px 16px;
+      }
+      .btn-rechercher {
+        padding: 8px 10px;
+        font-size: 0.75rem;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- header -->
+  <header>
+    <!-- icone profil -->
+    <div class="profil-icon" title="Mon profil">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+      </svg>
+    </div>
+
+    <div class="logo">CESI-STAGES</div>
+
+    <!-- espace vide pour centrer le logo -->
+    <div style="width:44px;"></div>
+  </header>
+
+  <!-- contenu principal -->
+  <main>
+
+    <!-- bienvenue -->
+    <div class="bienvenue">
+      <h1>Bienvenue, <span>Pilote</span> 👋</h1>
+      <p>Recherchez des entreprises ou des offres de stage disponibles sur la plateforme.</p>
+    </div>
+
+    <div class="separateur"></div>
+
+    <!-- bloc actions -->
+    <div class="bloc-actions">
+      <h2>Que voulez-vous faire ?</h2>
+
+      <div class="search-rows">
+
+        <!-- recherche entreprise -->
+        <div class="search-item">
+          <label>Recherche d'entreprise</label>
+          <div class="search-row">
+            <input type="text" placeholder="Nom de l'entreprise...">
+            <a href="liste-entreprises.html">
+              <button class="btn-rechercher">Rechercher</button>
+            </a>
+          </div>
+          <span class="hint">→ Redirige vers la liste des entreprises</span>
+        </div>
+
+        <!-- recherche offre -->
+        <div class="search-item">
+          <label>Recherche d'offre de stage</label>
+          <div class="search-row">
+            <input type="text" placeholder="Titre, domaine, lieu...">
+            <a href="liste-offres.html">
+              <button class="btn-rechercher">Rechercher</button>
+            </a>
+          </div>
+          <span class="hint">→ Redirige vers la liste des offres</span>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- footer -->
+  <footer>
+    <p>&copy; 2026 <span>CESI-STAGES</span> — Tous droits réservés</p>
+  </footer>
+
+  <!-- bouton retour -->
+  <a href="javascript:history.back()" class="btn-retour">&#8592; Retour</a>
+
+</body>
+</html>
