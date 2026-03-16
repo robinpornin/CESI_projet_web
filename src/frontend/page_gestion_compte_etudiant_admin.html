@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestion Compte Étudiant</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Montserrat', Arial, sans-serif;
+      background-color: #ffffff;
+      color: #111111;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* --- HEADER --- */
+    header {
+      background-color: #111111;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #FFD700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      flex: 1;
+      text-align: center;
+    }
+
+    .icon-btn {
+      width: 42px;
+      height: 42px;
+      background-color: #FFD700;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      text-decoration: none;
+      transition: opacity 0.2s;
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: #111111;
+    }
+
+    .icon-btn:hover { opacity: 0.8; }
+
+    .icon-btn svg {
+      width: 22px;
+      height: 22px;
+      fill: #111111;
+    }
+
+    /* --- BANDEAU --- */
+    .bandeau {
+      background: linear-gradient(135deg, #111111 60%, #2a2a2a 100%);
+      border-bottom: 3px solid #FFD700;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .bandeau-icon {
+      width: 48px;
+      height: 48px;
+      background-color: #FFD700;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    .bandeau-info { display: flex; flex-direction: column; gap: 4px; }
+
+    .bandeau-titre {
+      font-size: 1rem;
+      font-weight: 900;
+      color: #ffffff;
+    }
+
+    .bandeau-badge {
+      background-color: #FFD700;
+      color: #111111;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: inline-block;
+      align-self: flex-start;
+    }
+
+    .bandeau-sous {
+      font-size: 0.8rem;
+      color: #aaaaaa;
+    }
+
+    /* --- MAIN --- */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 28px 24px;
+      gap: 22px;
+      max-width: 720px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .separateur {
+      width: 50px;
+      height: 4px;
+      background-color: #FFD700;
+      border-radius: 2px;
+    }
+
+    /* --- CRÉER COMPTE --- */
+    .creer-bloc {
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .creer-toggle-btn {
+      width: 100%;
+      background-color: #111111;
+      color: #FFD700;
+      border: none;
+      padding: 16px 22px;
+      font-size: 0.88rem;
+      font-weight: 900;
+      font-family: 'Montserrat', sans-serif;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: 12px;
+      transition: background-color 0.2s, border-radius 0.1s;
+    }
+
+    .creer-toggle-btn.open {
+      border-radius: 12px 12px 0 0;
+    }
+
+    .creer-toggle-btn:hover { background-color: #222222; }
+
+    .creer-arrow {
+      transition: transform 0.3s;
+      font-size: 1rem;
+    }
+
+    .creer-arrow.open { transform: rotate(180deg); }
+
+    .creer-form {
+      display: none;
+      flex-direction: column;
+      gap: 14px;
+      padding: 22px;
+      background-color: #f9f9f9;
+      border: 2px solid #111111;
+      border-top: none;
+      border-radius: 0 0 12px 12px;
+    }
+
+    .creer-form.visible { display: flex; }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .form-group.full { grid-column: 1 / -1; }
+
+    .form-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #888888;
+      letter-spacing: 0.5px;
+    }
+
+    .form-input {
+      border: 2px solid #e0e0e0;
+      border-radius: 7px;
+      padding: 9px 12px;
+      font-size: 0.86rem;
+      font-family: 'Montserrat', sans-serif;
+      color: #111111;
+      outline: none;
+      background-color: #ffffff;
+      transition: border-color 0.2s;
+    }
+
+    .form-input:focus { border-color: #FFD700; }
+    .form-input::placeholder { color: #bbbbbb; font-style: italic; }
+
+    .form-select {
+      border: 2px solid #e0e0e0;
+      border-radius: 7px;
+      padding: 9px 12px;
+      font-size: 0.86rem;
+      font-family: 'Montserrat', sans-serif;
+      color: #111111;
+      outline: none;
+      background-color: #ffffff;
+      transition: border-color 0.2s;
+      cursor: pointer;
+    }
+
+    .form-select:focus { border-color: #FFD700; }
+
+    .btn-creer {
+      align-self: flex-end;
+      background-color: #FFD700;
+      color: #111111;
+      border: none;
+      padding: 11px 26px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 900;
+      font-family: 'Montserrat', sans-serif;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .btn-creer:hover { opacity: 0.85; transform: translateY(-2px); }
+
+    /* --- RECHERCHE --- */
+    .recherche-bloc {
+      background-color: #f9f9f9;
+      border: 2px solid #111111;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .bloc-header {
+      background-color: #111111;
+      padding: 12px 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #FFD700;
+    }
+
+    .bloc-body { padding: 20px; }
+
+    .search-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .search-row input {
+      flex: 1;
+      border: 2px solid #e0e0e0;
+      border-radius: 7px;
+      padding: 10px 14px;
+      font-size: 0.86rem;
+      font-family: 'Montserrat', sans-serif;
+      color: #111111;
+      outline: none;
+      background-color: #ffffff;
+      transition: border-color 0.2s;
+    }
+
+    .search-row input:focus { border-color: #FFD700; }
+    .search-row input::placeholder { color: #bbbbbb; font-style: italic; }
+
+    .btn-search {
+      background-color: #111111;
+      color: #FFD700;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 7px;
+      font-size: 0.82rem;
+      font-weight: 900;
+      font-family: 'Montserrat', sans-serif;
+      cursor: pointer;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition: background-color 0.2s, transform 0.15s;
+    }
+
+    .btn-search:hover {
+      background-color: #FFD700;
+      color: #111111;
+      transform: translateY(-1px);
+    }
+
+    /* --- FICHE ÉTUDIANT --- */
+    .fiche-etudiant {
+      background-color: #f9f9f9;
+      border: 2px solid #111111;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .fiche-placeholder {
+      padding: 36px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      color: #aaaaaa;
+      font-size: 0.85rem;
+      font-style: italic;
+      text-align: center;
+    }
+
+    .fiche-placeholder .big-icon { font-size: 2.2rem; }
+
+    .fiche-content { display: none; }
+    .fiche-content.visible { display: block; }
+
+    .fiche-top {
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border-bottom: 2px solid #e0e0e0;
+      background-color: #fffbea;
+    }
+
+    .etudiant-avatar {
+      width: 48px;
+      height: 48px;
+      background-color: #111111;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .etudiant-nom {
+      font-size: 1rem;
+      font-weight: 900;
+      color: #111111;
+    }
+
+    .etudiant-meta {
+      font-size: 0.78rem;
+      color: #777777;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 2px;
+    }
+
+    .fiche-fields {
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .field-group.full { grid-column: 1 / -1; }
+
+    .field-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #888888;
+      letter-spacing: 0.5px;
+    }
+
+    .field-input {
+      border: 2px solid #e0e0e0;
+      border-radius: 7px;
+      padding: 9px 12px;
+      font-size: 0.86rem;
+      font-family: 'Montserrat', sans-serif;
+      color: #111111;
+      outline: none;
+      background-color: #ffffff;
+      transition: border-color 0.2s;
+    }
+
+    .field-input:focus { border-color: #FFD700; }
+
+    .field-select {
+      border: 2px solid #e0e0e0;
+      border-radius: 7px;
+      padding: 9px 12px;
+      font-size: 0.86rem;
+      font-family: 'Montserrat', sans-serif;
+      color: #111111;
+      outline: none;
+      background-color: #ffffff;
+      transition: border-color 0.2s;
+      cursor: pointer;
+    }
+
+    .field-select:focus { border-color: #FFD700; }
+
+    /* boutons action */
+    .fiche-actions {
+      padding: 0 20px 20px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-enregistrer {
+      flex: 1;
+      background-color: #FFD700;
+      color: #111111;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 900;
+      font-family: 'Montserrat', sans-serif;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .btn-enregistrer:hover { opacity: 0.85; transform: translateY(-2px); }
+
+    .btn-supprimer {
+      flex: 1;
+      background-color: #ffffff;
+      color: #cc0000;
+      border: 2px solid #cc0000;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 900;
+      font-family: 'Montserrat', sans-serif;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    .btn-supprimer:hover { background-color: #cc0000; color: #ffffff; }
+
+    /* --- FOOTER --- */
+    footer {
+      background-color: #111111;
+      color: #aaaaaa;
+      text-align: center;
+      padding: 18px;
+      font-size: 0.85rem;
+      margin-top: 10px;
+    }
+
+    footer span { color: #FFD700; font-weight: bold; }
+
+    @media (max-width: 540px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .fiche-fields { grid-template-columns: 1fr; }
+      .form-group.full, .field-group.full { grid-column: 1; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- header -->
+  <header>
+    <a href="javascript:history.back()" class="icon-btn" title="Retour">&#8592;</a>
+    <div class="logo">CESI-STAGES</div>
+    <div class="icon-btn" title="Admin">
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+    </div>
+  </header>
+
+  <!-- bandeau -->
+  <div class="bandeau">
+    <div class="bandeau-icon">🎓</div>
+    <div class="bandeau-info">
+      <span class="bandeau-titre">Gestion des comptes Étudiants</span>
+      <span class="bandeau-badge">⚙️ Espace Admin</span>
+      <span class="bandeau-sous">Créez, modifiez ou supprimez des comptes étudiants.</span>
+    </div>
+  </div>
+
+  <!-- main -->
+  <main>
+
+    <div class="separateur"></div>
+
+    <!-- créer compte étudiant -->
+    <div class="creer-bloc">
+      <button class="creer-toggle-btn" id="creerBtn" onclick="toggleCreer()">
+        <span>➕ Créer un compte Étudiant</span>
+        <span class="creer-arrow" id="creerArrow">▼</span>
+      </button>
+      <div class="creer-form" id="creerForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Prénom</label>
+            <input class="form-input" type="text" placeholder="Alice">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Nom</label>
+            <input class="form-input" type="text" placeholder="Martin">
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Email</label>
+            <input class="form-input" type="email" placeholder="alice.martin@viacesi.fr">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Mot de passe</label>
+            <input class="form-input" type="password" placeholder="••••••••">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Centre CESI</label>
+            <input class="form-input" type="text" placeholder="Paris, Lyon...">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Promotion</label>
+            <input class="form-input" type="text" placeholder="2024-2026">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Spécialité</label>
+            <select class="form-select">
+              <option value="">-- Choisir --</option>
+              <option>Informatique</option>
+              <option>Génie Civil</option>
+              <option>Électronique</option>
+              <option>Management</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn-creer">✅ Créer le compte</button>
+      </div>
+    </div>
+
+    <!-- recherche étudiant -->
+    <div class="recherche-bloc">
+      <div class="bloc-header">🔍 Rechercher un étudiant</div>
+      <div class="bloc-body">
+        <div class="search-row">
+          <input type="text" id="searchEtudiant" placeholder="Nom, prénom, email...">
+          <button class="btn-search" onclick="rechercherEtudiant()">🔍 Rechercher</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- fiche étudiant -->
+    <div class="fiche-etudiant">
+      <div class="bloc-header">🎓 Informations de l'étudiant</div>
+
+      <div class="fiche-placeholder" id="fichePlaceholder">
+        <span class="big-icon">🎓</span>
+        <span>Effectuez une recherche pour afficher et modifier les informations d'un étudiant.</span>
+      </div>
+
+      <div class="fiche-content" id="ficheContent">
+        <div class="fiche-top">
+          <div class="etudiant-avatar">🎓</div>
+          <div>
+            <div class="etudiant-nom" id="ficheNomAffiche">Alice Martin</div>
+            <div class="etudiant-meta">
+              <span id="ficheEmailAffiche">alice.martin@viacesi.fr</span>
+              <span id="ficheCentreAffiche">📍 Paris</span>
+              <span id="fichePromoAffiche">🗓 2024-2026</span>
+            </div>
+          </div>
+        </div>
+        <div class="fiche-fields">
+          <div class="field-group">
+            <label class="field-label">Prénom</label>
+            <input class="field-input" id="fichePrenom" type="text" value="Alice">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Nom</label>
+            <input class="field-input" id="ficheNom" type="text" value="Martin">
+          </div>
+          <div class="field-group full">
+            <label class="field-label">Email</label>
+            <input class="field-input" id="ficheEmail" type="email" value="alice.martin@viacesi.fr">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Centre CESI</label>
+            <input class="field-input" id="ficheCentre" type="text" value="Paris">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Promotion</label>
+            <input class="field-input" id="fichePromo" type="text" value="2024-2026">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Spécialité</label>
+            <select class="field-select" id="ficheSpecialite">
+              <option>Informatique</option>
+              <option>Génie Civil</option>
+              <option>Électronique</option>
+              <option>Management</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Statut</label>
+            <select class="field-select" id="ficheStatut">
+              <option>Actif</option>
+              <option>Inactif</option>
+              <option>En stage</option>
+            </select>
+          </div>
+        </div>
+        <div class="fiche-actions">
+          <button class="btn-enregistrer" onclick="enregistrer()">💾 Enregistrer</button>
+          <button class="btn-supprimer" onclick="supprimerCompte()">🗑️ Supprimer le compte</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- footer -->
+  <footer>
+    <p>&copy; 2026 <span>CESI-STAGES</span> — Tous droits réservés</p>
+  </footer>
+
+  <script>
+    function toggleCreer() {
+      const form = document.getElementById('creerForm');
+      const arrow = document.getElementById('creerArrow');
+      const btn = document.getElementById('creerBtn');
+      form.classList.toggle('visible');
+      arrow.classList.toggle('open');
+      btn.classList.toggle('open');
+    }
+
+    const etudiantsFake = [
+      { prenom: 'Alice', nom: 'Martin', email: 'alice.martin@viacesi.fr', centre: 'Paris', promo: '2024-2026', specialite: 'Informatique', statut: 'Actif' },
+      { prenom: 'Lucas', nom: 'Petit', email: 'lucas.petit@viacesi.fr', centre: 'Lyon', promo: '2023-2025', specialite: 'Génie Civil', statut: 'En stage' },
+      { prenom: 'Emma', nom: 'Leroy', email: 'emma.leroy@viacesi.fr', centre: 'Toulouse', promo: '2024-2026', specialite: 'Management', statut: 'Actif' },
+    ];
+
+    function rechercherEtudiant() {
+      const q = document.getElementById('searchEtudiant').value.trim().toLowerCase();
+      if (!q) return;
+      const found = etudiantsFake.find(e =>
+        e.nom.toLowerCase().includes(q) ||
+        e.prenom.toLowerCase().includes(q) ||
+        e.email.toLowerCase().includes(q)
+      );
+      if (found) {
+        afficherFiche(found);
+      } else {
+        document.getElementById('fichePlaceholder').style.display = 'flex';
+        document.getElementById('fichePlaceholder').innerHTML = '<span class="big-icon">❌</span><span>Aucun étudiant trouvé pour cette recherche.</span>';
+        document.getElementById('ficheContent').classList.remove('visible');
+      }
+    }
+
+    function afficherFiche(e) {
+      document.getElementById('fichePlaceholder').style.display = 'none';
+      document.getElementById('ficheContent').classList.add('visible');
+      document.getElementById('ficheNomAffiche').textContent = e.prenom + ' ' + e.nom;
+      document.getElementById('ficheEmailAffiche').textContent = e.email;
+      document.getElementById('ficheCentreAffiche').textContent = '📍 ' + e.centre;
+      document.getElementById('fichePromoAffiche').textContent = '🗓 ' + e.promo;
+      document.getElementById('fichePrenom').value = e.prenom;
+      document.getElementById('ficheNom').value = e.nom;
+      document.getElementById('ficheEmail').value = e.email;
+      document.getElementById('ficheCentre').value = e.centre;
+      document.getElementById('fichePromo').value = e.promo;
+      document.getElementById('ficheSpecialite').value = e.specialite;
+      document.getElementById('ficheStatut').value = e.statut;
+    }
+
+    function enregistrer() {
+      const prenom = document.getElementById('fichePrenom').value;
+      const nom = document.getElementById('ficheNom').value;
+      document.getElementById('ficheNomAffiche').textContent = prenom + ' ' + nom;
+      document.getElementById('ficheEmailAffiche').textContent = document.getElementById('ficheEmail').value;
+      document.getElementById('ficheCentreAffiche').textContent = '📍 ' + document.getElementById('ficheCentre').value;
+      document.getElementById('fichePromoAffiche').textContent = '🗓 ' + document.getElementById('fichePromo').value;
+      alert('✅ Modifications enregistrées pour ' + prenom + ' ' + nom);
+    }
+
+    function supprimerCompte() {
+      if (confirm('⚠️ Confirmer la suppression de ce compte étudiant ?')) {
+        document.getElementById('ficheContent').classList.remove('visible');
+        document.getElementById('fichePlaceholder').style.display = 'flex';
+        document.getElementById('fichePlaceholder').innerHTML = '<span class="big-icon">✅</span><span>Compte supprimé avec succès.</span>';
+      }
+    }
+
+    document.getElementById('searchEtudiant').addEventListener('keydown', e => {
+      if (e.key === 'Enter') rechercherEtudiant();
+    });
+  </script>
+
+</body>
+</html>
