@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Page Offre</title>
+  <title>Offre de Stage</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
 
@@ -50,9 +50,10 @@
       flex-shrink: 0;
       text-decoration: none;
       transition: opacity 0.2s;
+      color: #111111;
       font-size: 1.1rem;
       font-weight: 900;
-      color: #111111;
+      border: none;
     }
 
     .icon-btn:hover { opacity: 0.8; }
@@ -63,240 +64,245 @@
       fill: #111111;
     }
 
-    /* --- BANDEAU INTITULÉ --- */
-    .bandeau-intitule {
-      background-color: #f9f9f9;
-      border-bottom: 3px solid #FFD700;
-      padding: 20px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .intitule-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .intitule-titre {
-      font-size: 1.4rem;
-      font-weight: 900;
-      color: #111111;
-    }
-
-    .intitule-badges {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .badge {
-      background-color: #111111;
-      color: #FFD700;
-      font-size: 0.72rem;
-      font-weight: 700;
-      padding: 4px 12px;
-      border-radius: 20px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .badge.yellow {
-      background-color: #FFD700;
-      color: #111111;
-    }
-
-    .intitule-meta {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      font-size: 0.82rem;
-      color: #555555;
-      font-weight: 600;
-    }
-
     /* --- MAIN --- */
     main {
       flex: 1;
       display: flex;
       flex-direction: column;
-      padding: 30px 24px;
-      gap: 24px;
-      max-width: 800px;
+      padding: 24px 24px;
+      gap: 16px;
+      max-width: 720px;
       margin: 0 auto;
       width: 100%;
     }
 
-    /* separateur */
-    .separateur {
-      width: 50px;
-      height: 4px;
-      background-color: #FFD700;
-      border-radius: 2px;
+    /* --- INTITULÉ --- */
+    .intitule-card {
+      background-color: #f9f9f9;
+      border: 2px solid #e0e0e0;
+      border-radius: 14px;
+      padding: 20px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
 
+    .intitule-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .intitule-titre {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: #111111;
+      line-height: 1.3;
+      flex: 1;
+    }
+
+    .intitule-badge {
+      background-color: #FFD700;
+      color: #111111;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .intitule-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.78rem;
+      color: #666666;
+      background-color: #f0f0f0;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .meta-item span { font-size: 0.85rem; }
+
     /* --- DESCRIPTION --- */
-    .description-bloc {
+    .desc-card {
       background-color: #f9f9f9;
-      border: 2px solid #111111;
-      border-radius: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 14px;
       overflow: hidden;
     }
 
-    .bloc-header {
+    .desc-card-header {
       background-color: #111111;
-      padding: 12px 20px;
-      font-size: 0.8rem;
+      padding: 12px 22px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .desc-card-header-titre {
+      font-size: 0.78rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 1px;
       color: #FFD700;
     }
 
-    .bloc-body {
+    .desc-body {
       padding: 22px;
-    }
-
-    .description-texte {
-      font-size: 0.92rem;
-      color: #333333;
-      line-height: 1.8;
-    }
-
-    .description-texte p { margin-bottom: 12px; }
-    .description-texte p:last-child { margin-bottom: 0; }
-
-    /* missions */
-    .missions-list {
-      list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      margin-top: 10px;
-    }
-
-    .missions-list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      font-size: 0.88rem;
-      color: #333333;
-      line-height: 1.5;
-    }
-
-    .missions-list li::before {
-      content: "▸";
-      color: #FFD700;
-      font-weight: 900;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-
-    /* competences */
-    .competences {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 10px;
-    }
-
-    .competence-tag {
-      background-color: #fffbea;
-      border: 2px solid #FFD700;
-      color: #111111;
-      font-size: 0.78rem;
-      font-weight: 700;
-      padding: 5px 12px;
-      border-radius: 20px;
-    }
-
-    /* --- INFOS PRATIQUES --- */
-    .infos-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
       gap: 16px;
     }
 
-    .info-row {
+    .desc-texte {
+      font-size: 0.86rem;
+      color: #444444;
+      line-height: 1.7;
+    }
+
+    .desc-section-titre {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #aaaaaa;
+      letter-spacing: 1px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #eeeeee;
+    }
+
+    /* tags compétences */
+    .tags-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      background-color: #FFD700;
+      color: #111111;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+
+    /* infos pratiques */
+    .infos-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .info-item {
+      background-color: #ffffff;
+      border: 1px solid #eeeeee;
+      border-radius: 8px;
+      padding: 10px 14px;
       display: flex;
       flex-direction: column;
       gap: 3px;
     }
 
     .info-label {
-      font-size: 0.72rem;
+      font-size: 0.65rem;
       font-weight: 700;
       text-transform: uppercase;
-      color: #888888;
+      color: #aaaaaa;
       letter-spacing: 0.5px;
     }
 
     .info-value {
-      font-size: 0.92rem;
+      font-size: 0.82rem;
       font-weight: 700;
       color: #111111;
     }
 
-    /* --- BOUTON POSTULER --- */
-    .postuler-section {
-      display: flex;
+    /* --- ACTIONS --- */
+    .actions-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 12px;
-      flex-wrap: wrap;
     }
 
     .btn-postuler {
-      flex: 1;
       background-color: #FFD700;
       color: #111111;
       border: none;
-      padding: 14px 24px;
-      border-radius: 8px;
+      padding: 15px;
+      border-radius: 10px;
       font-size: 0.9rem;
       font-weight: 900;
       font-family: 'Montserrat', sans-serif;
       cursor: pointer;
       text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
       transition: opacity 0.2s, transform 0.2s;
-      text-align: center;
     }
 
     .btn-postuler:hover { opacity: 0.85; transform: translateY(-2px); }
 
-    .btn-sauvegarder {
+    .btn-wishlist {
       background-color: #ffffff;
       color: #111111;
-      border: 2px solid #111111;
-      padding: 14px 20px;
-      border-radius: 8px;
+      border: 2px solid #e0e0e0;
+      padding: 15px;
+      border-radius: 10px;
       font-size: 0.9rem;
       font-weight: 900;
       font-family: 'Montserrat', sans-serif;
       cursor: pointer;
       text-transform: uppercase;
-      transition: background-color 0.2s;
-      white-space: nowrap;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: border-color 0.2s, background-color 0.2s, transform 0.2s;
     }
 
-    .btn-sauvegarder:hover { background-color: #f0f0f0; }
+    .btn-wishlist:hover {
+      border-color: #FFD700;
+      background-color: #fffbea;
+      transform: translateY(-2px);
+    }
+
+    .btn-wishlist.active {
+      background-color: #111111;
+      border-color: #111111;
+      color: #FFD700;
+    }
 
     /* --- STATISTIQUES --- */
-    .stats-toggle {
+    .stats-card {
       background-color: #f9f9f9;
-      border: 2px solid #111111;
-      border-radius: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 14px;
       overflow: hidden;
     }
 
-    .stats-toggle-btn {
+    .stats-toggle {
       width: 100%;
       background-color: #111111;
       color: #FFD700;
       border: none;
-      padding: 14px 20px;
-      font-size: 0.85rem;
+      padding: 15px 22px;
+      font-size: 0.82rem;
       font-weight: 700;
       font-family: 'Montserrat', sans-serif;
       cursor: pointer;
@@ -308,7 +314,7 @@
       transition: background-color 0.2s;
     }
 
-    .stats-toggle-btn:hover { background-color: #222222; }
+    .stats-toggle:hover { background-color: #222222; }
 
     .stats-arrow {
       transition: transform 0.3s;
@@ -317,26 +323,26 @@
 
     .stats-arrow.open { transform: rotate(180deg); }
 
-    .stats-content {
+    .stats-body {
       display: none;
-      padding: 22px;
+      padding: 20px 22px;
+      gap: 14px;
       flex-direction: column;
-      gap: 20px;
     }
 
-    .stats-content.visible { display: flex; }
+    .stats-body.visible { display: flex; }
 
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
+      gap: 12px;
     }
 
-    .stat-card {
+    .stat-item {
       background-color: #ffffff;
-      border: 2px solid #e0e0e0;
+      border: 1px solid #eeeeee;
       border-radius: 10px;
-      padding: 16px;
+      padding: 14px 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -344,45 +350,54 @@
       text-align: center;
     }
 
-    .stat-icon { font-size: 1.5rem; }
+    .stat-icon { font-size: 1.4rem; }
 
     .stat-value {
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       font-weight: 900;
       color: #111111;
     }
 
     .stat-label {
-      font-size: 0.72rem;
+      font-size: 0.65rem;
       font-weight: 700;
       text-transform: uppercase;
-      color: #888888;
+      color: #aaaaaa;
       letter-spacing: 0.5px;
     }
 
+    .stat-item.highlight {
+      background-color: #111111;
+      border-color: #111111;
+    }
+
+    .stat-item.highlight .stat-value { color: #FFD700; }
+    .stat-item.highlight .stat-label { color: #888888; }
+
     /* barre progression */
-    .progress-item {
+    .progress-row {
       display: flex;
       flex-direction: column;
       gap: 6px;
     }
 
-    .progress-label {
+    .progress-label-row {
       display: flex;
       justify-content: space-between;
-      font-size: 0.8rem;
+      font-size: 0.72rem;
+      color: #888888;
       font-weight: 700;
-      color: #111111;
     }
 
-    .progress-bar {
+    .progress-bar-bg {
+      width: 100%;
       height: 8px;
-      background-color: #e0e0e0;
+      background-color: #eeeeee;
       border-radius: 4px;
       overflow: hidden;
     }
 
-    .progress-fill {
+    .progress-bar-fill {
       height: 100%;
       background-color: #FFD700;
       border-radius: 4px;
@@ -401,9 +416,10 @@
 
     footer span { color: #FFD700; font-weight: bold; }
 
-    @media (max-width: 540px) {
-      .infos-grid { grid-template-columns: 1fr; }
-      .stats-grid { grid-template-columns: 1fr 1fr; }
+    @media (max-width: 480px) {
+      .actions-row { grid-template-columns: 1fr; }
+      .stats-grid  { grid-template-columns: 1fr 1fr; }
+      .infos-grid  { grid-template-columns: 1fr; }
     }
 
   </style>
@@ -414,159 +430,126 @@
   <header>
     <a href="javascript:history.back()" class="icon-btn" title="Retour">&#8592;</a>
     <div class="logo">CESI-STAGES</div>
-    <div class="icon-btn" title="Mon profil">
+    <button class="icon-btn" title="Mon profil">
       <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
-    </div>
+    </button>
   </header>
-
-  <!-- bandeau intitulé -->
-  <div class="bandeau-intitule">
-    <div class="intitule-top">
-      <span class="intitule-titre">Développeur Web Full-Stack</span>
-      <div class="intitule-badges">
-        <span class="badge">6 mois</span>
-        <span class="badge yellow">800 €/mois</span>
-      </div>
-    </div>
-    <div class="intitule-meta">
-      <span>🏢 Capgemini</span>
-      <span>📍 Paris (75009)</span>
-      <span>📅 Début : Septembre 2026</span>
-    </div>
-  </div>
 
   <!-- main -->
   <main>
 
-    <div class="separateur"></div>
+    <!-- intitulé -->
+    <div class="intitule-card">
+      <div class="intitule-top">
+        <span class="intitule-titre">Développeur Web Full-Stack — Stage 6 mois</span>
+        <span class="intitule-badge">🟢 Disponible</span>
+      </div>
+      <div class="intitule-meta">
+        <div class="meta-item"><span>🏢</span> TechCorp Solutions</div>
+        <div class="meta-item"><span>📍</span> Paris, Île-de-France</div>
+        <div class="meta-item"><span>📅</span> Juin 2026 — Déc. 2026</div>
+        <div class="meta-item"><span>💶</span> 650 €/mois</div>
+      </div>
+    </div>
 
     <!-- description -->
-    <div class="description-bloc">
-      <div class="bloc-header">📄 Description du stage</div>
-      <div class="bloc-body">
-        <div class="description-texte">
-          <p>
-            Dans le cadre du développement de ses solutions numériques, Capgemini recherche un(e) stagiaire
-            développeur(se) Web Full-Stack motivé(e) pour rejoindre ses équipes techniques à Paris.
-          </p>
-          <p>Vous interviendrez sur des projets clients à forte valeur ajoutée dans un environnement agile.</p>
-        </div>
-
-        <br>
-        <div class="bloc-header" style="margin: 0 -22px; padding: 10px 22px; font-size:0.75rem;">🎯 Missions principales</div>
-        <br>
-        <ul class="missions-list">
-          <li>Développement de nouvelles fonctionnalités front-end (React.js)</li>
-          <li>Conception et maintenance des APIs back-end (Node.js / Express)</li>
-          <li>Participation aux revues de code et aux réunions Scrum</li>
-          <li>Rédaction de tests unitaires et d'intégration</li>
-          <li>Collaboration avec les équipes UX/UI et DevOps</li>
-        </ul>
-
-        <br>
-        <div class="bloc-header" style="margin: 0 -22px; padding: 10px 22px; font-size:0.75rem;">🛠 Compétences requises</div>
-        <br>
-        <div class="competences">
-          <span class="competence-tag">React.js</span>
-          <span class="competence-tag">Node.js</span>
-          <span class="competence-tag">JavaScript</span>
-          <span class="competence-tag">SQL</span>
-          <span class="competence-tag">Git</span>
-          <span class="competence-tag">REST API</span>
-          <span class="competence-tag">Agile / Scrum</span>
-        </div>
+    <div class="desc-card">
+      <div class="desc-card-header">
+        <span style="font-size:1rem">📄</span>
+        <span class="desc-card-header-titre">Description du stage</span>
       </div>
-    </div>
+      <div class="desc-body">
 
-    <!-- infos pratiques -->
-    <div class="description-bloc">
-      <div class="bloc-header">ℹ️ Informations pratiques</div>
-      <div class="bloc-body">
+        <span class="desc-section-titre">🎯 Missions</span>
+        <p class="desc-texte">
+          Au sein de l'équipe produit, vous participerez au développement de nouvelles fonctionnalités
+          de notre plateforme SaaS. Vous travaillerez en méthode Agile (Scrum) et collaborerez
+          étroitement avec les équipes design et back-end.
+        </p>
+
+        <span class="desc-section-titre">🛠️ Compétences requises</span>
+        <div class="tags-list">
+          <span class="tag">React</span>
+          <span class="tag">Node.js</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">SQL</span>
+          <span class="tag">Git</span>
+          <span class="tag">REST API</span>
+        </div>
+
+        <span class="desc-section-titre">📋 Informations pratiques</span>
         <div class="infos-grid">
-          <div class="info-row">
-            <span class="info-label">Durée</span>
-            <span class="info-value">6 mois</span>
+          <div class="info-item">
+            <span class="info-label">⏱ Durée</span>
+            <span class="info-value">24 semaines</span>
           </div>
-          <div class="info-row">
-            <span class="info-label">Gratification</span>
-            <span class="info-value">800 €/mois</span>
+          <div class="info-item">
+            <span class="info-label">📆 Début</span>
+            <span class="info-value">01/06/2026</span>
           </div>
-          <div class="info-row">
-            <span class="info-label">Date de début</span>
-            <span class="info-value">Septembre 2026</span>
+          <div class="info-item">
+            <span class="info-label">🏠 Télétravail</span>
+            <span class="info-value">Hybride</span>
           </div>
-          <div class="info-row">
-            <span class="info-label">Télétravail</span>
-            <span class="info-value">Hybride (2j/semaine)</span>
-          </div>
-          <div class="info-row">
-            <span class="info-label">Niveau requis</span>
+          <div class="info-item">
+            <span class="info-label">🎓 Niveau requis</span>
             <span class="info-value">Bac+4 / Bac+5</span>
           </div>
-          <div class="info-row">
-            <span class="info-label">Référence</span>
-            <span class="info-value">#CAP-2026-042</span>
-          </div>
         </div>
+
       </div>
     </div>
 
-    <!-- boutons postuler -->
-    <div class="postuler-section">
-      <button class="btn-postuler">✉️ Postuler à cette offre</button>
-      <button class="btn-sauvegarder">🔖 Sauvegarder</button>
+    <!-- actions -->
+    <div class="actions-row">
+      <button class="btn-postuler" onclick="postuler()">🚀 Postuler</button>
+      <button class="btn-wishlist" id="btnWishlist" onclick="toggleWishlist()">⭐ Ajouter à la wishlist</button>
     </div>
 
     <!-- statistiques -->
-    <div class="stats-toggle">
-      <button class="stats-toggle-btn" onclick="toggleStats()">
+    <div class="stats-card">
+      <button class="stats-toggle" onclick="toggleStats()">
         <span>📊 Afficher les statistiques de l'offre</span>
         <span class="stats-arrow" id="statsArrow">▼</span>
       </button>
-      <div class="stats-content" id="statsContent">
+      <div class="stats-body" id="statsBody">
 
-        <!-- chiffres clés -->
         <div class="stats-grid">
-          <div class="stat-card">
+          <div class="stat-item highlight">
             <span class="stat-icon">👁️</span>
-            <span class="stat-value">142</span>
+            <span class="stat-value">248</span>
             <span class="stat-label">Vues</span>
           </div>
-          <div class="stat-card">
-            <span class="stat-icon">📨</span>
-            <span class="stat-value">18</span>
+          <div class="stat-item">
+            <span class="stat-icon">📩</span>
+            <span class="stat-value">34</span>
             <span class="stat-label">Candidatures</span>
           </div>
-          <div class="stat-card">
-            <span class="stat-icon">📅</span>
-            <span class="stat-value">12j</span>
-            <span class="stat-label">Publiée il y a</span>
+          <div class="stat-item">
+            <span class="stat-icon">⭐</span>
+            <span class="stat-value">12</span>
+            <span class="stat-label">Wishlists</span>
           </div>
         </div>
 
-        <!-- barres progression -->
-        <div class="progress-item">
-          <div class="progress-label">
+        <div class="progress-row">
+          <div class="progress-label-row">
             <span>Taux de candidature</span>
-            <span>12,7 %</span>
+            <span>14 %</span>
           </div>
-          <div class="progress-bar"><div class="progress-fill" style="width:12.7%"></div></div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" style="width: 14%"></div>
+          </div>
         </div>
 
-        <div class="progress-item">
-          <div class="progress-label">
-            <span>Profil correspondant</span>
-            <span>87 %</span>
+        <div class="progress-row">
+          <div class="progress-label-row">
+            <span>Taux d'ajout wishlist</span>
+            <span>5 %</span>
           </div>
-          <div class="progress-bar"><div class="progress-fill" style="width:87%"></div></div>
-        </div>
-
-        <div class="progress-item">
-          <div class="progress-label">
-            <span>Popularité relative</span>
-            <span>74 %</span>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" style="width: 5%"></div>
           </div>
-          <div class="progress-bar"><div class="progress-fill" style="width:74%"></div></div>
         </div>
 
       </div>
@@ -580,11 +563,30 @@
   </footer>
 
   <script>
+    function postuler() {
+      alert('🚀 Votre candidature a bien été envoyée !');
+    }
+
+    let wishlisted = false;
+    function toggleWishlist() {
+      wishlisted = !wishlisted;
+      const btn = document.getElementById('btnWishlist');
+      if (wishlisted) {
+        btn.textContent = '★ Retiré de la wishlist';
+        btn.classList.add('active');
+      } else {
+        btn.textContent = '⭐ Ajouter à la wishlist';
+        btn.classList.remove('active');
+      }
+    }
+
+    let statsOpen = false;
     function toggleStats() {
-      const content = document.getElementById('statsContent');
-      const arrow = document.getElementById('statsArrow');
-      content.classList.toggle('visible');
-      arrow.classList.toggle('open');
+      statsOpen = !statsOpen;
+      document.getElementById('statsBody').classList.toggle('visible', statsOpen);
+      document.getElementById('statsArrow').classList.toggle('open', statsOpen);
+      const btn = document.querySelector('.stats-toggle span:first-child');
+      btn.textContent = statsOpen ? '📊 Masquer les statistiques' : '📊 Afficher les statistiques de l\'offre';
     }
   </script>
 
