@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Montserrat', Arial, sans-serif;
+      background-color: #ffffff;
+      color: #111111;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* --- HEADER --- */
+    header {
+      background-color: #111111;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #FFD700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      flex: 1;
+      text-align: center;
+    }
+
+    .icon-btn {
+      width: 42px;
+      height: 42px;
+      background-color: #FFD700;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      text-decoration: none;
+      transition: opacity 0.2s;
+      color: #111111;
+    }
+
+    .icon-btn:hover { opacity: 0.8; }
+
+    .icon-btn svg {
+      width: 22px;
+      height: 22px;
+      fill: #111111;
+    }
+
+    .icon-placeholder { width: 42px; flex-shrink: 0; }
+
+    /* --- BANDEAU ADMIN --- */
+    .bandeau-admin {
+      background: linear-gradient(135deg, #111111 60%, #2a2a2a 100%);
+      border-bottom: 3px solid #FFD700;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .admin-avatar {
+      width: 52px;
+      height: 52px;
+      background-color: #FFD700;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .admin-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .admin-nom {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: #ffffff;
+    }
+
+    .admin-badge {
+      background-color: #FFD700;
+      color: #111111;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: inline-block;
+    }
+
+    .admin-bienvenue {
+      font-size: 0.82rem;
+      color: #aaaaaa;
+      margin-top: 2px;
+    }
+
+    /* --- MAIN --- */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 24px;
+      gap: 24px;
+      max-width: 700px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* separateur */
+    .separateur {
+      width: 50px;
+      height: 4px;
+      background-color: #FFD700;
+      border-radius: 2px;
+      align-self: center;
+    }
+
+    /* section titre */
+    .section-titre {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #888888;
+      text-align: center;
+      width: 100%;
+    }
+
+    /* --- GROUPE DE BLOCS --- */
+    .groupe {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .groupe-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #aaaaaa;
+      padding-left: 4px;
+      margin-bottom: 4px;
+    }
+
+    /* --- BLOC ACTION --- */
+    .action-bloc {
+      background-color: #f9f9f9;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      transition: border-color 0.2s, background-color 0.2s;
+    }
+
+    .action-bloc:hover {
+      border-color: #FFD700;
+      background-color: #fffbea;
+    }
+
+    .action-bloc.admin-action {
+      border-color: #dddddd;
+      background-color: #fafafa;
+    }
+
+    .action-icon {
+      font-size: 1.6rem;
+      flex-shrink: 0;
+    }
+
+    .action-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .action-titre {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #111111;
+    }
+
+    .action-desc {
+      font-size: 0.76rem;
+      color: #777777;
+      font-style: italic;
+    }
+
+    /* input dans le bloc */
+    .action-input-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+      align-items: center;
+    }
+
+    .action-input-row input {
+      flex: 1;
+      border: 2px solid #e0e0e0;
+      border-radius: 7px;
+      padding: 8px 12px;
+      font-size: 0.83rem;
+      font-family: 'Montserrat', sans-serif;
+      color: #111111;
+      outline: none;
+      background-color: #ffffff;
+      transition: border-color 0.2s;
+    }
+
+    .action-input-row input:focus { border-color: #FFD700; }
+    .action-input-row input::placeholder { color: #bbbbbb; font-style: italic; }
+
+    .btn-action {
+      background-color: #111111;
+      color: #FFD700;
+      border: none;
+      padding: 9px 14px;
+      border-radius: 7px;
+      font-size: 0.78rem;
+      font-weight: 900;
+      font-family: 'Montserrat', sans-serif;
+      cursor: pointer;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition: background-color 0.2s, transform 0.15s;
+      flex-shrink: 0;
+    }
+
+    .btn-action:hover {
+      background-color: #FFD700;
+      color: #111111;
+      transform: translateY(-1px);
+    }
+
+    /* bouton plein (gestion) */
+    .btn-gestion {
+      background-color: #FFD700;
+      color: #111111;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 900;
+      font-family: 'Montserrat', sans-serif;
+      cursor: pointer;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition: opacity 0.2s, transform 0.15s;
+      flex-shrink: 0;
+    }
+
+    .btn-gestion:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    /* --- DIVIDER --- */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background-color: #e8e8e8;
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      background-color: #111111;
+      color: #aaaaaa;
+      text-align: center;
+      padding: 18px;
+      font-size: 0.85rem;
+      margin-top: 10px;
+    }
+
+    footer span { color: #FFD700; font-weight: bold; }
+
+  </style>
+</head>
+<body>
+
+  <!-- header -->
+  <header>
+    <div class="icon-btn" title="Admin">
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+    </div>
+    <div class="logo">CESI-STAGES</div>
+    <div class="icon-placeholder"></div>
+  </header>
+
+  <!-- bandeau admin -->
+  <div class="bandeau-admin">
+    <div class="admin-avatar">🛡️</div>
+    <div class="admin-info">
+      <span class="admin-nom">Administrateur</span>
+      <span class="admin-badge">⚙️ Admin</span>
+      <span class="admin-bienvenue">Bienvenue dans l'espace d'administration CESI-Stages.</span>
+    </div>
+  </div>
+
+  <!-- main -->
+  <main>
+
+    <div class="separateur"></div>
+    <div class="section-titre">Que voulez-vous faire ?</div>
+
+    <!-- GROUPE 1 : Recherches -->
+    <div class="groupe">
+      <div class="groupe-label">🔍 Recherches</div>
+
+      <!-- recherche entreprise -->
+      <div class="action-bloc">
+        <div class="action-icon">🏢</div>
+        <div class="action-info">
+          <span class="action-titre">Rechercher une entreprise</span>
+          <span class="action-desc">→ Redirection vers la liste des entreprises</span>
+          <div class="action-input-row">
+            <input type="text" id="inputEntreprise" placeholder="Nom, secteur, ville...">
+            <button class="btn-action" onclick="go('recherche-entreprise.html', 'inputEntreprise')">🔍 Rechercher</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- recherche offre -->
+      <div class="action-bloc">
+        <div class="action-icon">📋</div>
+        <div class="action-info">
+          <span class="action-titre">Rechercher une offre de stage</span>
+          <span class="action-desc">→ Redirection vers la liste des offres</span>
+          <div class="action-input-row">
+            <input type="text" id="inputOffre" placeholder="Poste, compétence, ville...">
+            <button class="btn-action" onclick="go('recherche-offre.html', 'inputOffre')">🔍 Rechercher</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- GROUPE 2 : Gestion comptes -->
+    <div class="groupe">
+      <div class="groupe-label">👥 Gestion des comptes</div>
+
+      <!-- gestion pilote -->
+      <div class="action-bloc admin-action">
+        <div class="action-icon">🧑‍✈️</div>
+        <div class="action-info">
+          <span class="action-titre">Gestion des comptes Pilotes</span>
+          <span class="action-desc">→ Redirection vers la page de gestion du compte pilote</span>
+        </div>
+        <button class="btn-gestion" onclick="window.location.href='gestion-pilote.html'">Gérer →</button>
+      </div>
+
+      <!-- gestion étudiant -->
+      <div class="action-bloc admin-action">
+        <div class="action-icon">🎓</div>
+        <div class="action-info">
+          <span class="action-titre">Gestion des comptes Étudiants</span>
+          <span class="action-desc">→ Redirection vers la page de gestion du compte étudiant</span>
+        </div>
+        <button class="btn-gestion" onclick="window.location.href='gestion-etudiant.html'">Gérer →</button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- footer -->
+  <footer>
+    <p>&copy; 2026 <span>CESI-STAGES</span> — Tous droits réservés</p>
+  </footer>
+
+  <script>
+    function go(page, inputId) {
+      const q = document.getElementById(inputId).value.trim();
+      window.location.href = page + (q ? '?q=' + encodeURIComponent(q) : '');
+    }
+
+    document.getElementById('inputEntreprise').addEventListener('keydown', e => {
+      if (e.key === 'Enter') go('recherche-entreprise.html', 'inputEntreprise');
+    });
+
+    document.getElementById('inputOffre').addEventListener('keydown', e => {
+      if (e.key === 'Enter') go('recherche-offre.html', 'inputOffre');
+    });
+  </script>
+
+</body>
+</html>
