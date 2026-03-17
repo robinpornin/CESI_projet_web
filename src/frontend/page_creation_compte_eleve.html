@@ -22,7 +22,7 @@
     <div class="bandeau-icon">🎓</div>
     <div class="bandeau-info">
       <span class="bandeau-titre">Création d'un compte Élève</span>
-      <span class="bandeau-badge">➕ Nouveau profil</span>
+      <span class="bandeau-badge">Nouveau profil</span>
       <span class="bandeau-sous">Remplissez le formulaire pour créer un nouveau compte élève.</span>
     </div>
   </div>
@@ -41,7 +41,7 @@
       <div class="form-body">
 
         <!-- identité -->
-        <span class="section-label">👤 Identité</span>
+        <span class="section-label">Identité</span>
         <div class="form-grid">
           <div class="form-group">
             <label class="form-label">Prénom</label>
@@ -58,7 +58,7 @@
         </div>
 
         <!-- scolarité -->
-        <span class="section-label">🏫 Scolarité</span>
+        <span class="section-label">Scolarité</span>
         <div class="form-grid">
           <div class="form-group">
             <label class="form-label">Centre CESI</label>
@@ -90,7 +90,7 @@
         </div>
 
         <!-- mot de passe -->
-        <span class="section-label">🔒 Sécurité</span>
+        <span class="section-label">Sécurité</span>
         <div class="form-grid">
           <div class="form-group">
             <label class="form-label">Mot de passe</label>
@@ -111,8 +111,8 @@
 
         <!-- actions -->
         <div class="form-actions">
-          <button class="btn-submit" onclick="soumettre()">✅ Créer le compte</button>
-          <button class="btn-reset" onclick="document.querySelector('form') && document.querySelector('form').reset()">🔄 Réinitialiser</button>
+          <button class="btn-submit" onclick="soumettre()">Créer le compte</button>
+          <button class="btn-reset" onclick="document.querySelector('form') && document.querySelector('form').reset()">Réinitialiser</button>
         </div>
 
       </div>
@@ -137,13 +137,13 @@
       const medium = val.length >= 8 && (/[A-Z]/.test(val) || /[0-9]/.test(val));
       if (strong) {
         [b1, b2, b3].forEach(b => b.classList.add('strong'));
-        hint.textContent = '✅ Mot de passe fort'; hint.style.color = '#00aa44';
+        hint.textContent = 'Mot de passe fort'; hint.style.color = '#00aa44';
       } else if (medium) {
         b1.classList.add('medium'); b2.classList.add('medium');
-        hint.textContent = '⚠️ Mot de passe moyen'; hint.style.color = '#ff9900';
+        hint.textContent = 'Mot de passe moyen'; hint.style.color = '#ff9900';
       } else {
         b1.classList.add('weak');
-        hint.textContent = '❌ Mot de passe faible'; hint.style.color = '#cc0000';
+        hint.textContent = 'Mot de passe faible'; hint.style.color = '#cc0000';
       }
       checkMatch();
     }
@@ -154,9 +154,9 @@
       const hint = document.getElementById('matchHint');
       if (!confirm) { hint.textContent = ''; return; }
       if (mdp === confirm) {
-        hint.textContent = '✅ Mots de passe identiques'; hint.style.color = '#00aa44';
+        hint.textContent = 'Mots de passe identiques'; hint.style.color = '#00aa44';
       } else {
-        hint.textContent = '❌ Les mots de passe ne correspondent pas'; hint.style.color = '#cc0000';
+        hint.textContent = 'Les mots de passe ne correspondent pas'; hint.style.color = '#cc0000';
       }
     }
 
@@ -164,10 +164,10 @@
       const mdp = document.getElementById('mdp').value;
       const confirm = document.getElementById('mdpConfirm').value;
       if (mdp !== confirm) {
-        alert('❌ Les mots de passe ne correspondent pas.');
+        alert('Les mots de passe ne correspondent pas.');
         return;
       }
-      alert('✅ Compte élève créé avec succès !');
+      alert('Compte élève créé avec succès !');
     }
   </script>
 

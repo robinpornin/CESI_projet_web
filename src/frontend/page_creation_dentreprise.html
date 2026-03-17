@@ -22,7 +22,7 @@
     <div class="bandeau-icon">🏢</div>
     <div class="bandeau-info">
       <span class="bandeau-titre">Création d'une entreprise</span>
-      <span class="bandeau-badge">🏢 Nouvelle entreprise</span>
+      <span class="bandeau-badge">Nouvelle entreprise</span>
       <span class="bandeau-sous">Remplissez le formulaire pour ajouter une entreprise partenaire.</span>
     </div>
   </div>
@@ -41,7 +41,7 @@
       <div class="form-body">
 
         <!-- identité -->
-        <span class="section-label">🏷️ Identité de l'entreprise</span>
+        <span class="section-label">Identité de l'entreprise</span>
         <div class="form-grid">
           <div class="form-group full">
             <label class="form-label">Nom de l'entreprise</label>
@@ -91,7 +91,7 @@
         </div>
 
         <!-- coordonnées -->
-        <span class="section-label">📍 Coordonnées</span>
+        <span class="section-label">Coordonnées</span>
         <div class="form-grid">
           <div class="form-group full">
             <label class="form-label">Adresse</label>
@@ -120,7 +120,7 @@
         </div>
 
         <!-- description -->
-        <span class="section-label">📝 Présentation</span>
+        <span class="section-label">Présentation</span>
         <div class="form-group">
           <label class="form-label">Description de l'entreprise</label>
           <textarea class="form-textarea" id="desc" placeholder="Décrivez l'activité, les valeurs, l'environnement de travail…" maxlength="500" oninput="updateCount('desc','countDesc',500)"></textarea>
@@ -128,17 +128,17 @@
         </div>
 
         <!-- domaines -->
-        <span class="section-label">🛠️ Domaines de stage proposés</span>
+        <span class="section-label">Domaines de stage proposés</span>
         <div class="form-group">
           <label class="form-label">Ajouter des domaines</label>
           <div class="tags-container" id="tagsContainer" onclick="document.getElementById('tagInput').focus()">
             <input class="tag-input" id="tagInput" type="text" placeholder="Ex : Dev Web, Data, Réseau… (Entrée pour valider)">
           </div>
-          <span class="tags-hint">💡 Appuyez sur Entrée ou virgule pour ajouter un domaine</span>
+          <span class="tags-hint">Appuyez sur Entrée ou virgule pour ajouter un domaine</span>
         </div>
 
         <!-- logo -->
-        <span class="section-label">🖼️ Logo de l'entreprise</span>
+        <span class="section-label">Logo de l'entreprise</span>
         <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
           <span class="upload-icon">📁</span>
           <span class="upload-texte" id="uploadTexte">Glissez-déposez votre logo ici ou cliquez pour parcourir</span>
@@ -148,8 +148,8 @@
 
         <!-- actions -->
         <div class="form-actions">
-          <button class="btn-submit" onclick="soumettre()">✅ Créer l'entreprise</button>
-          <button class="btn-reset" onclick="resetForm()">🔄 Réinitialiser</button>
+          <button class="btn-submit" onclick="soumettre()">Créer l'entreprise</button>
+          <button class="btn-reset" onclick="resetForm()">Réinitialiser</button>
         </div>
 
       </div>
@@ -208,7 +208,7 @@
     function handleFile(e) {
       const file = e.target.files[0];
       if (file) {
-        document.getElementById('uploadTexte').textContent = '✅ Fichier sélectionné : ' + file.name;
+        document.getElementById('uploadTexte').textContent = 'Fichier sélectionné : ' + file.name;
       }
     }
 
@@ -223,7 +223,7 @@
     }
 
     function soumettre() {
-      alert('✅ Entreprise créée avec succès !');
+      alert('Entreprise créée avec succès !');
     }
   </script>
 
