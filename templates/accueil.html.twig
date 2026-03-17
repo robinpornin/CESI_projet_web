@@ -1,0 +1,32 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block content %}
+
+<div class="bienvenue">
+  <h1>
+    Bienvenue sur <span>{{ platform_name }}</span>
+  </h1>
+  <p>
+    Accédez à l'ensemble de vos ressources et services en vous connectant ou en continuant en tant qu'invité.
+  </p>
+</div>
+
+<div class="separateur"></div>
+
+<div class="acces-section">
+  <h2>Comment voulez-vous accéder au site ?</h2>
+
+  <div class="boutons">
+    <a href="/connexion" class="btn btn-connexion">
+      Je veux me connecter
+    </a>
+
+    <a href="/invite" class="btn btn-invite">
+      Je continue en tant qu'invité
+    </a>
+  </div>
+</div>
+
+{% endblock %}
