@@ -4,455 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gestion Compte Pilote</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
-  <style>
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: 'Montserrat', Arial, sans-serif;
-      background-color: #ffffff;
-      color: #111111;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* --- HEADER --- */
-    header {
-      background-color: #111111;
-      padding: 14px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .logo {
-      font-size: 1.8rem;
-      font-weight: 900;
-      color: #FFD700;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      flex: 1;
-      text-align: center;
-    }
-
-    .icon-btn {
-      width: 42px;
-      height: 42px;
-      background-color: #FFD700;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      flex-shrink: 0;
-      text-decoration: none;
-      transition: opacity 0.2s;
-      font-size: 1.1rem;
-      font-weight: 900;
-      color: #111111;
-    }
-
-    .icon-btn:hover { opacity: 0.8; }
-
-    .icon-btn svg {
-      width: 22px;
-      height: 22px;
-      fill: #111111;
-    }
-
-    /* --- BANDEAU --- */
-    .bandeau {
-      background: linear-gradient(135deg, #111111 60%, #2a2a2a 100%);
-      border-bottom: 3px solid #FFD700;
-      padding: 18px 24px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .bandeau-icon {
-      width: 48px;
-      height: 48px;
-      background-color: #FFD700;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
-      flex-shrink: 0;
-    }
-
-    .bandeau-info { display: flex; flex-direction: column; gap: 4px; }
-
-    .bandeau-titre {
-      font-size: 1rem;
-      font-weight: 900;
-      color: #ffffff;
-    }
-
-    .bandeau-sous {
-      font-size: 0.8rem;
-      color: #aaaaaa;
-    }
-
-    .bandeau-badge {
-      background-color: #FFD700;
-      color: #111111;
-      font-size: 0.68rem;
-      font-weight: 700;
-      padding: 3px 10px;
-      border-radius: 20px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      display: inline-block;
-      margin-top: 2px;
-      align-self: flex-start;
-    }
-
-    /* --- MAIN --- */
-    main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      padding: 28px 24px;
-      gap: 22px;
-      max-width: 720px;
-      margin: 0 auto;
-      width: 100%;
-    }
-
-    .separateur {
-      width: 50px;
-      height: 4px;
-      background-color: #FFD700;
-      border-radius: 2px;
-    }
-
-    /* --- CRÉER COMPTE --- */
-    .creer-bloc {
-      background-color: #111111;
-      border-radius: 12px;
-      overflow: hidden;
-    }
-
-    .creer-toggle-btn {
-      width: 100%;
-      background-color: #111111;
-      color: #FFD700;
-      border: none;
-      padding: 16px 22px;
-      font-size: 0.88rem;
-      font-weight: 900;
-      font-family: 'Montserrat', sans-serif;
-      cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      transition: background-color 0.2s;
-    }
-
-    .creer-toggle-btn:hover { background-color: #222222; }
-
-    .creer-arrow {
-      transition: transform 0.3s;
-      font-size: 1rem;
-    }
-
-    .creer-arrow.open { transform: rotate(180deg); }
-
-    .creer-form {
-      display: none;
-      flex-direction: column;
-      gap: 14px;
-      padding: 22px;
-      background-color: #f9f9f9;
-      border: 2px solid #111111;
-      border-top: none;
-      border-radius: 0 0 12px 12px;
-    }
-
-    .creer-form.visible { display: flex; }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-
-    .form-group.full { grid-column: 1 / -1; }
-
-    .form-label {
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: #888888;
-      letter-spacing: 0.5px;
-    }
-
-    .form-input {
-      border: 2px solid #e0e0e0;
-      border-radius: 7px;
-      padding: 9px 12px;
-      font-size: 0.86rem;
-      font-family: 'Montserrat', sans-serif;
-      color: #111111;
-      outline: none;
-      background-color: #ffffff;
-      transition: border-color 0.2s;
-    }
-
-    .form-input:focus { border-color: #FFD700; }
-    .form-input::placeholder { color: #bbbbbb; font-style: italic; }
-
-    .btn-creer {
-      align-self: flex-end;
-      background-color: #FFD700;
-      color: #111111;
-      border: none;
-      padding: 11px 26px;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      font-weight: 900;
-      font-family: 'Montserrat', sans-serif;
-      cursor: pointer;
-      text-transform: uppercase;
-      transition: opacity 0.2s, transform 0.2s;
-    }
-
-    .btn-creer:hover { opacity: 0.85; transform: translateY(-2px); }
-
-    /* --- RECHERCHE PILOTE --- */
-    .recherche-bloc {
-      background-color: #f9f9f9;
-      border: 2px solid #111111;
-      border-radius: 12px;
-      overflow: hidden;
-    }
-
-    .bloc-header {
-      background-color: #111111;
-      padding: 12px 20px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #FFD700;
-    }
-
-    .bloc-body { padding: 20px; }
-
-    .search-row {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .search-row input {
-      flex: 1;
-      border: 2px solid #e0e0e0;
-      border-radius: 7px;
-      padding: 10px 14px;
-      font-size: 0.86rem;
-      font-family: 'Montserrat', sans-serif;
-      color: #111111;
-      outline: none;
-      background-color: #ffffff;
-      transition: border-color 0.2s;
-    }
-
-    .search-row input:focus { border-color: #FFD700; }
-    .search-row input::placeholder { color: #bbbbbb; font-style: italic; }
-
-    .btn-search {
-      background-color: #111111;
-      color: #FFD700;
-      border: none;
-      padding: 10px 18px;
-      border-radius: 7px;
-      font-size: 0.82rem;
-      font-weight: 900;
-      font-family: 'Montserrat', sans-serif;
-      cursor: pointer;
-      text-transform: uppercase;
-      white-space: nowrap;
-      transition: background-color 0.2s, transform 0.15s;
-    }
-
-    .btn-search:hover {
-      background-color: #FFD700;
-      color: #111111;
-      transform: translateY(-1px);
-    }
-
-    /* --- FICHE PILOTE --- */
-    .fiche-pilote {
-      background-color: #f9f9f9;
-      border: 2px solid #111111;
-      border-radius: 12px;
-      overflow: hidden;
-    }
-
-    .fiche-placeholder {
-      padding: 36px 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      color: #aaaaaa;
-      font-size: 0.85rem;
-      font-style: italic;
-      text-align: center;
-    }
-
-    .fiche-placeholder .big-icon { font-size: 2.2rem; }
-
-    .fiche-content { display: none; }
-    .fiche-content.visible { display: block; }
-
-    .fiche-top {
-      padding: 18px 20px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      border-bottom: 2px solid #e0e0e0;
-      background-color: #fffbea;
-    }
-
-    .pilote-avatar {
-      width: 48px;
-      height: 48px;
-      background-color: #111111;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
-      flex-shrink: 0;
-    }
-
-    .pilote-nom {
-      font-size: 1rem;
-      font-weight: 900;
-      color: #111111;
-    }
-
-    .pilote-email {
-      font-size: 0.8rem;
-      color: #777777;
-    }
-
-    .fiche-fields {
-      padding: 20px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    .field-group {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-
-    .field-group.full { grid-column: 1 / -1; }
-
-    .field-label {
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: #888888;
-      letter-spacing: 0.5px;
-    }
-
-    .field-input {
-      border: 2px solid #e0e0e0;
-      border-radius: 7px;
-      padding: 9px 12px;
-      font-size: 0.86rem;
-      font-family: 'Montserrat', sans-serif;
-      color: #111111;
-      outline: none;
-      background-color: #ffffff;
-      transition: border-color 0.2s;
-    }
-
-    .field-input:focus { border-color: #FFD700; }
-
-    /* boutons action fiche */
-    .fiche-actions {
-      padding: 0 20px 20px;
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .btn-enregistrer {
-      flex: 1;
-      background-color: #FFD700;
-      color: #111111;
-      border: none;
-      padding: 12px;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      font-weight: 900;
-      font-family: 'Montserrat', sans-serif;
-      cursor: pointer;
-      text-transform: uppercase;
-      transition: opacity 0.2s, transform 0.2s;
-    }
-
-    .btn-enregistrer:hover { opacity: 0.85; transform: translateY(-2px); }
-
-    .btn-supprimer {
-      flex: 1;
-      background-color: #ffffff;
-      color: #cc0000;
-      border: 2px solid #cc0000;
-      padding: 12px;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      font-weight: 900;
-      font-family: 'Montserrat', sans-serif;
-      cursor: pointer;
-      text-transform: uppercase;
-      transition: background-color 0.2s, color 0.2s;
-    }
-
-    .btn-supprimer:hover {
-      background-color: #cc0000;
-      color: #ffffff;
-    }
-
-    /* --- FOOTER --- */
-    footer {
-      background-color: #111111;
-      color: #aaaaaa;
-      text-align: center;
-      padding: 18px;
-      font-size: 0.85rem;
-      margin-top: 10px;
-    }
-
-    footer span { color: #FFD700; font-weight: bold; }
-
-    @media (max-width: 540px) {
-      .form-grid { grid-template-columns: 1fr; }
-      .fiche-fields { grid-template-columns: 1fr; }
-      .form-group.full, .field-group.full { grid-column: 1; }
-    }
-
-  </style>
+  <link rel="stylesheet" href="Styles.css">
 </head>
 <body>
 
@@ -470,7 +22,7 @@
     <div class="bandeau-icon">🧑‍✈️</div>
     <div class="bandeau-info">
       <span class="bandeau-titre">Gestion des comptes Pilotes</span>
-      <span class="bandeau-badge">⚙️ Espace Admin</span>
+      <span class="bandeau-badge">Espace Admin</span>
       <span class="bandeau-sous">Créez, modifiez ou supprimez des comptes pilotes.</span>
     </div>
   </div>
@@ -483,7 +35,7 @@
     <!-- créer compte pilote -->
     <div class="creer-bloc">
       <button class="creer-toggle-btn" onclick="toggleCreer()">
-        <span>➕ Créer un compte Pilote</span>
+        <span>Créer un compte Pilote</span>
         <span class="creer-arrow" id="creerArrow">▼</span>
       </button>
       <div class="creer-form" id="creerForm">
@@ -509,24 +61,24 @@
             <input class="form-input" type="text" placeholder="Paris, Lyon...">
           </div>
         </div>
-        <button class="btn-creer">✅ Créer le compte</button>
+        <button class="btn-creer">Créer le compte</button>
       </div>
     </div>
 
     <!-- recherche pilote -->
     <div class="recherche-bloc">
-      <div class="bloc-header">🔍 Rechercher un pilote</div>
+      <div class="bloc-header">Rechercher un pilote</div>
       <div class="bloc-body">
         <div class="search-row">
           <input type="text" id="searchPilote" placeholder="Nom, prénom, email...">
-          <button class="btn-search" onclick="rechercherPilote()">🔍 Rechercher</button>
+          <button class="btn-search" onclick="rechercherPilote()">Rechercher</button>
         </div>
       </div>
     </div>
 
     <!-- fiche pilote -->
     <div class="fiche-pilote" id="fichePilote">
-      <div class="bloc-header">👤 Informations du pilote</div>
+      <div class="bloc-header">Informations du pilote</div>
 
       <div class="fiche-placeholder" id="fichePlaceholder">
         <span class="big-icon">🧑‍✈️</span>
@@ -564,8 +116,8 @@
           </div>
         </div>
         <div class="fiche-actions">
-          <button class="btn-enregistrer" onclick="enregistrer()">💾 Enregistrer</button>
-          <button class="btn-supprimer" onclick="supprimerCompte()">🗑️ Supprimer le compte</button>
+          <button class="btn-enregistrer" onclick="enregistrer()">Enregistrer</button>
+          <button class="btn-supprimer" onclick="supprimerCompte()">Supprimer le compte</button>
         </div>
       </div>
     </div>
