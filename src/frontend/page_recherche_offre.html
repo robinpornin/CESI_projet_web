@@ -30,7 +30,7 @@
         <input type="text" id="searchInput" placeholder="Titre, compétence..." oninput="filterOffres()">
         <div class="divider-v"></div>
         <select id="filterVille" onchange="filterOffres()">
-          <option value="">📍 Toutes les villes</option>
+          <option value="">Toutes les villes</option>
           <option value="Paris">Paris</option>
           <option value="Toulouse">Toulouse</option>
           <option value="Lyon">Lyon</option>
@@ -43,7 +43,7 @@
           <option value="3 mois">3 mois</option>
           <option value="6 mois">6 mois</option>
         </select>
-        <button class="btn-search" onclick="filterOffres()">🔍 Rechercher</button>
+        <button class="btn-search" onclick="filterOffres()">Rechercher</button>
       </div>
     </div>
 
@@ -55,7 +55,7 @@
       <!-- liste -->
       <div class="liste-offres">
         <div style="display:flex;justify-content:space-between;align-items:center;">
-          <div class="liste-title">📋 Liste des offres</div>
+          <div class="liste-title">Liste des offres</div>
           <span class="results-count" id="resultsCount"></span>
         </div>
         <div id="listeContainer"></div>
