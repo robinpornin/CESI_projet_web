@@ -8,7 +8,7 @@ class ControllerAccueil
     {
         global $twig;
 
-        echo $twig->render('home.html.twig', [
+        echo $twig->render('accueil.html.twig', [
             'platform_name' => 'notre plateforme d\'offres de stage'
         ]);
     }
