@@ -1,23 +1,30 @@
 <?php
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+namespace App\Core;
 
-require_once __DIR__ . '/../vendor/autoload.php';
+use App\Controller\ControllerAccueil;
 
-// Controllers
-require_once __DIR__ . '/../src/Controller/ControllerAccueil.php';
+class Router
+{
+    public function handle($url)
+    {
+        switch ($url) {
 
-// Core
-require_once __DIR__ . '/../src/Core/Router.php';
+            case '/':
+                (new ControllerAccueil())->index();
+                break;
 
-// Twig
-$loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../templates');
-$twig = new \Twig\Environment($loader);
+            case '/connexion':
+                echo "Page de connexion (à faire)";
+                break;
 
-// URL
-$url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+            case '/invite':
+                echo "Page invité (à faire)";
+                break;
 
-// Router
-$router = new Router();
-$router->handle($url);
+            default:
+                http_response_code(404);
+                echo "404 - Page non trouvée";
+        }
+    }
+}
