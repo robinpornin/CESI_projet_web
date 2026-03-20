@@ -3,6 +3,7 @@
 namespace App\Core;
 
 use App\Controller\ControllerAccueil;
+use App\Controller\ControllerInvite;
 
 class Router
 {
@@ -19,7 +20,8 @@ class Router
                 break;
 
             case '/invite':
-                echo "Page invité (à faire)";
+                (new ControllerInvite())->index();
+                ;
                 break;
 
             default:
