@@ -2,47 +2,42 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Postulez facilement à une offre de stage ou d'alternance sur la plateforme Web4All.">
-    <title>Postuler à une offre | Web4All</title>
+    <title>Page formulaire</title>
     <link rel="stylesheet" href="../static/Styles.css">
 </head>
 
 <body>
-<header class="header">
-    <h1>Web4All</h1>
-    <nav>
-        <a href="index.html">Candidature</a>
-        <a href="mentions-legales.html">Mentions légales</a>
-    </nav>
+<header>
+    <div class="icon-placeholder"></div>
+    <div class="logo">CESI-STAGES</div>
+    <div class="icon-placeholder"></div>
 </header>
 
-<main class="container">
-    <section class="intro">
-        <h2>Postuler à une offre</h2>
+<main>
+    <section class="bienvenue">
+        <div class="tag">Candidature</div>
+        <h1>Postuler à une <span>offre</span></h1>
         <p>Remplissez le formulaire ci-dessous pour soumettre votre candidature.</p>
     </section>
 
+    <div class="separateur"></div>
+    <div class="section-titre">Formulaire de candidature</div>
+
     <div id="message"></div>
 
-
-    <form class="formulaire" action="/index.php" method="post" enctype="multipart/form-data">
-
-    <div class="form-row">
-        <div class="form-group">
-            <label for="nom">Nom</label>
+    <form action="/index.php" method="post" enctype="multipart/form-data">
+        <p>
+            <label for="nom">Nom</label><br>
             <input type="text" id="nom" name="nom" required>
-        </div>
+        </p>
 
-        <div class="form-group">
-            <label for="prenom">Prénom</label>
+        <p>
+            <label for="prenom">Prénom</label><br>
             <input type="text" id="prenom" name="prenom" required>
-        </div>
-    </div>
+        </p>
 
-    <div class="form-row">
-        <div class="form-group">
-            <label for="genre">Genre</label>
+        <p>
+            <label for="genre">Genre</label><br>
             <select id="genre" name="genre" required>
                 <option value="">-- Sélectionner --</option>
                 <option value="femme">Femme</option>
@@ -50,10 +45,10 @@
                 <option value="autre">Autre</option>
                 <option value="non_precise">Préfère ne pas répondre</option>
             </select>
-        </div>
+        </p>
 
-        <div class="form-group">
-            <label for="age">Âge</label>
+        <p>
+            <label for="age">Âge</label><br>
             <select id="age" name="age" required>
                 <option value="">-- Sélectionner --</option>
                 <option value="-18">Moins de 18 ans</option>
@@ -62,53 +57,47 @@
                 <option value="36-45">36 – 45 ans</option>
                 <option value="46+">46 ans et plus</option>
             </select>
-        </div>
-    </div>
+        </p>
 
-    <div class="form-row">
-        <div class="form-group">
-            <label for="email">Adresse email</label>
+        <p>
+            <label for="email">Adresse email</label><br>
             <input type="email" id="email" name="email" required>
-        </div>
+        </p>
 
-        <div class="form-group">
-            <label for="telephone">Téléphone</label>
+        <p>
+            <label for="telephone">Téléphone</label><br>
             <input type="tel" id="telephone" name="telephone">
-        </div>
-    </div>
+        </p>
 
-    <div class="form-group">
-        <label for="type">Type de contrat</label>
-        <select id="type" name="type">
-            <option value="stage">Stage</option>
-            <option value="alternance">Alternance</option>
-        </select>
-    </div>
+        <p>
+            <label for="type">Type de contrat</label><br>
+            <select id="type" name="type">
+                <option value="stage">Stage</option>
+                <option value="alternance">Alternance</option>
+            </select>
+        </p>
 
-    <div class="form-group">
-            <label for="cv">CV</label>
+        <p>
+            <label for="cv">CV</label><br>
             <input type="file" id="cv" name="cv" accept=".pdf" required>
-    </div>
+        </p>
 
+        <p>
+            <label for="motivation">Message de motivation</label><br>
+            <textarea id="motivation" name="message" rows="5"></textarea>
+        </p>
 
-    <div class="form-group">
-        <label for="message">Message de motivation</label>
-        <textarea id="message" name="message" rows="5"></textarea>
-    </div>
+        <p>
+            <input type="checkbox" id="rgpd" required>
+            <label for="rgpd">J’accepte la politique de confidentialité</label>
+        </p>
 
-    <div class="form-group checkbox">
-        <input type="checkbox" id="rgpd" required>
-        <label for="rgpd">J’accepte la politique de confidentialité</label>
-    </div>
-
-    <button type="submit" class="btn">Envoyer ma candidature</button>
-
-</form>
-
+        <button type="submit" class="btn-postuler">Envoyer ma candidature</button>
+    </form>
 </main>
 
-<footer class="footer">
-    <p>© 2026 Web4All — <a href="mentions-legales.html">Mentions légales</a></p>
+<footer>
+    <p>© 2026 <span>CESI-STAGES</span> — <a href="mentions-legales.html">Mentions légales</a></p>
 </footer>
 
 <script>
@@ -138,7 +127,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 </script>
-
 
 </body>
 </html>
