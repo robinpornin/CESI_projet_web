@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Postulez facilement à une offre de stage ou d'alternance sur la plateforme Web4All.">
+    <title>Postuler à une offre | Web4All</title>
+    <link rel="stylesheet" href="../static/Styles.css">
+</head>
+
+<body>
+<header class="header">
+    <h1>Web4All</h1>
+    <nav>
+        <a href="index.html">Candidature</a>
+        <a href="mentions-legales.html">Mentions légales</a>
+    </nav>
+</header>
+
+<main class="container">
+    <section class="intro">
+        <h2>Postuler à une offre</h2>
+        <p>Remplissez le formulaire ci-dessous pour soumettre votre candidature.</p>
+    </section>
+
+    <div id="message"></div>
+
+
+    <form class="formulaire" action="/index.php" method="post" enctype="multipart/form-data">
+
+    <div class="form-row">
+        <div class="form-group">
+            <label for="nom">Nom</label>
+            <input type="text" id="nom" name="nom" required>
+        </div>
+
+        <div class="form-group">
+            <label for="prenom">Prénom</label>
+            <input type="text" id="prenom" name="prenom" required>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group">
+            <label for="genre">Genre</label>
+            <select id="genre" name="genre" required>
+                <option value="">-- Sélectionner --</option>
+                <option value="femme">Femme</option>
+                <option value="homme">Homme</option>
+                <option value="autre">Autre</option>
+                <option value="non_precise">Préfère ne pas répondre</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="age">Âge</label>
+            <select id="age" name="age" required>
+                <option value="">-- Sélectionner --</option>
+                <option value="-18">Moins de 18 ans</option>
+                <option value="18-25">18 – 25 ans</option>
+                <option value="26-35">26 – 35 ans</option>
+                <option value="36-45">36 – 45 ans</option>
+                <option value="46+">46 ans et plus</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group">
+            <label for="email">Adresse email</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="telephone">Téléphone</label>
+            <input type="tel" id="telephone" name="telephone">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="type">Type de contrat</label>
+        <select id="type" name="type">
+            <option value="stage">Stage</option>
+            <option value="alternance">Alternance</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+            <label for="cv">CV</label>
+            <input type="file" id="cv" name="cv" accept=".pdf" required>
+    </div>
+
+
+    <div class="form-group">
+        <label for="message">Message de motivation</label>
+        <textarea id="message" name="message" rows="5"></textarea>
+    </div>
+
+    <div class="form-group checkbox">
+        <input type="checkbox" id="rgpd" required>
+        <label for="rgpd">J’accepte la politique de confidentialité</label>
+    </div>
+
+    <button type="submit" class="btn">Envoyer ma candidature</button>
+
+</form>
+
+</main>
+
+<footer class="footer">
+    <p>© 2026 Web4All — <a href="mentions-legales.html">Mentions légales</a></p>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const params = new URLSearchParams(window.location.search);
+    const status = params.get('status');
+    const messageDiv = document.getElementById('message');
+
+    if (!messageDiv) return;
+
+    if (status === 'success') {
+        messageDiv.innerHTML = "<p style='color:green;'>✅ CV téléchargé avec succès !</p>";
+    }
+    if (status === 'error_size') {
+        messageDiv.innerHTML = "<p style='color:red;'>❌ Fichier trop volumineux (max 2MB).</p>";
+    }
+    if (status === 'error_type') {
+        messageDiv.innerHTML = "<p style='color:red;'>❌ Seuls les PDF sont autorisés.</p>";
+    }
+    if (status === 'error_upload') {
+        messageDiv.innerHTML = "<p style='color:red;'>❌ Erreur lors du téléchargement.</p>";
+    }
+    if (status === 'no_file') {
+        messageDiv.innerHTML = "<p style='color:red;'>❌ Aucun fichier sélectionné.</p>";
+    }
+
+});
+</script>
+
+
+</body>
+</html>
