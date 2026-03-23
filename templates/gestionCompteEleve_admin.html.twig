@@ -1,0 +1,145 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Page de la gestion des comptes des élèves par l'administrateur {% endblock %}
+
+{% block content %}
+
+<!-- bandeau -->
+  <div class="bandeau">
+    <div class="bandeau-icon">🎓</div>
+    <div class="bandeau-info">
+      <span class="bandeau-titre">Gestion des comptes Étudiants</span>
+      <span class="bandeau-badge">Espace Admin</span>
+      <span class="bandeau-sous">Créez, modifiez ou supprimez des comptes étudiants.</span>
+    </div>
+  </div>
+
+  <!-- main -->
+    <div class="separateur"></div>
+
+    <!-- créer compte étudiant -->
+    <div class="creer-bloc">
+      <button class="creer-toggle-btn" id="creerBtn" onclick="toggleCreer()">
+        <span>Créer un compte Étudiant</span>
+        <span class="creer-arrow" id="creerArrow">▼</span>
+      </button>
+      <div class="creer-form" id="creerForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Prénom</label>
+            <input class="form-input" type="text" placeholder="Alice">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Nom</label>
+            <input class="form-input" type="text" placeholder="Martin">
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Email</label>
+            <input class="form-input" type="email" placeholder="alice.martin@viacesi.fr">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Mot de passe</label>
+            <input class="form-input" type="password" placeholder="••••••••">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Centre CESI</label>
+            <input class="form-input" type="text" placeholder="Paris, Lyon...">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Promotion</label>
+            <input class="form-input" type="text" placeholder="2024-2026">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Spécialité</label>
+            <select class="form-select">
+              <option value="">-- Choisir --</option>
+              <option>Informatique</option>
+              <option>Génie Civil</option>
+              <option>Électronique</option>
+              <option>Management</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn-creer">Créer le compte</button>
+      </div>
+    </div>
+
+    <!-- recherche étudiant -->
+    <div class="recherche-bloc">
+      <div class="bloc-header">Rechercher un étudiant</div>
+      <div class="bloc-body">
+        <div class="search-row">
+          <input type="text" id="searchEtudiant" placeholder="Nom, prénom, email...">
+          <button class="btn-search" onclick="rechercherEtudiant()">Rechercher</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- fiche étudiant -->
+    <div class="fiche-etudiant">
+      <div class="bloc-header">Informations de l'étudiant</div>
+
+      <div class="fiche-placeholder" id="fichePlaceholder">
+        <span class="big-icon">🎓</span>
+        <span>Effectuez une recherche pour afficher et modifier les informations d'un étudiant.</span>
+      </div>
+
+      <div class="fiche-content" id="ficheContent">
+        <div class="fiche-top">
+          <div class="etudiant-avatar">🎓</div>
+          <div>
+            <div class="etudiant-nom" id="ficheNomAffiche">Alice Martin</div>
+            <div class="etudiant-meta">
+              <span id="ficheEmailAffiche">alice.martin@viacesi.fr</span>
+              <span id="ficheCentreAffiche">📍 Paris</span>
+              <span id="fichePromoAffiche">🗓 2024-2026</span>
+            </div>
+          </div>
+        </div>
+        <div class="fiche-fields">
+          <div class="field-group">
+            <label class="field-label">Prénom</label>
+            <input class="field-input" id="fichePrenom" type="text" value="Alice">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Nom</label>
+            <input class="field-input" id="ficheNom" type="text" value="Martin">
+          </div>
+          <div class="field-group full">
+            <label class="field-label">Email</label>
+            <input class="field-input" id="ficheEmail" type="email" value="alice.martin@viacesi.fr">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Centre CESI</label>
+            <input class="field-input" id="ficheCentre" type="text" value="Paris">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Promotion</label>
+            <input class="field-input" id="fichePromo" type="text" value="2024-2026">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Spécialité</label>
+            <select class="field-select" id="ficheSpecialite">
+              <option>Informatique</option>
+              <option>Génie Civil</option>
+              <option>Électronique</option>
+              <option>Management</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Statut</label>
+            <select class="field-select" id="ficheStatut">
+              <option>Actif</option>
+              <option>Inactif</option>
+              <option>En stage</option>
+            </select>
+          </div>
+        </div>
+        <div class="fiche-actions">
+          <button class="btn-enregistrer" onclick="enregistrer()">Enregistrer</button>
+          <button class="btn-supprimer" onclick="supprimerCompte()">Supprimer le compte</button>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}
