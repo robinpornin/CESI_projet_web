@@ -23,6 +23,7 @@ class PageAccueil
         echo $this->twig->render('accueil.html.twig', [
             'page'     => 'accueil',
             'title'    => 'Accueil',
+            'platform_name' => 'CESI-STAGES',
         ]);
     }
 }

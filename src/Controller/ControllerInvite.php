@@ -19,6 +19,7 @@ class PageInvite
         echo $this->twig->render('invite.html.twig', [
             'page'   => 'guest',
             'title'  => 'Invités',
+            'platform_name' => 'CESI-STAGES',
         ]);
     }
 }
