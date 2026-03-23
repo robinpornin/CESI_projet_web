@@ -30,12 +30,12 @@ switch ($route) {
 
     case 'home':
     case '':
-        $controller = new HomePage($twig);
+        $controller = new PageAccueil($twig);
         $controller->render();
         break;
 
     case 'guest':
-        $controller = new GuestPage($twig);
+        $controller = new PageInvite($twig);
         $controller->render();
         break;
 
