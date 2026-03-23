@@ -1,0 +1,115 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Page de la fiche de l'entreprise{% endblock %}
+
+{% block content %}
+
+<!-- bandeau nom entreprise -->
+  <div class="bandeau-nom">
+    <div class="entreprise-avatar">🏢</div>
+    <div class="entreprise-nom-bloc">
+      <span class="entreprise-nom">{{ nom_entreprise }}</span>
+      <span class="entreprise-secteur">{{ secteur }}</span>
+    </div>
+  </div>
+
+  <!-- main -->
+
+    <div class="separateur"></div>
+
+    <!-- fiche informations -->
+    <div class="fiche-bloc">
+      <div class="fiche-bloc-header">Fiche Entreprise</div>
+      <div class="fiche-bloc-body">
+        <div class="fiche-row">
+          <span class="fiche-label">Raison sociale</span>
+          <span class="fiche-value">{{ raison_sociale }}</span>
+        </div>
+        <div class="fiche-row">
+          <span class="fiche-label">Secteur</span>
+          <span class="fiche-value">{{ secteur }}</span>
+        </div>
+        <div class="fiche-row">
+          <span class="fiche-label">Ville</span>
+          <span class="fiche-value">{{ ville_codePostale }}</span>
+        </div>
+        <div class="fiche-row">
+          <span class="fiche-label">Effectif</span>
+          <span class="fiche-value">{{ effectif_entrepris }}</span>
+        </div>
+        <div class="fiche-row">
+          <span class="fiche-label">Contact RH</span>
+          <span class="fiche-value">{{ contact_rh }}</span>
+        </div>
+        <div class="fiche-row">
+          <span class="fiche-label">Téléphone</span>
+          <span class="fiche-value">{{ num_tel }}</span>
+        </div>
+        <div class="fiche-row full">
+          <span class="fiche-label">Description</span>
+          <span class="fiche-value" style="font-weight:400;line-height:1.6;font-size:0.88rem;">
+            {{ description_entreprise }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- offres liées -->
+    <div class="fiche-bloc">
+      <div class="fiche-bloc-header">Offres de stage disponibles</div>
+      <div class="fiche-bloc-body" style="display:flex;flex-direction:column;gap:10px;">
+        <div class="offres-liees">
+          <div class="offre-mini">
+            <div class="offre-mini-info">
+              <span class="offre-mini-titre">{{ titre_stage }}</span>
+              <span class="offre-mini-meta">{{ ville_stage }} · {{ salaire_mensuel }} </span>
+            </div>
+            <span class="offre-mini-badge"> {{ durée_stage }} </span>
+          </div>
+          <div class="offre-mini">
+            <div class="offre-mini-info">
+              <span class="offre-mini-titre">{{ titre_stage }}</span>
+              <span class="offre-mini-meta">{{ ville_stage }} · {{ salaire_mensuel }}</span>
+            </div>
+            <span class="offre-mini-badge">{{ durée_stage }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- evaluer -->
+    <div class="evaluer-section">
+      <h2>Évaluer l'entreprise</h2>
+
+      <!-- avis existants -->
+      <div class="avis-list">
+        <div class="avis-card">
+          <div class="avis-top">
+            <span class="avis-auteur">{{ nom_prenom }}</span>
+            <span class="avis-etoiles">{{ nombre_etoile }}</span>
+          </div>
+          <span class="avis-texte"> {{ texte_avis }} </span>
+        </div>
+        <div class="avis-card">
+          <div class="avis-top">
+            <span class="avis-auteur">{{ nom_prenom }}</span>
+            <span class="avis-etoiles">{{ nombre_etoile }}</span>
+          </div>
+          <span class="avis-texte">{{ texte_avis }}</span>
+        </div>
+      </div>
+
+      <!-- formulaire avis -->
+      <div class="stars" id="starsContainer">
+        <span class="star" onclick="setNote(1)">★</span>
+        <span class="star" onclick="setNote(2)">★</span>
+        <span class="star" onclick="setNote(3)">★</span>
+        <span class="star" onclick="setNote(4)">★</span>
+        <span class="star" onclick="setNote(5)">★</span>
+      </div>
+
+      <textarea placeholder="Partagez votre expérience dans cette entreprise..."></textarea>
+      <button class="btn-evaluer">Envoyer mon avis</button>
+    </div>
+
+{% endblock %}

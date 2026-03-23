@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Page de la gestion de votre compte{% endblock %}
+
+{% block content %}
+
+<!-- bienvenue -->
+    <div class="bienvenue">
+      <h1>Gestion de <span>votre compte</span></h1>
+      <p>Modifiez votre nom d'utilisateur ou votre mot de passe depuis cette page.</p>
+    </div>
+
+    <div class="separateur"></div>
+
+    <!-- bloc nom d'utilisateur -->
+    <div class="bloc">
+      <h2>Nom d'utilisateur</h2>
+      <div class="nom-actuel">{{ nom }} {{ prenom }}</div>
+      <div class="input-group">
+        <label for="new-username">Nouveau nom d'utilisateur</label>
+        <input type="text" id="new-username" placeholder="Entrer un nouveau nom...">
+      </div>
+      <button class="btn-changement">Changer</button>
+    </div>
+
+    <!-- bloc changement mot de passe -->
+    <div class="bloc">
+      <h2>Changement de mot de passe</h2>
+      <div class="inputs">
+        <div class="input-group">
+          <label for="mdp-actuel">Mot de passe actuel</label>
+          <input type="password" id="mdp-actuel" placeholder="Entrer votre mot de passe actuel">
+        </div>
+        <div class="input-group">
+          <label for="new-mdp">Nouveau mot de passe</label>
+          <input type="password" id="new-mdp" placeholder="Entrer un nouveau mot de passe">
+        </div>
+        <div class="input-group">
+          <label for="confirm-mdp">Confirmation mot de passe</label>
+          <input type="password" id="confirm-mdp" placeholder="Entrer à nouveau le nouveau mot de passe">
+        </div>
+      </div>
+    </div>
+
+    <!-- bouton confirmer -->
+    <button class="btn-confirmer">Confirmer les changements</button>
+
+{% endblock %}
