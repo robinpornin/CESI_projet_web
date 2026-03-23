@@ -1,0 +1,122 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Page de l'offre {% endblock %}
+
+{% block content %}
+
+<!-- main -->
+
+    <!-- intitulé -->
+    <div class="intitule-card">
+      <div class="intitule-top">
+        <span class="intitule-titre">{{ titre_stage }}</span>
+        <span class="intitule-badge"> {{ disponibilite }} </span>
+      </div>
+      <div class="intitule-meta">
+        <div class="meta-item"><span>🏢</span> {{ nom_entreprise }} </div>
+        <div class="meta-item"><span>📍</span> {{ ville_codePostale }} </div>
+        <div class="meta-item"><span>📅</span> {{ debut/fin_stage }}</div>
+        <div class="meta-item"><span>💶</span> {{ salaire_mensuel }} </div>
+      </div>
+    </div>
+
+    <!-- description -->
+    <div class="desc-card">
+      <div class="desc-card-header">
+        <span style="font-size:1rem">📄</span>
+        <span class="desc-card-header-titre">Description du stage</span>
+      </div>
+      <div class="desc-body">
+
+        <span class="desc-section-titre">Missions</span>
+        <p class="desc-texte"> {{ description_missions }} </p>
+
+        <span class="desc-section-titre">Compétences requises</span>
+        <div class="tags-list">
+          <span class="tag">React</span>
+          <span class="tag">Node.js</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">SQL</span>
+          <span class="tag">Git</span>
+          <span class="tag">REST API</span>
+        </div>
+
+        <span class="desc-section-titre">Informations pratiques</span>
+        <div class="infos-grid">
+          <div class="info-item">
+            <span class="info-label">Durée</span>
+            <span class="info-value">24 semaines</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Début</span>
+            <span class="info-value">01/06/2026</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Télétravail</span>
+            <span class="info-value">Hybride</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Niveau requis</span>
+            <span class="info-value">Bac+4 / Bac+5</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- actions -->
+    <div class="actions-row">
+      <button class="btn-postuler" onclick="postuler()">Postuler</button>
+      <button class="btn-wishlist" id="btnWishlist" onclick="toggleWishlist()">Ajouter à la wishlist</button>
+    </div>
+
+    <!-- statistiques -->
+    <div class="stats-card">
+      <button class="stats-toggle" onclick="toggleStats()">
+        <span>Afficher les statistiques de l'offre</span>
+        <span class="stats-arrow" id="statsArrow">▼</span>
+      </button>
+      <div class="stats-body" id="statsBody">
+
+        <div class="stats-grid">
+          <div class="stat-item highlight">
+            <span class="stat-icon">👁️</span>
+            <span class="stat-value">248</span>
+            <span class="stat-label">Vues</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-icon">📩</span>
+            <span class="stat-value">34</span>
+            <span class="stat-label">Candidatures</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-icon">⭐</span>
+            <span class="stat-value">12</span>
+            <span class="stat-label">Wishlists</span>
+          </div>
+        </div>
+
+        <div class="progress-row">
+          <div class="progress-label-row">
+            <span>Taux de candidature</span>
+            <span>14 %</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" style="width: 14%"></div>
+          </div>
+        </div>
+
+        <div class="progress-row">
+          <div class="progress-label-row">
+            <span>Taux d'ajout wishlist</span>
+            <span>5 %</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" style="width: 5%"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+{% endblock %}
