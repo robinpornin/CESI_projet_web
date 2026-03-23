@@ -1424,3 +1424,150 @@ footer span { color: #FFD700; font-weight: bold; }
   .fiche-entreprise,
   .fiche-offre     { position: static; min-width: unset; }
 }
+
+/* --- FORMULAIRE --- */
+form {
+  width: 100%;
+  max-width: 640px;
+  background-color: #ffffff;
+  border: 2px solid #FFD700;
+  border-radius: 16px;
+  padding: 30px 24px;
+  box-shadow: 0 8px 24px rgba(17, 17, 17, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+}
+
+form::before {
+  content: "";
+  display: block;
+  width: 90px;
+  height: 5px;
+  background-color: #FFD700;
+  border-radius: 3px;
+  margin: 0 auto 8px auto;
+}
+
+form p {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+}
+
+form label {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #111111;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="tel"],
+form input[type="file"],
+form select,
+form textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid #111111;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  font-family: 'Montserrat', Arial, sans-serif;
+  background-color: #ffffff;
+  color: #111111;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+form input:hover,
+form select:hover,
+form textarea:hover {
+  border-color: #FFD700;
+}
+
+form textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+  outline: none;
+  border-color: #FFD700;
+  box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.28);
+}
+
+form input[type="file"] {
+  cursor: pointer;
+}
+
+form input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #FFD700;
+}
+
+.ligne-checkbox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  border: 2px solid #FFD700;
+  border-radius: 10px;
+  padding: 10px 12px;
+  background-color: #ffffff;
+}
+
+.ligne-checkbox label {
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: #111111;
+}
+
+#message {
+  width: 100%;
+  max-width: 640px;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+#message p {
+  padding: 12px 14px;
+  border-radius: 10px;
+  margin: 0 0 12px 0;
+  border: 2px solid #FFD700;
+  background-color: #ffffff;
+  color: #111111;
+}
+
+button.btn-postuler {
+  width: 100%;
+  margin-top: 8px;
+  background-color: #FFD700;
+  color: #111111;
+  border: 2px solid #FFD700;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  font-weight: 900;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s, background-color 0.2s, color 0.2s;
+}
+
+button.btn-postuler:hover {
+  background-color: #111111;
+  color: #FFD700;
+  border-color: #111111;
+  transform: translateY(-2px);
+}
+
+form input::placeholder,
+form textarea::placeholder {
+  color: #777777;
+}
