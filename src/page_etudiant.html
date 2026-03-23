@@ -11,11 +11,9 @@
 
   <!-- header -->
   <header>
-    <div class="icon-btn" title="Mon profil">
-      <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
-    </div>
-    <div class="logo">CESI-STAGES</div>
     <div class="icon-placeholder"></div>
+    <div class="logo">CESI-STAGES</div>
+    <div id="menu-container" data-role="1"></div>
   </header>
 
   <!-- bandeau bienvenue -->
@@ -38,7 +36,6 @@
     <div class="groupe">
       <div class="groupe-label">Recherches</div>
 
-      <!-- recherche entreprise -->
       <div class="action-bloc">
         <div class="action-icon">🏢</div>
         <div class="action-info">
@@ -51,7 +48,6 @@
         </div>
       </div>
 
-      <!-- recherche offre -->
       <div class="action-bloc">
         <div class="action-icon">📋</div>
         <div class="action-info">
@@ -64,7 +60,6 @@
         </div>
       </div>
 
-      <!-- recherche offre statistiques -->
       <div class="action-bloc stat-bloc">
         <div class="action-icon">📊</div>
         <div class="action-info">
@@ -81,11 +76,9 @@
 
     <div class="divider"></div>
 
-    <!-- GROUPE 2 : Mon compte -->
     <div class="groupe">
       <div class="groupe-label">Mon compte</div>
 
-      <!-- recherche compte étudiant -->
       <div class="action-bloc">
         <div class="action-icon">🪪</div>
         <div class="action-info">
@@ -101,7 +94,6 @@
 
   </main>
 
-  <!-- footer -->
   <footer>
     <p>&copy; 2026 <span>CESI-STAGES</span> — Tous droits réservés</p>
   </footer>
@@ -127,5 +119,6 @@
     });
   </script>
 
+  <script src="../public/JavaScript/menu_deroulant.js"></script>
 </body>
 </html>

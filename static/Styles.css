@@ -65,6 +65,7 @@ header {
   transition: opacity 0.2s;
   position: relative;
   z-index: 200;
+  margin-left: auto;
 }
 .avatar-btn:hover { opacity: 0.85; }
 .avatar-btn svg { width: 22px; height: 22px; fill: #111111; }
@@ -1571,3 +1572,4 @@ form input::placeholder,
 form textarea::placeholder {
   color: #777777;
 }
+
