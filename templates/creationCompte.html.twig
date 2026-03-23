@@ -1,0 +1,59 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block content %}
+
+<!-- bienvenue -->
+    <div class="bienvenue">
+      <h1>Créer votre <span>compte</span></h1>
+      <p>Rejoignez la plateforme CESI-STAGES et accédez à toutes les offres de stage disponibles.</p>
+    </div>
+
+    <div class="separateur"></div>
+
+    <!-- selection type de compte -->
+    <div class="bloc">
+      <h2>Sélectionner le type de compte à créer</h2>
+      <div class="type-compte">
+        <label>
+          <input type="radio" name="type" value="pilote">
+          <span>Compte Pilote</span>
+        </label>
+        <label>
+          <input type="radio" name="type" value="entreprise">
+          <span>Compte Entreprise</span>
+        </label>
+        <label>
+          <input type="radio" name="type" value="etudiant">
+          <span>Compte Étudiant</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- formulaire infos -->
+    <div class="bloc">
+      <h2>Rentrer les informations suivantes</h2>
+      <div class="inputs">
+        <div class="input-group">
+          <label for="email">Identifiant (email)</label>
+          <input type="email" id="email" placeholder="exemple@cesi.fr">
+        </div>
+        <div class="input-group">
+          <label for="password">Mot de passe</label>
+          <input type="password" id="password" placeholder="••••••••">
+        </div>
+        <div class="input-group">
+          <label for="confirm-password">Confirmation mot de passe</label>
+          <input type="password" id="confirm-password" placeholder="••••••••">
+        </div>
+        <button class="btn-submit">Créer mon compte</button>
+      </div>
+    </div>
+
+    <!-- lien connexion -->
+    <p class="lien-connexion">
+      Vous avez déjà un compte ? <a href="connexion.html">Connectez-vous</a>
+    </p>
+
+{% endblock %}
