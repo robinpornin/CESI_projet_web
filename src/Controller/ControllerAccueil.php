@@ -1,15 +1,28 @@
 <?php
 
-namespace App\Controller;
+declare(strict_types=1);
 
-class ControllerAccueil
+class PageAccueil
 {
-    public function index()
-    {
-        global $twig;
+    private \Twig\Environment $twig;
+    
 
-        echo $twig->render('accueil.html.twig', [
-            'platform_name' => 'notre plateforme d\'offres de stage'
+    public function __construct(\Twig\Environment $twig)
+    {
+        $this->twig = $twig;
+    }
+
+    /**
+     * Récupère les données nécessaires et affiche la page.
+     */
+    public function render(): void
+    {
+        // Exemple : récupérer des articles depuis la BDD
+
+        // Passe les données à Twig et affiche
+        echo $this->twig->render('accueil.html.twig', [
+            'page'     => 'accueil',
+            'title'    => 'Accueil',
         ]);
     }
 }

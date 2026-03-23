@@ -1,16 +1,24 @@
 <?php
 
-namespace App\Controller;
+declare(strict_types=1);
 
-class ControllerInvite
+class PageInvite
 {
-    public function index()
-    {
-        global $twig;
+    private \Twig\Environment $twig;
 
-        echo $twig->render('invite.html.twig', [
-            'platform_name' => 'notre plateforme d\'offres de stage',
-            'mode' => 'Mode Invité'
+    public function __construct(\Twig\Environment $twig)
+    {
+        $this->twig = $twig;
+    }
+
+    /**
+     * Récupère les données et affiche la page invité.
+     */
+    public function render(): void
+    {
+        echo $this->twig->render('invite.html.twig', [
+            'page'   => 'guest',
+            'title'  => 'Invités',
         ]);
     }
 }

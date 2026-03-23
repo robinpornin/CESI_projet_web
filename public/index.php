@@ -1,19 +1,52 @@
 <?php
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+declare(strict_types=1);
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/src/Database.php';
+require_once __DIR__ . '/src/pages/HomePage.php';
+require_once __DIR__ . '/src/pages/GuestPage.php';
 
-use App\Core\Router;
+// --- Initialisation Twig ---
+$loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/templates');
+$twig = new \Twig\Environment($loader, [
+    // 'cache' => __DIR__ . '/cache', // décommenter en production
+    'debug' => true,
+]);
+$twig->addExtension(new \Twig\Extension\DebugExtension());
 
-// Twig
-$loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../templates');
-$twig = new \Twig\Environment($loader);
+// --- Récupération de la route ---
+// Ex: /mon-projet/guest → "guest"
+$requestUri  = $_SERVER['REQUEST_URI'];
+$scriptDir   = dirname($_SERVER['SCRIPT_NAME']); // gère les sous-dossiers
+$route = trim(str_replace($scriptDir, '', parse_url($requestUri, PHP_URL_PATH)), '/');
 
-// URL
-$url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+if ($route === '') {
+    $route = 'home';
+}
 
-// Router
-$router = new Router();
-$router->handle($url);
+// --- Router ---
+switch ($route) {
+
+    case 'home':
+    case '':
+        $controller = new HomePage($twig);
+        $controller->render();
+        break;
+
+    case 'guest':
+        $controller = new GuestPage($twig);
+        $controller->render();
+        break;
+
+    // Ajoute tes routes ici :
+    // case 'contact':
+    //     $controller = new ContactPage($twig);
+    //     $controller->render();
+    //     break;
+
+    default:
+        http_response_code(404);
+        echo $twig->render('404.html.twig', ['route' => $route]);
+        break;
+}
