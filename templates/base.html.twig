@@ -4,18 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}CESI-STAGES{% endblock %}</title>
-  <link rel="stylesheet" href="/Styles.css">
+  <!-- CSS -->
+  <link rel="stylesheet" href="../static/Styles.css">
 </head>
 
 <body>
 
 <header>
   <div class="logo">CESI-STAGES</div>
+  <!-- Menu déroulant -->
+  <div id="menu-container" data-role="1"></div>
 </header>
 
 <main>
   {% block content %}{% endblock %}
 </main>
+
+<!-- JS -->
+<script src="../public/JavaScript/menu_deroulant.js"></script>
 
 <footer>
   <p>&copy; 2026 <span>CESI-STAGES</span> — Tous droits réservés</p>
