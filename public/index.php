@@ -9,6 +9,7 @@ error_reporting(E_ALL);
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../src/Controller/accueil.php';
 require_once __DIR__ . '/../src/Controller/invite.php';
+require_once __DIR__ . '/../src/Controller/connexion.php';
 require_once __DIR__ . '/../src/Controller/creationOffre.php';
 
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../templates');
@@ -35,6 +36,11 @@ switch ($route) {
 
     case 'invite':
         $controller = new PageInvite($twig);
+        $controller->render();
+        break;
+
+    case 'connexion':
+        $controller = new PageConnexion($twig);
         $controller->render();
         break;
 

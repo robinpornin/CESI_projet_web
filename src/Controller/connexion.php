@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../config/database.php';
 
-class PageInvite
+class PageConnexion
 {
     private \Twig\Environment $twig;
     private PDO $pdo;
@@ -62,7 +62,7 @@ class PageInvite
 
                     $message = 'Connexion réussie.';
 
-                    // Redirection possible :
+                    // Exemple de redirection :
                     // header('Location: /dashboard');
                     // exit;
                 }
@@ -78,3 +78,4 @@ class PageInvite
         ]);
     }
 }
+
