@@ -23,4 +23,4 @@ function getPDO(): PDO
     } catch (PDOException $e) {
         die('Erreur de connexion à la base de données.');
     }
-
+}

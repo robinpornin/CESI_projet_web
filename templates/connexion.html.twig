@@ -4,38 +4,58 @@
 
 {% block content %}
 
-<!-- bienvenue -->
-    <div class="bienvenue">
-      <h1>Connexion à <span>votre espace</span></h1>
-      <p>Entrez vos identifiants pour accéder à la plateforme CESI-STAGES.</p>
-    </div>
+<div class="bienvenue">
+  <h1>Connexion à <span>votre espace</span></h1>
+  <p>Entrez vos identifiants pour accéder à la plateforme CESI-STAGES.</p>
+</div>
 
-    <div class="separateur"></div>
+<div class="separateur"></div>
 
-    <!-- formulaire -->
-    <div class="form-section">
-      <h2>Rentrer les informations suivantes</h2>
+<div class="form-section">
+  <h2>Rentrer les informations suivantes</h2>
 
-      <div class="form-fields">
-        <div class="inputs">
-          <div class="input-group">
-            <label for="email">Identifiant (email)</label>
-            <input type="email" id="email" placeholder="exemple@viacesi.fr">
-          </div>
-          <div class="input-group">
-            <label for="password">Mot de passe</label>
-            <input type="password" id="password" placeholder="••••••••">
-          </div>
+  {% if erreur %}
+    <div class="alert alert-danger">{{ erreur }}</div>
+  {% endif %}
+
+  {% if message %}
+    <div class="alert alert-success">{{ message }}</div>
+  {% endif %}
+
+  <form method="POST">
+    <div class="form-fields">
+      <div class="inputs">
+        <div class="input-group">
+          <label for="email">Identifiant (email)</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="exemple@viacesi.fr"
+            required
+          >
         </div>
-        <button class="btn-connexion">Connexion</button>
+
+        <div class="input-group">
+          <label for="password">Mot de passe</label>
+          <input
+            type="password"
+            id="password"
+            name="mot_de_passe"
+            placeholder="••••••••"
+            required
+          >
+        </div>
       </div>
 
-      <!-- liens -->
-      <div class="form-links">
-        <a href="mot-de-passe-oublie.html">Mot de passe oublié ?</a>
-        <a href="inscription.html">Pas de compte ? S'inscrire</a>
-      </div>
-
+      <button class="btn-connexion" type="submit">Connexion</button>
     </div>
+  </form>
+
+  <div class="form-links">
+    <a href="mot-de-passe-oublie.html">Mot de passe oublié ?</a>
+    <a href="inscription.html">Pas de compte ? S'inscrire</a>
+  </div>
+</div>
 
 {% endblock %}
