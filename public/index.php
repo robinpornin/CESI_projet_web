@@ -9,6 +9,7 @@ error_reporting(E_ALL);
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../src/Controller/accueil.php';
 require_once __DIR__ . '/../src/Controller/invite.php';
+require_once __DIR__ . '/../src/Controller/creationOffre.php';
 
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../templates');
 $twig = new \Twig\Environment($loader, [
@@ -34,6 +35,11 @@ switch ($route) {
 
     case 'invite':
         $controller = new PageInvite($twig);
+        $controller->render();
+        break;
+
+    case 'creationOffre':
+        $controller = new PageCreationOffre($twig);
         $controller->render();
         break;
 
