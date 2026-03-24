@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Création d'Entreprise</title>
+  <link rel="stylesheet" href="../static/Styles.css">
+</head>
+<body>
+
+  <!-- header -->
+  <header>
+    <a href="javascript:history.back()" class="icon-btn" title="Retour">&#8592;</a>
+    <div class="logo">CESI-STAGES</div>
+    <button class="icon-btn" title="Mon profil">
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+    </button>
+  </header>
+
+  <!-- bandeau -->
+  <div class="bandeau">
+    <div class="bandeau-icon">🏢</div>
+    <div class="bandeau-info">
+      <span class="bandeau-titre">Création d'une entreprise</span>
+      <span class="bandeau-badge">Nouvelle entreprise</span>
+      <span class="bandeau-sous">Remplissez le formulaire pour ajouter une entreprise partenaire.</span>
+    </div>
+  </div>
+
+  <!-- main -->
+  <main>
+
+    <div class="separateur"></div>
+
+    <div class="form-card">
+      <div class="form-card-header">
+        <span style="font-size:1rem">🏭</span>
+        <span class="form-card-header-titre">Formulaire de création</span>
+      </div>
+
+      <div class="form-body">
+
+        <!-- identité -->
+        <span class="section-label">Identité de l'entreprise</span>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label class="form-label">Nom de l'entreprise</label>
+            <input class="form-input" type="text" id="nom" placeholder="Ex : TechCorp Solutions" maxlength="80" oninput="updateCount('nom','countNom',80)">
+            <span class="char-count" id="countNom">0 / 80</span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Forme juridique</label>
+            <select class="form-select">
+              <option value="">-- Choisir --</option>
+              <option>SAS</option>
+              <option>SARL</option>
+              <option>SA</option>
+              <option>EURL</option>
+              <option>SNC</option>
+              <option>Autre</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">SIRET</label>
+            <input class="form-input" type="text" placeholder="Ex : 123 456 789 00012" maxlength="17">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Secteur d'activité</label>
+            <select class="form-select">
+              <option value="">-- Choisir --</option>
+              <option>Informatique / Tech</option>
+              <option>BTP / Génie Civil</option>
+              <option>Industrie</option>
+              <option>Finance / Banque</option>
+              <option>Santé</option>
+              <option>Commerce / Marketing</option>
+              <option>Énergie</option>
+              <option>Autre</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Taille de l'entreprise</label>
+            <select class="form-select">
+              <option value="">-- Choisir --</option>
+              <option>TPE (1–9 salariés)</option>
+              <option>PME (10–249 salariés)</option>
+              <option>ETI (250–4999 salariés)</option>
+              <option>Grande entreprise (5000+)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- coordonnées -->
+        <span class="section-label">Coordonnées</span>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label class="form-label">Adresse</label>
+            <input class="form-input" type="text" placeholder="Numéro, rue, avenue…">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Ville</label>
+            <input class="form-input" type="text" placeholder="Ex : Paris">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Code postal</label>
+            <input class="form-input" type="text" placeholder="Ex : 75001" maxlength="5">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email de contact</label>
+            <input class="form-input" type="email" placeholder="contact@entreprise.fr">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Téléphone</label>
+            <input class="form-input" type="tel" placeholder="01 00 00 00 00">
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Site web</label>
+            <input class="form-input" type="url" placeholder="https://www.entreprise.fr">
+          </div>
+        </div>
+
+        <!-- description -->
+        <span class="section-label">Présentation</span>
+        <div class="form-group">
+          <label class="form-label">Description de l'entreprise</label>
+          <textarea class="form-textarea" id="desc" placeholder="Décrivez l'activité, les valeurs, l'environnement de travail…" maxlength="500" oninput="updateCount('desc','countDesc',500)"></textarea>
+          <span class="char-count" id="countDesc">0 / 500</span>
+        </div>
+
+        <!-- domaines -->
+        <span class="section-label">Domaines de stage proposés</span>
+        <div class="form-group">
+          <label class="form-label">Ajouter des domaines</label>
+          <div class="tags-container" id="tagsContainer" onclick="document.getElementById('tagInput').focus()">
+            <input class="tag-input" id="tagInput" type="text" placeholder="Ex : Dev Web, Data, Réseau… (Entrée pour valider)">
+          </div>
+          <span class="tags-hint">Appuyez sur Entrée ou virgule pour ajouter un domaine</span>
+        </div>
+
+        <!-- logo -->
+        <span class="section-label">Logo de l'entreprise</span>
+        <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
+          <span class="upload-icon">📁</span>
+          <span class="upload-texte" id="uploadTexte">Glissez-déposez votre logo ici ou cliquez pour parcourir</span>
+          <button class="upload-btn" type="button">Choisir un fichier</button>
+          <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="handleFile(event)">
+        </div>
+
+        <!-- actions -->
+        <div class="form-actions">
+          <button class="btn-submit" onclick="soumettre()">Créer l'entreprise</button>
+          <button class="btn-reset" onclick="resetForm()">Réinitialiser</button>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- footer -->
+  <footer>
+    <p>&copy; 2026 <span>CESI-STAGES</span> — Tous droits réservés</p>
+  </footer>
+
+  <script>
+    function updateCount(inputId, countId, max) {
+      const len = document.getElementById(inputId).value.length;
+      document.getElementById(countId).textContent = len + ' / ' + max;
+    }
+
+    // tags
+    const tagInput = document.getElementById('tagInput');
+    const tagsContainer = document.getElementById('tagsContainer');
+    const tags = [];
+
+    tagInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ',') {
+        e.preventDefault();
+        const val = tagInput.value.trim().replace(/,$/, '');
+        if (val && !tags.includes(val)) {
+          tags.push(val);
+          renderTags();
+        }
+        tagInput.value = '';
+      }
+      if (e.key === 'Backspace' && tagInput.value === '' && tags.length > 0) {
+        tags.pop();
+        renderTags();
+      }
+    });
+
+    function renderTags() {
+      tagsContainer.querySelectorAll('.tag').forEach(t => t.remove());
+      tags.forEach((tag, i) => {
+        const el = document.createElement('span');
+        el.className = 'tag';
+        el.innerHTML = tag + '<span class="tag-remove" onclick="removeTag(' + i + ')">✕</span>';
+        tagsContainer.insertBefore(el, tagInput);
+      });
+    }
+
+    function removeTag(i) {
+      tags.splice(i, 1);
+      renderTags();
+    }
+
+    // upload
+    function handleFile(e) {
+      const file = e.target.files[0];
+      if (file) {
+        document.getElementById('uploadTexte').textContent = 'Fichier sélectionné : ' + file.name;
+      }
+    }
+
+    function resetForm() {
+      document.querySelectorAll('.form-input, .form-select, .form-textarea').forEach(el => el.value = '');
+      tags.length = 0;
+      renderTags();
+      document.getElementById('countNom').textContent = '0 / 80';
+      document.getElementById('countDesc').textContent = '0 / 500';
+      document.getElementById('uploadTexte').textContent = 'Glissez-déposez votre logo ici ou cliquez pour parcourir';
+      document.getElementById('fileInput').value = '';
+    }
+
+    function soumettre() {
+      alert('Entreprise créée avec succès !');
+    }
+  </script>
+
+</body>
+</html>

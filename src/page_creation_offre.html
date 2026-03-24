@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Création d'Offre</title>
+  <link rel="stylesheet" href="../static/Styles.css">
+</head>
+<body>
+
+  <!-- header -->
+  <header>
+    <a href="javascript:history.back()" class="icon-btn" title="Retour">&#8592;</a>
+    <div class="logo">CESI-STAGES</div>
+    <button class="icon-btn" title="Mon profil">
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+    </button>
+  </header>
+
+  <!-- bandeau -->
+  <div class="bandeau">
+    <div class="bandeau-icon">➕</div>
+    <div class="bandeau-info">
+      <span class="bandeau-titre">Création d'une offre de stage</span>
+      <span class="bandeau-badge">Nouvelle offre</span>
+      <span class="bandeau-sous">Remplissez le formulaire pour publier une nouvelle offre.</span>
+    </div>
+  </div>
+
+  <!-- main -->
+  <main>
+
+    <div class="separateur"></div>
+
+    <div class="form-card">
+      <div class="form-card-header">
+        <span style="font-size:1rem">📋</span>
+        <span class="form-card-header-titre">Formulaire de création</span>
+      </div>
+
+      <div class="form-body">
+
+        <!-- informations générales -->
+        <span class="section-label">Informations générales</span>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label class="form-label">Titre de l'offre</label>
+            <input class="form-input" type="text" id="titre" placeholder="Ex : Développeur web full-stack" maxlength="80" oninput="updateCount('titre','countTitre',80)">
+            <span class="char-count" id="countTitre">0 / 80</span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Entreprise</label>
+            <input class="form-input" type="text" placeholder="Nom de l'entreprise">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Secteur d'activité</label>
+            <select class="form-select">
+              <option value="">-- Choisir --</option>
+              <option>Informatique / Tech</option>
+              <option>BTP / Génie Civil</option>
+              <option>Industrie</option>
+              <option>Finance / Banque</option>
+              <option>Santé</option>
+              <option>Commerce / Marketing</option>
+              <option>Autre</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Localisation</label>
+            <input class="form-input" type="text" placeholder="Ville, Région">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Type de stage</label>
+            <select class="form-select">
+              <option value="">-- Choisir --</option>
+              <option>Stage obligatoire</option>
+              <option>Stage volontaire</option>
+              <option>Alternance</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- durée & dates -->
+        <span class="section-label">Durée & Dates</span>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Date de début</label>
+            <input class="form-input" type="date">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Date de fin</label>
+            <input class="form-input" type="date">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Durée (semaines)</label>
+            <input class="form-input" type="number" placeholder="Ex : 12" min="1" max="52">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Gratification (€/mois)</label>
+            <input class="form-input" type="number" placeholder="Ex : 600" min="0">
+          </div>
+        </div>
+
+        <!-- description -->
+        <span class="section-label">Description</span>
+        <div class="form-group">
+          <label class="form-label">Description du poste</label>
+          <textarea class="form-textarea" id="desc" placeholder="Décrivez les missions, le contexte, les objectifs…" maxlength="600" oninput="updateCount('desc','countDesc',600)"></textarea>
+          <span class="char-count" id="countDesc">0 / 600</span>
+        </div>
+
+        <!-- compétences -->
+        <span class="section-label">Compétences requises</span>
+        <div class="form-group">
+          <label class="form-label">Ajouter des compétences</label>
+          <div class="tags-container" id="tagsContainer" onclick="document.getElementById('tagInput').focus()">
+            <input class="tag-input" id="tagInput" type="text" placeholder="Ex : React, Python… (Entrée pour valider)">
+          </div>
+          <span class="tags-hint">Appuyez sur Entrée ou virgule pour ajouter une compétence</span>
+        </div>
+
+        <!-- contact -->
+        <span class="section-label">Contact</span>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Email de contact</label>
+            <input class="form-input" type="email" placeholder="rh@entreprise.fr">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Téléphone</label>
+            <input class="form-input" type="tel" placeholder="06 00 00 00 00">
+          </div>
+        </div>
+
+        <!-- actions -->
+        <div class="form-actions">
+          <button class="btn-submit" onclick="soumettre()">Publier l'offre</button>
+          <button class="btn-reset" onclick="resetForm()">Réinitialiser</button>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- footer -->
+  <footer>
+    <p>&copy; 2026 <span>CESI-STAGES</span> — Tous droits réservés</p>
+  </footer>
+
+  <script>
+    // compteur caractères
+    function updateCount(inputId, countId, max) {
+      const len = document.getElementById(inputId).value.length;
+      document.getElementById(countId).textContent = len + ' / ' + max;
+    }
+
+    // gestion tags
+    const tagInput = document.getElementById('tagInput');
+    const tagsContainer = document.getElementById('tagsContainer');
+    const tags = [];
+
+    tagInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ',') {
+        e.preventDefault();
+        const val = tagInput.value.trim().replace(/,$/, '');
+        if (val && !tags.includes(val)) {
+          tags.push(val);
+          renderTags();
+        }
+        tagInput.value = '';
+      }
+      if (e.key === 'Backspace' && tagInput.value === '' && tags.length > 0) {
+        tags.pop();
+        renderTags();
+      }
+    });
+
+    function renderTags() {
+      const existing = tagsContainer.querySelectorAll('.tag');
+      existing.forEach(t => t.remove());
+      tags.forEach((tag, i) => {
+        const el = document.createElement('span');
+        el.className = 'tag';
+        el.innerHTML = tag + '<span class="tag-remove" onclick="removeTag(' + i + ')">✕</span>';
+        tagsContainer.insertBefore(el, tagInput);
+      });
+    }
+
+    function removeTag(i) {
+      tags.splice(i, 1);
+      renderTags();
+    }
+
+    function resetForm() {
+      document.querySelectorAll('.form-input, .form-select, .form-textarea').forEach(el => {
+        el.value = '';
+      });
+      tags.length = 0;
+      renderTags();
+      document.getElementById('countTitre').textContent = '0 / 80';
+      document.getElementById('countDesc').textContent = '0 / 600';
+    }
+
+    function soumettre() {
+      alert('Offre publiée avec succès !');
+    }
+  </script>
+
+</body>
+</html>

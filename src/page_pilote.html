@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Pilote</title>
+  <link rel="stylesheet" href="../static/Styles.css">
+</head>
+<body>
+
+  <!-- header -->
+  <header>
+    <!-- icone profil -->
+    <div class="profil-icon" title="Mon profil">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+      </svg>
+    </div>
+
+    <div class="logo">CESI-STAGES</div>
+
+    <!-- espace vide pour centrer le logo -->
+    <div style="width:44px;"></div>
+  </header>
+
+
+
+  <!-- contenu principal -->
+  <main>
+
+    <!-- bienvenue -->
+    <div class="bienvenue">
+      <h1>Bienvenue, <span>Pilote</span> 👋</h1>
+      <p>Recherchez des entreprises ou des offres de stage disponibles sur la plateforme.</p>
+    </div>
+
+    <div class="separateur"></div>
+
+    <!-- bloc actions -->
+    <div class="bloc-actions">
+      <h2>Que voulez-vous faire ?</h2>
+
+      <div class="search-rows">
+
+        <!-- recherche entreprise -->
+        <div class="search-item">
+          <label>Recherche d'entreprise</label>
+          <div class="search-row">
+            <input type="text" placeholder="Nom de l'entreprise...">
+            <a href="liste-entreprises.html">
+              <button class="btn-rechercher">Rechercher</button>
+            </a>
+          </div>
+          <span class="hint">→ Redirige vers la liste des entreprises</span>
+        </div>
+
+        <!-- recherche offre -->
+        <div class="search-item">
+          <label>Recherche d'offre de stage</label>
+          <div class="search-row">
+            <input type="text" placeholder="Titre, domaine, lieu...">
+            <a href="liste-offres.html">
+              <button class="btn-rechercher">Rechercher</button>
+            </a>
+          </div>
+          <span class="hint">→ Redirige vers la liste des offres</span>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- footer -->
+  <footer>
+    <p>&copy; 2026 <span>CESI-STAGES</span> — Tous droits réservés</p>
+  </footer>
+
+  <!-- bouton retour -->
+  <a href="javascript:history.back()" class="btn-retour">&#8592; Retour</a>
+
+
+</body>
+</html>

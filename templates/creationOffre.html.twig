@@ -1,0 +1,131 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Page de création d'offre{% endblock %}
+
+{% block content %}
+
+ <!-- bandeau -->
+  <div class="bandeau">
+    <div class="bandeau-icon">➕</div>
+    <div class="bandeau-info">
+      <span class="bandeau-titre">Création d'une offre de stage</span>
+      <span class="bandeau-badge">Nouvelle offre</span>
+      <span class="bandeau-sous">Remplissez le formulaire pour publier une nouvelle offre.</span>
+    </div>
+  </div>
+
+  <!-- main -->
+  <main>
+
+    <div class="separateur"></div>
+
+    <div class="form-card">
+      <div class="form-card-header">
+        <span style="font-size:1rem">📋</span>
+        <span class="form-card-header-titre">Formulaire de création</span>
+      </div>
+
+      <div class="form-body">
+
+        <!-- informations générales -->
+        <span class="section-label">Informations générales</span>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label class="form-label">Titre de l'offre</label>
+            <input class="form-input" type="text" id="titre" placeholder="Ex : Développeur web full-stack" maxlength="80" oninput="updateCount('titre','countTitre',80)">
+            <span class="char-count" id="countTitre">0 / 80</span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Entreprise</label>
+            <input class="form-input" type="text" placeholder="Nom de l'entreprise">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Secteur d'activité</label>
+            <select class="form-select">
+              <option value="">-- Choisir --</option>
+              <option>Informatique / Tech</option>
+              <option>BTP / Génie Civil</option>
+              <option>Industrie</option>
+              <option>Finance / Banque</option>
+              <option>Santé</option>
+              <option>Commerce / Marketing</option>
+              <option>Autre</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Localisation</label>
+            <input class="form-input" type="text" placeholder="Ville, Région">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Type de stage</label>
+            <select class="form-select">
+              <option value="">-- Choisir --</option>
+              <option>Stage obligatoire</option>
+              <option>Stage volontaire</option>
+              <option>Alternance</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- durée & dates -->
+        <span class="section-label">Durée & Dates</span>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Date de début</label>
+            <input class="form-input" type="date">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Date de fin</label>
+            <input class="form-input" type="date">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Durée (semaines)</label>
+            <input class="form-input" type="number" placeholder="Ex : 12" min="1" max="52">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Gratification (€/mois)</label>
+            <input class="form-input" type="number" placeholder="Ex : 600" min="0">
+          </div>
+        </div>
+
+        <!-- description -->
+        <span class="section-label">Description</span>
+        <div class="form-group">
+          <label class="form-label">Description du poste</label>
+          <textarea class="form-textarea" id="desc" placeholder="Décrivez les missions, le contexte, les objectifs…" maxlength="600" oninput="updateCount('desc','countDesc',600)"></textarea>
+          <span class="char-count" id="countDesc">0 / 600</span>
+        </div>
+
+        <!-- compétences -->
+        <span class="section-label">Compétences requises</span>
+        <div class="form-group">
+          <label class="form-label">Ajouter des compétences</label>
+          <div class="tags-container" id="tagsContainer" onclick="document.getElementById('tagInput').focus()">
+            <input class="tag-input" id="tagInput" type="text" placeholder="Ex : React, Python… (Entrée pour valider)">
+          </div>
+          <span class="tags-hint">Appuyez sur Entrée ou virgule pour ajouter une compétence</span>
+        </div>
+
+        <!-- contact -->
+        <span class="section-label">Contact</span>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Email de contact</label>
+            <input class="form-input" type="email" placeholder="rh@entreprise.fr">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Téléphone</label>
+            <input class="form-input" type="tel" placeholder="06 00 00 00 00">
+          </div>
+        </div>
+
+        <!-- actions -->
+        <div class="form-actions">
+          <button class="btn-submit" onclick="soumettre()">Publier l'offre</button>
+          <button class="btn-reset" onclick="resetForm()">Réinitialiser</button>
+        </div>
+
+      </div>
+    </div>
+
+{% endblock %}

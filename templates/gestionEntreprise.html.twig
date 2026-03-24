@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block content %}
+
+<!-- bandeau -->
+  <div class="bandeau">
+    <div class="bandeau-icon">🏢</div>
+    <div class="bandeau-info">
+      <span class="bandeau-titre">Espace Gestion des Entreprises</span>
+      <span class="bandeau-badge">Entreprises</span>
+      <span class="bandeau-sous">Consultez les entreprises partenaires ou ajoutez-en une nouvelle.</span>
+    </div>
+  </div>
+
+  <!-- main -->
+
+    <div class="separateur"></div>
+
+    <div class="grid-main">
+
+      <!-- liste entreprises -->
+      <a class="carte carte-liste" href="liste-entreprises.html">
+        <span class="carte-icon">🏭</span>
+        <span class="carte-titre">Listes entreprises</span>
+        <span class="carte-desc">Consulter et gérer toutes les entreprises</span>
+        <span class="carte-badge">Voir les entreprises →</span>
+      </a>
+
+      <!-- paramètres -->
+      <a class="carte carte-param" href="parametres-entreprise.html">
+        <span class="carte-icon">⚙️</span>
+        <span class="carte-titre">Paramètres</span>
+      </a>
+
+      <!-- créer une entreprise -->
+      <a class="carte carte-creer" href="creer-entreprise.html">
+        <span class="carte-icon">➕</span>
+        <span class="carte-titre">Créer une entreprise</span>
+        <span class="carte-desc">Ajouter une nouvelle entreprise partenaire</span>
+        <span class="carte-badge light">Nouvelle entreprise →</span>
+      </a>
+
+    </div>
+
+
+{% endblock %}

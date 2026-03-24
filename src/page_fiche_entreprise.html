@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fiche Entreprise</title>
+  <link rel="stylesheet" href="../static/Styles.css">
+</head>
+<body>
+
+  <!-- header -->
+  <header>
+    <a href="javascript:history.back()" class="icon-btn" title="Retour">&#8592;</a>
+    <div class="logo">CESI-STAGES</div>
+    <div class="icon-btn" title="Mon profil">
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+    </div>
+  </header>
+
+  <!-- bandeau nom entreprise -->
+  <div class="bandeau-nom">
+    <div class="entreprise-avatar">🏢</div>
+    <div class="entreprise-nom-bloc">
+      <span class="entreprise-nom">Capgemini</span>
+      <span class="entreprise-secteur">Informatique & Conseil</span>
+    </div>
+  </div>
+
+  <!-- main -->
+  <main>
+
+    <div class="separateur"></div>
+
+    <!-- fiche informations -->
+    <div class="fiche-bloc">
+      <div class="fiche-bloc-header">Fiche Entreprise</div>
+      <div class="fiche-bloc-body">
+        <div class="fiche-row">
+          <span class="fiche-label">Raison sociale</span>
+          <span class="fiche-value">Capgemini France SAS</span>
+        </div>
+        <div class="fiche-row">
+          <span class="fiche-label">Secteur</span>
+          <span class="fiche-value">Informatique & Conseil</span>
+        </div>
+        <div class="fiche-row">
+          <span class="fiche-label">Ville</span>
+          <span class="fiche-value">Paris (75009)</span>
+        </div>
+        <div class="fiche-row">
+          <span class="fiche-label">Effectif</span>
+          <span class="fiche-value">+ 50 000 employés</span>
+        </div>
+        <div class="fiche-row">
+          <span class="fiche-label">Contact RH</span>
+          <span class="fiche-value">stages@capgemini.fr</span>
+        </div>
+        <div class="fiche-row">
+          <span class="fiche-label">Téléphone</span>
+          <span class="fiche-value">01 47 54 50 00</span>
+        </div>
+        <div class="fiche-row full">
+          <span class="fiche-label">Description</span>
+          <span class="fiche-value" style="font-weight:400;line-height:1.6;font-size:0.88rem;">
+            Capgemini est un leader mondial du conseil, des services informatiques et de la transformation numérique. L'entreprise accompagne ses clients dans leur évolution vers le cloud, l'IA et la cybersécurité.
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- offres liées -->
+    <div class="fiche-bloc">
+      <div class="fiche-bloc-header">Offres de stage disponibles</div>
+      <div class="fiche-bloc-body" style="display:flex;flex-direction:column;gap:10px;">
+        <div class="offres-liees">
+          <div class="offre-mini">
+            <div class="offre-mini-info">
+              <span class="offre-mini-titre">Développeur Web Full-Stack</span>
+              <span class="offre-mini-meta">📍 Paris · 800 €/mois</span>
+            </div>
+            <span class="offre-mini-badge">6 mois</span>
+          </div>
+          <div class="offre-mini">
+            <div class="offre-mini-info">
+              <span class="offre-mini-titre">Développeur Mobile</span>
+              <span class="offre-mini-meta">📍 Lyon · 750 €/mois</span>
+            </div>
+            <span class="offre-mini-badge">3 mois</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- evaluer -->
+    <div class="evaluer-section">
+      <h2>Évaluer l'entreprise</h2>
+
+      <!-- avis existants -->
+      <div class="avis-list">
+        <div class="avis-card">
+          <div class="avis-top">
+            <span class="avis-auteur">Marie L.</span>
+            <span class="avis-etoiles">★★★★☆</span>
+          </div>
+          <span class="avis-texte">"Très bonne ambiance, encadrement de qualité. Je recommande !"</span>
+        </div>
+        <div class="avis-card">
+          <div class="avis-top">
+            <span class="avis-auteur">Thomas R.</span>
+            <span class="avis-etoiles">★★★★★</span>
+          </div>
+          <span class="avis-texte">"Stage très enrichissant, projets concrets et équipe accueillante."</span>
+        </div>
+      </div>
+
+      <!-- formulaire avis -->
+      <div class="stars" id="starsContainer">
+        <span class="star" onclick="setNote(1)">★</span>
+        <span class="star" onclick="setNote(2)">★</span>
+        <span class="star" onclick="setNote(3)">★</span>
+        <span class="star" onclick="setNote(4)">★</span>
+        <span class="star" onclick="setNote(5)">★</span>
+      </div>
+
+      <textarea placeholder="Partagez votre expérience dans cette entreprise..."></textarea>
+      <button class="btn-evaluer">Envoyer mon avis</button>
+    </div>
+
+  </main>
+
+  <!-- footer -->
+  <footer>
+    <p>&copy; 2026 <span>CESI-STAGES</span> — Tous droits réservés</p>
+  </footer>
+
+  <script>
+    let noteActuelle = 0;
+
+    function setNote(n) {
+      noteActuelle = n;
+      const stars = document.querySelectorAll('.star');
+      stars.forEach((s, i) => {
+        s.classList.toggle('active', i < n);
+      });
+    }
+
+    // hover étoiles
+    document.querySelectorAll('.star').forEach((s, i) => {
+      s.addEventListener('mouseenter', () => {
+        document.querySelectorAll('.star').forEach((st, j) => {
+          st.style.color = j <= i ? '#FFD700' : '#dddddd';
+        });
+      });
+      s.addEventListener('mouseleave', () => {
+        document.querySelectorAll('.star').forEach((st, j) => {
+          st.style.color = j < noteActuelle ? '#FFD700' : '#dddddd';
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Espace élève{% endblock %}
+
+{% block content %}
+
+<!-- bandeau -->
+  <div class="bandeau">
+    <div class="bandeau-icon">🎓</div>
+    <div class="bandeau-info">
+      <span class="bandeau-titre">Espace Gestion des Élèves</span>
+      <span class="bandeau-badge">🎓 Espace Élève</span>
+      <span class="bandeau-sous">Consultez la liste des élèves ou créez un nouveau profil.</span>
+    </div>
+  </div>
+
+  <!-- main -->
+
+    <div class="separateur"></div>
+
+    <div class="grid-main">
+
+      <!-- liste élèves -->
+      <a class="carte carte-liste" href="liste-eleves.html">
+        <span class="carte-icon">📋</span>
+        <span class="carte-titre">Listes élèves</span>
+        <span class="carte-desc">Consulter et gérer tous les élèves</span>
+        <span class="carte-badge">Voir la liste →</span>
+      </a>
+
+      <!-- paramètres -->
+      <a class="carte carte-param" href="parametres.html">
+        <span class="carte-icon">⚙️</span>
+        <span class="carte-titre">Paramètres</span>
+      </a>
+
+      <!-- créer un élève -->
+      <a class="carte carte-creer" href="creer-eleve.html">
+        <span class="carte-icon">➕</span>
+        <span class="carte-titre">Créer un élève</span>
+        <span class="carte-desc">Ajouter un nouveau profil élève</span>
+        <span class="carte-badge light">Nouveau profil →</span>
+      </a>
+
+    </div>
+
+{% endblock %}

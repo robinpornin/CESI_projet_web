@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paramètres Élève</title>
+  <link rel="stylesheet" href="../static/Styles.css">
+</head>
+
+<body>
+
+  <!-- header -->
+  <header>
+    <a href="javascript:history.back()" class="icon-btn" title="Retour">&#8592;</a>
+    <div class="logo">CESI-STAGES</div>
+    <button class="icon-btn" title="Mon profil">
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+    </button>
+  </header>
+
+  <!-- bandeau -->
+  <div class="bandeau">
+    <div class="bandeau-icon">⚙️</div>
+    <div class="bandeau-info">
+      <span class="bandeau-titre">Paramètres du compte Élève</span>
+      <span class="bandeau-badge">Paramètres</span>
+      <span class="bandeau-sous">Gérez les paramètres et les informations du compte élève.</span>
+    </div>
+  </div>
+
+  <!-- main -->
+  <main>
+
+    <div class="separateur"></div>
+    <div class="section-titre">Que voulez-vous faire ?</div>
+
+    <!-- wish-list -->
+    <a class="action-carte" href="wish-list-eleve.html">
+      <span class="action-carte-icon">⭐</span>
+      <div class="action-carte-info">
+        <span class="action-carte-titre">Afficher la wish-list de l'élève</span>
+        <span class="action-carte-desc">→ Voir la liste des offres favorites de l'élève</span>
+      </div>
+      <span class="action-carte-arrow">›</span>
+    </a>
+
+    <div class="divider"></div>
+
+    <!-- modifier -->
+    <a class="action-carte modifier" href="modifier-compte-eleve.html">
+      <span class="action-carte-icon">✏️</span>
+      <div class="action-carte-info">
+        <span class="action-carte-titre">Modifier le compte élève</span>
+        <span class="action-carte-desc">→ Mettre à jour les informations du profil</span>
+      </div>
+      <span class="action-carte-arrow">›</span>
+    </a>
+
+    <!-- supprimer -->
+    <button class="action-carte danger" onclick="ouvrirModal()">
+      <span class="action-carte-icon">🗑️</span>
+      <div class="action-carte-info">
+        <span class="action-carte-titre">Supprimer le compte élève</span>
+        <span class="action-carte-desc">→ Suppression définitive et irréversible</span>
+      </div>
+      <span class="action-carte-arrow">›</span>
+    </button>
+
+  </main>
+
+  <!-- footer -->
+  <footer>
+    <p>&copy; 2026 <span>CESI-STAGES</span> — Tous droits réservés</p>
+  </footer>
+
+  <!-- modal confirmation suppression -->
+  <div class="modal-overlay" id="modalOverlay" onclick="fermerModalSiDehors(event)">
+    <div class="modal" id="modal">
+      <div class="modal-icon">⚠️</div>
+      <div class="modal-titre">Supprimer le compte ?</div>
+      <div class="modal-desc">
+        Cette action est <strong>définitive et irréversible</strong>.<br>
+        Toutes les données de l'élève seront perdues.
+      </div>
+      <div class="modal-actions">
+        <button class="btn-annuler" onclick="fermerModal()">Annuler</button>
+        <button class="btn-confirmer" onclick="confirmerSuppression()">Confirmer</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function ouvrirModal() {
+      document.getElementById('modalOverlay').classList.add('visible');
+    }
+
+    function fermerModal() {
+      document.getElementById('modalOverlay').classList.remove('visible');
+    }
+
+    function fermerModalSiDehors(e) {
+      if (e.target === document.getElementById('modalOverlay')) fermerModal();
+    }
+
+    function confirmerSuppression() {
+      fermerModal();
+      alert('Compte élève supprimé avec succès.');
+      // window.location.href = 'liste-eleves.html';
+    }
+  </script>
+
+</body>
+</html>

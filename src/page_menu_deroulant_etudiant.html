@@ -1,0 +1,60 @@
+<button class="avatar-btn" title="Mon compte étudiant" id="menuButton" aria-label="Ouvrir le menu étudiant">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+  </svg>
+</button>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="dropdown" id="dropdown" role="menu" aria-hidden="true">
+  <div class="dropdown-head">
+    <div class="dropdown-avatar">🎓</div>
+    <div class="dropdown-user">
+      <span class="dropdown-nom">Alice Martin</span>
+      <span class="dropdown-badge">Étudiant</span>
+    </div>
+  </div>
+
+  <div class="dropdown-body">
+    <a class="menu-item" href="liste-candidatures.html" onclick="closeMenu()">
+      <span class="menu-item-icon">📄</span>
+      <div class="menu-item-info">
+        <span class="menu-item-titre">Mes candidatures</span>
+        <span class="menu-item-desc">→ Voir la liste de mes candidatures</span>
+      </div>
+    </a>
+
+    <a class="menu-item" href="wish-list.html" onclick="closeMenu()">
+      <span class="menu-item-icon">⭐</span>
+      <div class="menu-item-info">
+        <span class="menu-item-titre">Ma wish-list</span>
+        <span class="menu-item-desc">→ Voir ma liste d'offres favorites</span>
+      </div>
+    </a>
+
+    <div class="menu-sep"></div>
+
+    <button class="menu-item deconnexion" onclick="seDeconnecter()">
+      <span class="menu-item-icon">🚪</span>
+      <div class="menu-item-info">
+        <span class="menu-item-titre">Se déconnecter</span>
+      </div>
+    </button>
+
+    <div class="menu-sep"></div>
+
+    <a class="menu-item" href="modifier-compte.html" onclick="closeMenu()">
+      <span class="menu-item-icon">✏️</span>
+      <div class="menu-item-info">
+        <span class="menu-item-titre">Modifier le compte</span>
+      </div>
+    </a>
+
+    <button class="menu-item danger" onclick="supprimerCompte()">
+      <span class="menu-item-icon">🗑️</span>
+      <div class="menu-item-info">
+        <span class="menu-item-titre">Supprimer le compte</span>
+      </div>
+    </button>
+  </div>
+</div>

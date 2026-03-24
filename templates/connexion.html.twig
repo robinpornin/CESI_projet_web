@@ -1,0 +1,41 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Page de connexion{% endblock %}
+
+{% block content %}
+
+<!-- bienvenue -->
+    <div class="bienvenue">
+      <h1>Connexion à <span>votre espace</span></h1>
+      <p>Entrez vos identifiants pour accéder à la plateforme CESI-STAGES.</p>
+    </div>
+
+    <div class="separateur"></div>
+
+    <!-- formulaire -->
+    <div class="form-section">
+      <h2>Rentrer les informations suivantes</h2>
+
+      <div class="form-fields">
+        <div class="inputs">
+          <div class="input-group">
+            <label for="email">Identifiant (email)</label>
+            <input type="email" id="email" placeholder="exemple@viacesi.fr">
+          </div>
+          <div class="input-group">
+            <label for="password">Mot de passe</label>
+            <input type="password" id="password" placeholder="••••••••">
+          </div>
+        </div>
+        <button class="btn-connexion">Connexion</button>
+      </div>
+
+      <!-- liens -->
+      <div class="form-links">
+        <a href="mot-de-passe-oublie.html">Mot de passe oublié ?</a>
+        <a href="inscription.html">Pas de compte ? S'inscrire</a>
+      </div>
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offre de Stage</title>
+  <link rel="stylesheet" href="../static/Styles.css">
+</head>
+
+<body>
+
+  <!-- header -->
+  <header>
+    <a href="javascript:history.back()" class="icon-btn" title="Retour">&#8592;</a>
+    <div class="logo">CESI-STAGES</div>
+    <button class="icon-btn" title="Mon profil">
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+    </button>
+  </header>
+
+  <!-- main -->
+  <main>
+
+    <!-- intitulé -->
+    <div class="intitule-card">
+      <div class="intitule-top">
+        <span class="intitule-titre">Développeur Web Full-Stack — Stage 6 mois</span>
+        <span class="intitule-badge">Disponible</span>
+      </div>
+      <div class="intitule-meta">
+        <div class="meta-item"><span>🏢</span> TechCorp Solutions</div>
+        <div class="meta-item"><span>📍</span> Paris, Île-de-France</div>
+        <div class="meta-item"><span>📅</span> Juin 2026 — Déc. 2026</div>
+        <div class="meta-item"><span>💶</span> 650 €/mois</div>
+      </div>
+    </div>
+
+    <!-- description -->
+    <div class="desc-card">
+      <div class="desc-card-header">
+        <span style="font-size:1rem">📄</span>
+        <span class="desc-card-header-titre">Description du stage</span>
+      </div>
+      <div class="desc-body">
+
+        <span class="desc-section-titre">Missions</span>
+        <p class="desc-texte">
+          Au sein de l'équipe produit, vous participerez au développement de nouvelles fonctionnalités
+          de notre plateforme SaaS. Vous travaillerez en méthode Agile (Scrum) et collaborerez
+          étroitement avec les équipes design et back-end.
+        </p>
+
+        <span class="desc-section-titre">Compétences requises</span>
+        <div class="tags-list">
+          <span class="tag">React</span>
+          <span class="tag">Node.js</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">SQL</span>
+          <span class="tag">Git</span>
+          <span class="tag">REST API</span>
+        </div>
+
+        <span class="desc-section-titre">Informations pratiques</span>
+        <div class="infos-grid">
+          <div class="info-item">
+            <span class="info-label">Durée</span>
+            <span class="info-value">24 semaines</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Début</span>
+            <span class="info-value">01/06/2026</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Télétravail</span>
+            <span class="info-value">Hybride</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Niveau requis</span>
+            <span class="info-value">Bac+4 / Bac+5</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- actions -->
+    <div class="actions-row">
+      <button class="btn-postuler" onclick="postuler()">Postuler</button>
+      <button class="btn-wishlist" id="btnWishlist" onclick="toggleWishlist()">Ajouter à la wishlist</button>
+    </div>
+
+    <!-- statistiques -->
+    <div class="stats-card">
+      <button class="stats-toggle" onclick="toggleStats()">
+        <span>Afficher les statistiques de l'offre</span>
+        <span class="stats-arrow" id="statsArrow">▼</span>
+      </button>
+      <div class="stats-body" id="statsBody">
+
+        <div class="stats-grid">
+          <div class="stat-item highlight">
+            <span class="stat-icon">👁️</span>
+            <span class="stat-value">248</span>
+            <span class="stat-label">Vues</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-icon">📩</span>
+            <span class="stat-value">34</span>
+            <span class="stat-label">Candidatures</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-icon">⭐</span>
+            <span class="stat-value">12</span>
+            <span class="stat-label">Wishlists</span>
+          </div>
+        </div>
+
+        <div class="progress-row">
+          <div class="progress-label-row">
+            <span>Taux de candidature</span>
+            <span>14 %</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" style="width: 14%"></div>
+          </div>
+        </div>
+
+        <div class="progress-row">
+          <div class="progress-label-row">
+            <span>Taux d'ajout wishlist</span>
+            <span>5 %</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" style="width: 5%"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- footer -->
+  <footer>
+    <p>&copy; 2026 <span>CESI-STAGES</span> — Tous droits réservés</p>
+  </footer>
+
+  <script>
+    function postuler() {
+      alert('Votre candidature a bien été envoyée !');
+    }
+
+    let wishlisted = false;
+    function toggleWishlist() {
+      wishlisted = !wishlisted;
+      const btn = document.getElementById('btnWishlist');
+      if (wishlisted) {
+        btn.textContent = '★ Retiré de la wishlist';
+        btn.classList.add('active');
+      } else {
+        btn.textContent = 'Ajouter à la wishlist';
+        btn.classList.remove('active');
+      }
+    }
+
+    let statsOpen = false;
+    function toggleStats() {
+      statsOpen = !statsOpen;
+      document.getElementById('statsBody').classList.toggle('visible', statsOpen);
+      document.getElementById('statsArrow').classList.toggle('open', statsOpen);
+      const btn = document.querySelector('.stats-toggle span:first-child');
+      btn.textContent = statsOpen ? 'Masquer les statistiques' : 'Afficher les statistiques de l\'offre';
+    }
+  </script>
+
+</body>
+</html>

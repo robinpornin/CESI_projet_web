@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Étudiant</title>
+  <link rel="stylesheet" href="../static/Styles.css">
+</head>
+
+<body>
+
+  <!-- header -->
+  <header>
+    <div class="icon-placeholder"></div>
+    <div class="logo">CESI-STAGES</div>
+    <div id="menu-container" data-role="1"></div>
+  </header>
+
+  <!-- bandeau bienvenue -->
+  <div class="bandeau">
+    <div class="bandeau-avatar">🎓</div>
+    <div class="bandeau-info">
+      <span class="bandeau-titre">Bienvenue, Étudiant 👋</span>
+      <span class="bandeau-badge">Espace Étudiant</span>
+      <span class="bandeau-sous">Recherchez des entreprises, des offres et gérez votre compte.</span>
+    </div>
+  </div>
+
+  <!-- main -->
+  <main>
+
+    <div class="separateur"></div>
+    <div class="section-titre">Que voulez-vous faire ?</div>
+
+    <!-- GROUPE 1 : Recherches -->
+    <div class="groupe">
+      <div class="groupe-label">Recherches</div>
+
+      <div class="action-bloc">
+        <div class="action-icon">🏢</div>
+        <div class="action-info">
+          <span class="action-titre">Rechercher une entreprise</span>
+          <span class="action-desc">→ Redirection vers la liste des entreprises</span>
+          <div class="action-input-row">
+            <input type="text" id="inputEntreprise" placeholder="Nom, secteur, ville...">
+            <button class="btn-action" onclick="go('recherche-entreprise.html', 'inputEntreprise')">Rechercher</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-bloc">
+        <div class="action-icon">📋</div>
+        <div class="action-info">
+          <span class="action-titre">Rechercher une offre de stage</span>
+          <span class="action-desc">→ Redirection vers la liste des offres</span>
+          <div class="action-input-row">
+            <input type="text" id="inputOffre" placeholder="Poste, compétence, ville...">
+            <button class="btn-action" onclick="go('recherche-offre.html', 'inputOffre')">Rechercher</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-bloc stat-bloc">
+        <div class="action-icon">📊</div>
+        <div class="action-info">
+          <span class="action-titre">Rechercher une offre <em>(avec statistiques)</em></span>
+          <span class="action-desc">→ Redirection vers la liste des offres avec statistiques</span>
+          <span class="action-tag">Stats incluses</span>
+          <div class="action-input-row">
+            <input type="text" id="inputOffreStat" placeholder="Poste, compétence, ville...">
+            <button class="btn-action" onclick="go('recherche-offre-stats.html', 'inputOffreStat')">Rechercher</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="groupe">
+      <div class="groupe-label">Mon compte</div>
+
+      <div class="action-bloc">
+        <div class="action-icon">🪪</div>
+        <div class="action-info">
+          <span class="action-titre">Accéder à un compte étudiant</span>
+          <span class="action-desc">→ Redirection vers la page du compte étudiant recherché</span>
+          <div class="action-input-row">
+            <input type="text" id="inputCompte" placeholder="Nom, prénom, email...">
+            <button class="btn-action" onclick="go('compte-etudiant.html', 'inputCompte')">Rechercher</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2026 <span>CESI-STAGES</span> — Tous droits réservés</p>
+  </footer>
+
+  <script>
+    function go(page, inputId) {
+      const q = document.getElementById(inputId).value.trim();
+      window.location.href = page + (q ? '?q=' + encodeURIComponent(q) : '');
+    }
+
+    ['inputEntreprise','inputOffre','inputOffreStat','inputCompte'].forEach(id => {
+      document.getElementById(id).addEventListener('keydown', e => {
+        if (e.key === 'Enter') {
+          const pages = {
+            inputEntreprise: 'recherche-entreprise.html',
+            inputOffre: 'recherche-offre.html',
+            inputOffreStat: 'recherche-offre-stats.html',
+            inputCompte: 'compte-etudiant.html'
+          };
+          go(pages[id], id);
+        }
+      });
+    });
+  </script>
+
+  <script src="../public/JavaScript/menu_deroulant.js"></script>
+</body>
+</html>

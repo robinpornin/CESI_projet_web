@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recherche Entreprise</title>
+  <link rel="stylesheet" href="../static/Styles.css">
+</head>
+
+<body>
+
+  <!-- header -->
+  <header>
+    <a href="javascript:history.back()" class="icon-btn" title="Retour">&#8592;</a>
+    <div class="logo">CESI-STAGES</div>
+    <div class="icon-btn" title="Mon profil" onclick="toggleMenu()">
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+    </div>
+  </header>
+
+  <!-- main -->
+  <main>
+
+    <!-- top -->
+    <div class="top-section">
+      <div class="bienvenue">
+        <h1>Recherche <span>Entreprise</span></h1>
+        <p>Trouvez une entreprise partenaire et accédez à sa fiche détaillée.</p>
+      </div>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Nom, secteur, ville..." oninput="filterEntreprises()">
+        <button class="btn-search" onclick="filterEntreprises()">Rechercher</button>
+      </div>
+    </div>
+
+    <div class="separateur"></div>
+
+    <!-- layout liste + fiche -->
+    <div class="content-layout">
+
+      <!-- liste -->
+      <div class="liste-entreprises">
+        <div class="liste-title">Liste des entreprises</div>
+        <div id="listeContainer"></div>
+      </div>
+
+      <!-- fiche -->
+      <div class="fiche-entreprise">
+        <h3>Accéder à la fiche entreprise</h3>
+
+        <div class="fiche-placeholder" id="fichePlaceholder">
+          <span class="icon">🏢</span>
+          <span>Sélectionnez une entreprise pour voir sa fiche</span>
+        </div>
+
+        <div class="fiche-content" id="ficheContent">
+          <div class="fiche-row">
+            <span class="fiche-label">Nom</span>
+            <span class="fiche-value" id="ficheNom">—</span>
+          </div>
+          <div class="fiche-row">
+            <span class="fiche-label">Secteur</span>
+            <span class="fiche-value" id="ficheSecteur">—</span>
+          </div>
+          <div class="fiche-row">
+            <span class="fiche-label">Ville</span>
+            <span class="fiche-value" id="ficheVille">—</span>
+          </div>
+          <div class="fiche-row">
+            <span class="fiche-label">Contact</span>
+            <span class="fiche-value" id="ficheContact">—</span>
+          </div>
+          <button class="btn-fiche">Voir la fiche complète →</button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- footer -->
+  <footer>
+    <p>&copy; 2026 <span>CESI-STAGES</span> — Tous droits réservés</p>
+  </footer>
+
+  <script>
+    const entreprises = [
+      { nom: "Airbus", secteur: "Aéronautique", ville: "Toulouse", contact: "rh@airbus.com" },
+      { nom: "Capgemini", secteur: "Informatique", ville: "Paris", contact: "stages@capgemini.fr" },
+      { nom: "Renault", secteur: "Automobile", ville: "Boulogne-Billancourt", contact: "recrutement@renault.com" },
+      { nom: "Orange", secteur: "Télécommunications", ville: "Paris", contact: "stages@orange.fr" },
+      { nom: "Schneider Electric", secteur: "Énergie", ville: "Grenoble", contact: "rh@schneider.com" },
+      { nom: "Thales", secteur: "Défense & Technologie", ville: "Vélizy", contact: "stages@thales.fr" },
+    ];
+
+    let activeIndex = null;
+
+    function renderEntreprises(list) {
+      const container = document.getElementById('listeContainer');
+      container.innerHTML = '';
+      if (list.length === 0) {
+        container.innerHTML = '<p style="color:#aaa;font-style:italic;font-size:0.85rem;padding:10px 0;">Aucune entreprise trouvée.</p>';
+        return;
+      }
+      list.forEach((e, i) => {
+        const card = document.createElement('div');
+        card.className = 'entreprise-card' + (activeIndex === i ? ' active' : '');
+        card.innerHTML = `
+          <div class="card-info">
+            <span class="card-name">${e.nom}</span>
+            <span class="card-meta">${e.secteur} · ${e.ville}</span>
+          </div>
+          <span class="card-arrow">›</span>
+        `;
+        card.onclick = () => selectEntreprise(i, list);
+        container.appendChild(card);
+      });
+    }
+
+    function selectEntreprise(index, list) {
+      activeIndex = index;
+      const e = list[index];
+      document.getElementById('ficheNom').textContent = e.nom;
+      document.getElementById('ficheSecteur').textContent = e.secteur;
+      document.getElementById('ficheVille').textContent = e.ville;
+      document.getElementById('ficheContact').textContent = e.contact;
+      document.getElementById('fichePlaceholder').style.display = 'none';
+      document.getElementById('ficheContent').classList.add('visible');
+      renderEntreprises(list);
+    }
+
+    function filterEntreprises() {
+      const q = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = entreprises.filter(e =>
+        e.nom.toLowerCase().includes(q) ||
+        e.secteur.toLowerCase().includes(q) ||
+        e.ville.toLowerCase().includes(q)
+      );
+      activeIndex = null;
+      document.getElementById('fichePlaceholder').style.display = 'flex';
+      document.getElementById('ficheContent').classList.remove('visible');
+      renderEntreprises(filtered);
+    }
+
+    // init
+    renderEntreprises(entreprises);
+  </script>
+
+</body>
+</html>
