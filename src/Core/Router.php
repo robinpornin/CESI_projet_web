@@ -4,6 +4,7 @@ namespace App\Core;
 
 use App\Controller\ControllerAccueil;
 use App\Controller\ControllerInvite;
+use App\Controller\ControllerCreationOffre;
 
 class Router
 {
@@ -21,6 +22,11 @@ class Router
 
             case '/invite':
                 (new ControllerInvite())->index();
+                ;
+                break;
+
+            case '/creationOffre':
+                (new ControllerCreationOffre())->index();
                 ;
                 break;
 
