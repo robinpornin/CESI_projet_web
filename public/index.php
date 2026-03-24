@@ -38,6 +38,11 @@ switch ($route) {
         $controller->render();
         break;
 
+    case 'connexion':
+        $controller = new PageConnexion($twig);
+        $controller->render();
+        break;
+
     case 'creationOffre':
         $controller = new PageCreationOffre($twig);
         $controller->render();
