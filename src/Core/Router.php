@@ -3,8 +3,10 @@
 namespace App\Core;
 
 use App\Controller\ControllerAccueil;
+use App\Controller\ControllerConnexion;
 use App\Controller\ControllerInvite;
 use App\Controller\ControllerCreationOffre;
+
 
 class Router
 {
@@ -17,7 +19,7 @@ class Router
                 break;
 
             case '/connexion':
-                echo "Page de connexion (à faire)";
+                (new ControllerConnexion())->index();
                 break;
 
             case '/invite':
