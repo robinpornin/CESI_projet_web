@@ -23,3 +23,19 @@ class PageInvite
         ]);
     }
 }
+
+public function create(CompetenceRepository $competenceRepository): Response
+{
+    $competences = $competenceRepository->findAll();
+
+    return $this->render('offre/create.html.twig', [
+        'competences' => $competences,
+    ]);
+}
+
+$competenceIds = $request->request->all('competences'); // tableau d'IDs
+
+foreach ($competenceIds as $id) {
+    $competence = $competenceRepository->find($id);
+    $offre->addCompetence($competence); // selon votre relation ManyToMany
+}

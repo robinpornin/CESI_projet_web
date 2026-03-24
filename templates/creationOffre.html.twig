@@ -96,14 +96,25 @@
           <span class="char-count" id="countDesc">0 / 600</span>
         </div>
 
-        <!-- compétences -->
+       <!-- compétences -->
         <span class="section-label">Compétences requises</span>
         <div class="form-group">
-          <label class="form-label">Ajouter des compétences</label>
-          <div class="tags-container" id="tagsContainer" onclick="document.getElementById('tagInput').focus()">
-            <input class="tag-input" id="tagInput" type="text" placeholder="Ex : React, Python… (Entrée pour valider)">
+          <label class="form-label">Sélectionnez les compétences</label>
+          <div class="tags-container" style="flex-wrap: wrap; gap: 0.5rem; padding: 0.75rem;">
+            {% for competence in competences %}
+              <label class="tag-checkbox">
+                <input 
+                  type="checkbox" 
+                  name="competences[]" 
+                  value="{{ competence.id }}"
+                >
+                <span>{{ competence.nomCompetence }}</span>
+              </label>
+            {% else %}
+              <p style="color: var(--text-muted)">Aucune compétence disponible.</p>
+            {% endfor %}
           </div>
-          <span class="tags-hint">Appuyez sur Entrée ou virgule pour ajouter une compétence</span>
+          <span class="tags-hint">Cochez une ou plusieurs compétences.</span>
         </div>
 
         <!-- contact -->
