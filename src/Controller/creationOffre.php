@@ -11,31 +11,13 @@ class PageInvite
         $this->twig = $twig;
     }
 
-    /**
-     * Récupère les données et affiche la page invité.
-     */
     public function render(): void
     {
         echo $this->twig->render('creationOffre.html.twig', [
-            'page'   => 'creation_offre',
-            'title'  => 'Création d\'une offre',
+            'page'          => 'creation_offre',
+            'title'         => 'Création d\'une offre',
             'platform_name' => 'CESI-STAGES',
+            'competences'   => [],  // ← tableau vide pour l'instant
         ]);
     }
-}
-
-public function create(CompetenceRepository $competenceRepository): Response
-{
-    $competences = $competenceRepository->findAll();
-
-    return $this->render('offre/create.html.twig', [
-        'competences' => $competences,
-    ]);
-}
-
-$competenceIds = $request->request->all('competences'); // tableau d'IDs
-
-foreach ($competenceIds as $id) {
-    $competence = $competenceRepository->find($id);
-    $offre->addCompetence($competence); // selon votre relation ManyToMany
 }
