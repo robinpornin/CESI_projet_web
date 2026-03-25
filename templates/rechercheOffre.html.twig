@@ -1,0 +1,163 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block content %}
+
+
+  <div class="top-section">
+    <div class="bienvenue">
+      <h1>Recherche d'<span>Offres de Stage</span></h1>
+      <p>Parcourez les offres disponibles et postulez en un clic.</p>
+    </div>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Titre, entreprise, secteur..." oninput="filterOffres()">
+      <div class="divider-v"></div>
+      <select id="filterVille" onchange="filterOffres()">
+        <option value="">Toutes les villes</option>
+        {% for ville in villes %}
+          <option value="{{ ville }}">{{ ville }}</option>
+        {% endfor %}
+      </select>
+      <div class="divider-v"></div>
+      <select id="filterDuree" onchange="filterOffres()">
+        <option value="">⏱ Toutes durées</option>
+        <option value="3">3 mois</option>
+        <option value="6">6 mois</option>
+      </select>
+      <button class="btn-search" onclick="filterOffres()">Rechercher</button>
+    </div>
+  </div>
+
+  <div class="separateur"></div>
+
+  <div class="content-layout">
+
+    <div class="liste-offres">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div class="liste-title">Liste des offres</div>
+        <span class="results-count" id="resultsCount"></span>
+      </div>
+      <div id="listeContainer"></div>
+    </div>
+
+    <div class="fiche-offre">
+      <h3>Postuler</h3>
+
+      <div class="fiche-placeholder" id="fichePlaceholder">
+        <span class="icon">📄</span>
+        <span>Sélectionnez une offre pour voir les détails</span>
+      </div>
+
+      <div class="fiche-content" id="ficheContent">
+        <div class="fiche-row">
+          <span class="fiche-label">Poste</span>
+          <span class="fiche-value" id="fichePoste">—</span>
+        </div>
+        <div class="fiche-row">
+          <span class="fiche-label">Entreprise</span>
+          <span class="fiche-value" id="ficheEntreprise">—</span>
+        </div>
+        <div class="fiche-row">
+          <span class="fiche-label">Secteur</span>
+          <span class="fiche-value" id="ficheSecteur">—</span>
+        </div>
+        <div class="fiche-row">
+          <span class="fiche-label">Ville</span>
+          <span class="fiche-value" id="ficheVille">—</span>
+        </div>
+        <div class="fiche-row">
+          <span class="fiche-label">Durée</span>
+          <span class="fiche-value" id="ficheDuree">—</span>
+        </div>
+        <div class="fiche-row">
+          <span class="fiche-label">Gratification</span>
+          <span class="fiche-value" id="ficheGrat">—</span>
+        </div>
+        <div class="fiche-row">
+          <span class="fiche-label">Date de début</span>
+          <span class="fiche-value" id="ficheDate">—</span>
+        </div>
+        <button class="btn-postuler" id="btnPostuler">✉️ Postuler</button>
+        <button class="btn-fiche-detail" id="btnDetail">Voir la fiche complète →</button>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+  const offres = {{ offres | json_encode | raw }};
+
+  let activeIndex = null;
+
+  function renderOffres(list) {
+    const container = document.getElementById('listeContainer');
+    const count = document.getElementById('resultsCount');
+    count.textContent = list.length + ' offre(s) trouvée(s)';
+    container.innerHTML = '';
+    if (list.length === 0) {
+      container.innerHTML = '<p style="color:#aaa;font-style:italic;font-size:0.85rem;padding:10px 0;">Aucune offre trouvée.</p>';
+      return;
+    }
+    list.forEach((o, i) => {
+      const card = document.createElement('div');
+      card.className = 'offre-card' + (activeIndex === i ? ' active' : '');
+      card.innerHTML = `
+        <div class="offre-top">
+          <span class="offre-titre">${o.Titre}</span>
+          <span class="offre-badge">${o.Duree} mois</span>
+        </div>
+        <div class="offre-meta">
+          <span>🏢 ${o.Nom_entreprise}</span>
+          <span>📍 ${o.Ville_CP}</span>
+          <span>💰 ${o.Remuneration} €/mois</span>
+        </div>
+      `;
+      card.onclick = () => selectOffre(i, list);
+      container.appendChild(card);
+    });
+  }
+
+  function selectOffre(index, list) {
+    activeIndex = index;
+    const o = list[index];
+    document.getElementById('fichePoste').textContent      = o.Titre;
+    document.getElementById('ficheEntreprise').textContent = o.Nom_entreprise;
+    document.getElementById('ficheSecteur').textContent    = o.Secteur;
+    document.getElementById('ficheVille').textContent      = o.Ville_CP;
+    document.getElementById('ficheDuree').textContent      = o.Duree + ' mois';
+    document.getElementById('ficheGrat').textContent       = o.Remuneration + ' €/mois';
+    document.getElementById('ficheDate').textContent       = o.Date_;
+    document.getElementById('btnPostuler').onclick = () => {
+      window.location.href = `postuler.php?id=${o.ID_Offre}`;
+    };
+    document.getElementById('btnDetail').onclick = () => {
+      window.location.href = `ficheOffre.php?id=${o.ID_Offre}`;
+    };
+    document.getElementById('fichePlaceholder').style.display = 'none';
+    document.getElementById('ficheContent').classList.add('visible');
+    renderOffres(list);
+  }
+
+  function filterOffres() {
+    const q     = document.getElementById('searchInput').value.toLowerCase();
+    const ville = document.getElementById('filterVille').value;
+    const duree = document.getElementById('filterDuree').value;
+
+    const filtered = offres.filter(o =>
+      (o.Titre.toLowerCase().includes(q) ||
+       o.Nom_entreprise.toLowerCase().includes(q) ||
+       o.Secteur.toLowerCase().includes(q)) &&
+      (ville === '' || o.Ville_CP === ville) &&
+      (duree === '' || String(o.Duree) === duree)
+    );
+    activeIndex = null;
+    document.getElementById('fichePlaceholder').style.display = 'flex';
+    document.getElementById('ficheContent').classList.remove('visible');
+    renderOffres(filtered);
+  }
+
+  renderOffres(offres);
+</script>
+
+{% endblock %}
