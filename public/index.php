@@ -8,9 +8,16 @@ error_reporting(E_ALL);
 
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../src/Controller/accueil.php';
-require_once __DIR__ . '/../src/Controller/invite.php';
+require_once __DIR__ . '/../src/Controller/admin.php';
 require_once __DIR__ . '/../src/Controller/connexion.php';
+require_once __DIR__ . '/../src/Controller/FicheEntreprise.php';
+require_once __DIR__ . '/../src/Controller/creationCompte.php';
+require_once __DIR__ . '/../src/Controller/creationEleve.php';
+require_once __DIR__ . '/../src/Controller/creationEntreprise.php';
 require_once __DIR__ . '/../src/Controller/creationOffre.php';
+require_once __DIR__ . '/../src/Controller/espaceEleve.php';
+require_once __DIR__ . '/../src/Controller/formulaire.php';
+require_once __DIR__ . '/../src/Controller/invite.php';
 
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../templates');
 $twig = new \Twig\Environment($loader, [
