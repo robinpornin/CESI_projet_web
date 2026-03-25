@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-class PageInvite
+class PageAdmin
 {
     private \Twig\Environment $twig;
 

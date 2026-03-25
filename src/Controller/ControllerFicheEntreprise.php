@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-class PageAccueil
+class PageFicheEntreprise
 {
     private \Twig\Environment $twig;
     

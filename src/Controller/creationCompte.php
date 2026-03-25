@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-class PageInvite
+class PageCreationCompte
 {
     private \Twig\Environment $twig;
 

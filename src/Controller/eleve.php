@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-class PageFormulaire
+class PageEleve
 {
     private \Twig\Environment $twig;
 
@@ -16,9 +16,9 @@ class PageFormulaire
      */
     public function render(): void
     {
-        echo $this->twig->render('formulaire.html.twig', [
-            'page'   => 'formulaire',
-            'title'  => 'Formulaire',
+        echo $this->twig->render('eleve.html.twig', [
+            'page'   => 'eleve',
+            'title'  => 'élève',
             'platform_name' => 'CESI-STAGES',
         ]);
     }

@@ -5,7 +5,17 @@ namespace App\Core;
 use App\Controller\ControllerAccueil;
 use App\Controller\ControllerConnexion;
 use App\Controller\ControllerInvite;
+use App\Controller\ControllerAdmin;
+use App\Controller\ControllerFicheEntreprise;
+use App\Controller\ControllerCreationCompte;
+use App\Controller\ControllerCreationEleve;
+use App\Controller\ControllerCreationEntreprise;
+
 use App\Controller\ControllerCreationOffre;
+use App\Controller\ControllerEleve;
+use App\Controller\ControllerEspaceEleve;
+use App\Controller\ControllerFormulaire;
+
 
 
 class Router
