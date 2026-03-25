@@ -1,0 +1,101 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block content %}
+
+<div class="profil-card">
+  <div class="profil-avatar">👤</div>
+  <div class="profil-info">
+    <span class="profil-nom">{{ utilisateur.Prenom }} {{ utilisateur.Nom }}</span>
+    <span class="profil-badge">Ma Wishlist</span>
+    <span class="profil-sous">Vos offres de stage sauvegardées</span>
+  </div>
+</div>
+
+  <div class="barre-titre">
+    <span class="titre-section">
+      Wishlist
+      <span class="compteur-badge" id="compteur">
+        {{ offres | length }} {{ offres | length <= 1 ? 'offre' : 'offres' }}
+      </span>
+    </span>
+    <a class="btn-voir-liste" href="rechercheOffre.php">
+      🔍 <span>Voir toutes les offres</span> →
+    </a>
+  </div>
+
+  <div class="offres-list" id="offresList">
+
+    {% for offre in offres %}
+      <div class="offre-carte" id="offre-{{ offre.ID_Offre }}" data-id="{{ offre.ID_Offre }}">
+        <div class="offre-num">{{ loop.index }}</div>
+        <div class="offre-info">
+          <span class="offre-titre">{{ offre.Titre }}</span>
+          <div class="offre-meta">
+            <span>🏢 {{ offre.Nom_entreprise }}</span>
+            <span>📍 {{ offre.Ville_CP }}</span>
+            <span class="offre-tag">{{ offre.Duree }} mois</span>
+            <span class="offre-tag">{{ offre.Remuneration }} €/mois</span>
+          </div>
+        </div>
+        <div class="offre-actions">
+          <a class="btn-offre btn-voir" href="ficheOffre.php?id={{ offre.ID_Offre }}">👁️ Voir</a>
+          <button class="btn-offre btn-suppr" onclick="supprimerOffre({{ offre.ID_Offre }})">🗑️ Supprimer</button>
+        </div>
+      </div>
+    {% endfor %}
+
+  </div>
+
+  <div class="vide {% if offres | length == 0 %}visible{% endif %}" id="vide">
+    <span class="vide-icon">⭐</span>
+    <span class="vide-titre">Votre wishlist est vide</span>
+    <span class="vide-desc">Explorez les offres disponibles et ajoutez vos favoris !</span>
+    <button class="btn-explorer" onclick="window.location.href='rechercheOffre.php'">Explorer les offres</button>
+  </div>
+
+<script>
+  let count = {{ offres | length }};
+
+  function supprimerOffre(idOffre) {
+    const carte = document.querySelector(`[data-id="${idOffre}"]`);
+    if (!carte) return;
+    carte.classList.add('removing');
+
+    // Appel AJAX pour supprimer en BDD
+    fetch('supprimerWishlist.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id_offre: idOffre })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        setTimeout(() => {
+          carte.remove();
+          count--;
+          majCompteur();
+          majNumerotation();
+          if (count === 0) {
+            document.getElementById('vide').classList.add('visible');
+          }
+        }, 350);
+      }
+    });
+  }
+
+  function majCompteur() {
+    const el = document.getElementById('compteur');
+    el.textContent = count + (count <= 1 ? ' offre' : ' offres');
+  }
+
+  function majNumerotation() {
+    document.querySelectorAll('.offre-carte').forEach((c, i) => {
+      const num = c.querySelector('.offre-num');
+      if (num) num.textContent = i + 1;
+    });
+  }
+</script>
+
+{% endblock %}
