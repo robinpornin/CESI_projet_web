@@ -1,0 +1,54 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Page des paramètres de l'entreprise{% endblock %}
+
+{% block content %}
+
+<!-- bandeau -->
+  <div class="bandeau">
+    <div class="bandeau-icon">⚙️</div>
+    <div class="bandeau-info">
+      <span class="bandeau-titre">Paramètres de l'entreprise</span>
+      <span class="bandeau-badge">Paramètres</span>
+      <span class="bandeau-sous">Gérez les paramètres de cette entreprise partenaire.</span>
+    </div>
+  </div>
+
+  <!-- main -->
+
+    <div class="separateur"></div>
+
+    <!-- fiche entreprise -->
+    <div class="fiche">
+      <div class="fiche-logo">🏢</div>
+      <div class="fiche-info">
+        <span class="fiche-nom"> {{ Nom }} </span>
+        <span class="fiche-meta"> {{ ville_codePostale }} &nbsp;·&nbsp; {{ secteur }} &nbsp;·&nbsp; PME</span>
+      </div>
+    </div>
+
+    <div class="section-titre">Que voulez-vous faire ?</div>
+
+    <!-- modifier -->
+    <a class="action-carte" href="modifier-entreprise.html">
+      <span class="action-carte-icon">✏️</span>
+      <div class="action-carte-info">
+        <span class="action-carte-titre">Modifier l'entreprise</span>
+        <span class="action-carte-desc">→ Mettre à jour les informations de l'entreprise</span>
+      </div>
+      <span class="action-carte-arrow">›</span>
+    </a>
+
+    <div class="divider"></div>
+
+    <!-- supprimer -->
+    <button class="action-carte danger" onclick="ouvrirModal()">
+      <span class="action-carte-icon">🗑️</span>
+      <div class="action-carte-info">
+        <span class="action-carte-titre">Supprimer l'entreprise</span>
+        <span class="action-carte-desc">→ Suppression définitive et irréversible</span>
+      </div>
+      <span class="action-carte-arrow">›</span>
+    </button>
+
+{% endblock %}

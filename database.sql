@@ -29,6 +29,8 @@ CREATE TABLE IF NOT EXISTS Entreprises(
    ID_Entreprise INT AUTO_INCREMENT,
    Email_entreprise VARCHAR(255) NOT NULL UNIQUE,
    Nom_entreprise VARCHAR(255) NOT NULL,
+   Secteur VARCHAR(255) NOT NULL,
+   Type VARCHAR(255) NOT NULL,
    Nb_stagiaires INT NOT NULL,
    Description_entreprise VARCHAR(512) NOT NULL,
    Telephone VARCHAR(16) NOT NULL,
@@ -68,6 +70,7 @@ CREATE TABLE IF NOT EXISTS Offres(
    Date_ DATE NOT NULL,
    Description VARCHAR(512) NOT NULL,
    Duree INT NOT NULL,
+   Ville_CP VARCHAR(255) NOT NULL,
    ID_Entreprise INT NOT NULL,
    ID_Utilisateur INT NOT NULL,
    PRIMARY KEY(ID_Offre),
@@ -204,6 +207,8 @@ CREATE TABLE `Entreprises` (
   `ID_Entreprise` int NOT NULL,
   `Email_entreprise` varchar(255) NOT NULL,
   `Nom_entreprise` varchar(255) NOT NULL,
+  `Secteur` varchar(255) NOT NULL,
+  `Type` varchar(255) NOT NULL,
   `Nb_stagiaires` int NOT NULL,
   `Description_entreprise` varchar(512) NOT NULL,
   `Telephone` varchar(16) NOT NULL,
@@ -236,6 +241,7 @@ CREATE TABLE `Offres` (
   `Date_` date NOT NULL,
   `Description` varchar(512) NOT NULL,
   `Duree` int NOT NULL,
+  `Ville_CP` varchar(255) NOT NULL,
   `ID_Entreprise` int NOT NULL,
   `ID_Utilisateur` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

@@ -1,0 +1,55 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Paramètres du compte élève{% endblock %}
+
+{% block content %}
+
+  <!-- bandeau -->
+  <div class="bandeau">
+    <div class="bandeau-icon">⚙️</div>
+    <div class="bandeau-info">
+      <span class="bandeau-titre">Paramètres du compte Élève</span>
+      <span class="bandeau-badge">Paramètres</span>
+      <span class="bandeau-sous">Gérez les paramètres et les informations du compte élève.</span>
+    </div>
+  </div>
+
+  <!-- main -->
+
+    <div class="separateur"></div>
+    <div class="section-titre">Que voulez-vous faire ?</div>
+
+    <!-- wish-list -->
+    <a class="action-carte" href="wish-list-eleve.html">
+      <span class="action-carte-icon">⭐</span>
+      <div class="action-carte-info">
+        <span class="action-carte-titre">Afficher la wish-list de l'élève</span>
+        <span class="action-carte-desc">→ Voir la liste des offres favorites de l'élève</span>
+      </div>
+      <span class="action-carte-arrow">›</span>
+    </a>
+
+    <div class="divider"></div>
+
+    <!-- modifier -->
+    <a class="action-carte modifier" href="modifier-compte-eleve.html">
+      <span class="action-carte-icon">✏️</span>
+      <div class="action-carte-info">
+        <span class="action-carte-titre">Modifier le compte élève</span>
+        <span class="action-carte-desc">→ Mettre à jour les informations du profil</span>
+      </div>
+      <span class="action-carte-arrow">›</span>
+    </a>
+
+    <!-- supprimer -->
+    <button class="action-carte danger" onclick="ouvrirModal()">
+      <span class="action-carte-icon">🗑️</span>
+      <div class="action-carte-info">
+        <span class="action-carte-titre">Supprimer le compte élève</span>
+        <span class="action-carte-desc">→ Suppression définitive et irréversible</span>
+      </div>
+      <span class="action-carte-arrow">›</span>
+    </button>
+
+
+{% endblock %}
