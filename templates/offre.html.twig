@@ -1,20 +1,18 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Page de l'offre {% endblock %}
+{% block title %}Page de l'offre{% endblock %}
 
 {% block content %}
-
-<!-- main -->
 
     <!-- intitulé -->
     <div class="intitule-card">
       <div class="intitule-top">
-        <span class="intitule-titre">{{ Titre }}</span>
+        <span class="intitule-titre">{{ offre.Titre }}</span>
       </div>
       <div class="intitule-meta">
-        <div class="meta-item"><span>🏢</span> {{ Nom }} </div>
-        <div class="meta-item"><span>📍</span> {{ ville_codePostale }} </div>
-        <div class="meta-item"><span>💶</span> {{ Remuneration }} </div>
+        <div class="meta-item"><span>🏢</span> {{ offre.Nom_entreprise }}</div>
+        <div class="meta-item"><span>📍</span> {{ offre.Ville_CP }}</div>
+        <div class="meta-item"><span>💶</span> {{ offre.Remuneration }} €/mois</div>
       </div>
     </div>
 
@@ -27,27 +25,26 @@
       <div class="desc-body">
 
         <span class="desc-section-titre">Missions</span>
-        <p class="desc-texte"> {{ Description }} </p>
+        <p class="desc-texte">{{ offre.Description }}</p>
 
         <span class="desc-section-titre">Compétences requises</span>
         <div class="tags-list">
-          <span class="tag">React</span>
-          <span class="tag">Node.js</span>
-          <span class="tag">TypeScript</span>
-          <span class="tag">SQL</span>
-          <span class="tag">Git</span>
-          <span class="tag">REST API</span>
+          {% for competence in competences %}
+            <span class="tag">{{ competence.Nom_competence }}</span>
+          {% else %}
+            <span>Aucune compétence renseignée.</span>
+          {% endfor %}
         </div>
 
         <span class="desc-section-titre">Informations pratiques</span>
         <div class="infos-grid">
           <div class="info-item">
             <span class="info-label">Durée</span>
-            <span class="info-value"> {{ Duree }} </span>
+            <span class="info-value">{{ offre.Duree }} mois</span>
           </div>
           <div class="info-item">
-            <span class="info-label">Télétravail</span>
-            <span class="info-value">Hybride</span>
+            <span class="info-label">Date de début</span>
+            <span class="info-value">{{ offre.Date_ }}</span>
           </div>
         </div>
 
@@ -71,26 +68,24 @@
         <div class="stats-grid">
           <div class="stat-item highlight">
             <span class="stat-icon">👁️</span>
-            <span class="stat-value"> {{ Nb_vues }} </span>
+            <span class="stat-value">{{ stats.nb_vues }}</span>
             <span class="stat-label">Vues</span>
           </div>
-
           <div class="stat-item">
             <span class="stat-icon">📩</span>
-            <span class="stat-value"> {{ Nb_postulations }} </span>
+            <span class="stat-value">{{ stats.nb_candidatures }}</span>
             <span class="stat-label">Candidatures</span>
           </div>
         </div>
 
-          <div class="progress-bar-bg">
-            <div class="progress-bar-fill" style="width: 14%"></div>
-          </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" style="width: {{ stats.taux_wishlist }}%"></div>
         </div>
 
         <div class="progress-row">
           <div class="progress-label-row">
             <span>Taux d'ajout wishlist : </span>
-            <span> {{ taux_ajout_wishlist }} </span>
+            <span>{{ stats.taux_wishlist }} %</span>
           </div>
         </div>
 
