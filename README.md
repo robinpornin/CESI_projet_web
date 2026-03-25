@@ -11,5 +11,7 @@ Projet web CESI : Conception d'un site Internet de type Job-board (fictif), Fron
 - GitHub
 - Notion.so
 - Serveur Apache local (apache2 sur Ubuntu)
+- MySQL / PHPMyAdmin
+- Visual Studio Code
 
 #
