@@ -28,8 +28,8 @@ class PageConnexion
         $message = null;
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email = trim($_POST['Email'] ?? '');
-            $motDePasse = $_POST['Mdp'] ?? '';
+            $email = trim($_POST['email'] ?? '');
+            $motDePasse = $_POST['mot_de_passe'] ?? '';
 
             if ($email === '' || $motDePasse === '') {
                 $erreur = 'Veuillez remplir tous les champs.';

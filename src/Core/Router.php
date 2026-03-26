@@ -45,7 +45,7 @@ class Router
 
             // --- Accueil ---
             case 'home':
-            default :
+            case '' :
                 (new \PageAccueil($this->twig))->render();
                 break;
 
