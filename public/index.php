@@ -6,58 +6,55 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+session_start();
+
 require_once __DIR__ . '/../vendor/autoload.php';
+
+// Controllers
 require_once __DIR__ . '/../src/Controller/accueil.php';
-require_once __DIR__ . '/../src/Controller/admin.php';
 require_once __DIR__ . '/../src/Controller/connexion.php';
+require_once __DIR__ . '/../src/Controller/invite.php';
+require_once __DIR__ . '/../src/Controller/admin.php';
 require_once __DIR__ . '/../src/Controller/FicheEntreprise.php';
 require_once __DIR__ . '/../src/Controller/creationCompte.php';
 require_once __DIR__ . '/../src/Controller/creationEleve.php';
 require_once __DIR__ . '/../src/Controller/creationEntreprise.php';
 require_once __DIR__ . '/../src/Controller/creationOffre.php';
+require_once __DIR__ . '/../src/Controller/eleve.php';
 require_once __DIR__ . '/../src/Controller/espaceEleve.php';
 require_once __DIR__ . '/../src/Controller/formulaire.php';
-require_once __DIR__ . '/../src/Controller/invite.php';
+require_once __DIR__ . '/../src/Controller/gestionCompte.php';
+require_once __DIR__ . '/../src/Controller/gestionEntreprise.php';
+require_once __DIR__ . '/../src/Controller/gestionCompteEleveAdmin.php';
+require_once __DIR__ . '/../src/Controller/gestionComptePiloteAdmin.php';
+require_once __DIR__ . '/../src/Controller/offre.php';
+require_once __DIR__ . '/../src/Controller/parametreEleve.php';
+require_once __DIR__ . '/../src/Controller/parametreEntreprise.php';
+require_once __DIR__ . '/../src/Controller/parametreOffre.php';
+require_once __DIR__ . '/../src/Controller/pilote.php';
+require_once __DIR__ . '/../src/Controller/rechercheEntreprise.php';
+require_once __DIR__ . '/../src/Controller/rechercheOffre.php';
+require_once __DIR__ . '/../src/Controller/wishlist.php';
 
+// Router
+require_once __DIR__ . '/../src/Core/Router.php';
+
+// Twig
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../templates');
-$twig = new \Twig\Environment($loader, [
-    'debug' => true,
-]);
+$twig   = new \Twig\Environment($loader, ['debug' => true]);
 $twig->addExtension(new \Twig\Extension\DebugExtension());
+$twig->addGlobal('user_role', $_SESSION['user_role'] ?? 0);
+$twig->addGlobal('user_nom',  $_SESSION['user_nom']  ?? null);
 
+// Récupération de la route
 $requestUri = $_SERVER['REQUEST_URI'];
-$scriptDir  = dirname($_SERVER['SCRIPT_NAME']);
-$route      = trim(str_replace($scriptDir, '', parse_url($requestUri, PHP_URL_PATH)), '/');
+$path       = parse_url($requestUri, PHP_URL_PATH);
+$route      = trim($path, '/');
 
 if ($route === '') {
     $route = 'home';
 }
 
-switch ($route) {
-
-    case 'home':
-    case '':
-        $controller = new PageAccueil($twig);
-        $controller->render();
-        break;
-
-    case 'invite':
-        $controller = new PageInvite($twig);
-        $controller->render();
-        break;
-
-    case 'connexion':
-        $controller = new PageConnexion($twig);
-        $controller->render();
-        break;
-
-    case 'creationOffre':
-        $controller = new PageCreationOffre($twig);
-        $controller->render();
-        break;
-
-    default:
-        http_response_code(404);
-        echo "404 - Page non trouvée : " . htmlspecialchars($route);
-        break;
-}
+// Lancement du router
+$router = new \App\Core\Router($twig);
+$router->handle($route);

@@ -2,49 +2,167 @@
 
 namespace App\Core;
 
-use App\Controller\ControllerAccueil;
-use App\Controller\ControllerConnexion;
-use App\Controller\ControllerInvite;
-use App\Controller\ControllerAdmin;
-use App\Controller\ControllerFicheEntreprise;
-use App\Controller\ControllerCreationCompte;
-use App\Controller\ControllerCreationEleve;
-use App\Controller\ControllerCreationEntreprise;
-
-use App\Controller\ControllerCreationOffre;
-use App\Controller\ControllerEleve;
-use App\Controller\ControllerEspaceEleve;
-use App\Controller\ControllerFormulaire;
-
-
+use App\Controller\{
+    ControllerAccueil,
+    ControllerConnexion,
+    ControllerInvite,
+    ControllerAdmin,
+    ControllerFicheEntreprise,
+    ControllerCreationCompte,
+    ControllerCreationEleve,
+    ControllerCreationEntreprise,
+    ControllerCreationOffre,
+    ControllerEleve,
+    ControllerEspaceEleve,
+    ControllerFormulaire,
+    ControllerGestionCompte,
+    ControllerGestionEntreprise,
+    ControllerGestionOffre,
+    ControllerGestionCompteEleveAdmin,
+    ControllerGestionComptePiloteAdmin,
+    ControllerOffre,
+    ControllerParametreEleve,
+    ControllerParametreEntreprise,
+    ControllerParametreOffre,
+    ControllerPilote,
+    ControllerRechercheEntreprise,
+    ControllerRechercheOffre,
+    ControllerWishlist
+};
 
 class Router
 {
-    public function handle($url)
+    private \Twig\Environment $twig;
+
+    public function __construct(\Twig\Environment $twig)
+    {
+        $this->twig = $twig;
+    }
+
+    public function handle(string $url): void
     {
         switch ($url) {
 
-            case '/':
-                (new ControllerAccueil())->index();
+            // --- Accueil ---
+            case 'home':
+            case '':
+                (new \ControllerAccueil($this->twig))->render();
                 break;
 
-            case '/connexion':
-                (new ControllerConnexion())->index();
+            // --- Authentification ---
+            case 'connexion':
+                (new \ControllerConnexion($this->twig))->render();
                 break;
 
-            case '/invite':
-                (new ControllerInvite())->index();
-                ;
+            case 'deconnexion':
+                session_destroy();
+                header('Location: /');
+                exit;
+
+            case 'creationCompte':
+                (new \ControllerCreationCompte($this->twig))->render();
                 break;
 
-            case '/creationOffre':
-                (new ControllerCreationOffre())->index();
-                ;
+            // --- Invité ---
+            case 'invite':
+                (new \ControllerInvite($this->twig))->render();
                 break;
 
+            // --- Espaces utilisateurs ---
+            case 'eleve':
+                (new \ControllerEleve($this->twig))->render();
+                break;
+
+            case 'pilote':
+                (new \ControllerPilote($this->twig))->render();
+                break;
+
+            case 'admin':
+                (new \ControllerAdmin($this->twig))->render();
+                break;
+
+            // --- Gestion compte ---
+            case 'gestionCompte':
+                (new \ControllerGestionCompte($this->twig))->render();
+                break;
+
+            case 'gestionCompteEleveAdmin':
+                (new \ControllerGestionCompteEleveAdmin($this->twig))->render();
+                break;
+
+            case 'gestionComptePiloteAdmin':
+                (new \ControllerGestionComptePiloteAdmin($this->twig))->render();
+                break;
+
+            // --- Espace élève ---
+            case 'espaceEleve':
+                (new \ControllerEspaceEleve($this->twig))->render();
+                break;
+
+            case 'creationEleve':
+                (new \ControllerCreationEleve($this->twig))->render();
+                break;
+
+            case 'parametreEleve':
+                (new \ControllerParametreEleve($this->twig))->render();
+                break;
+
+            // --- Entreprises ---
+            case 'gestionEntreprise':
+                (new \ControllerGestionEntreprise($this->twig))->render();
+                break;
+
+            case 'creationEntreprise':
+                (new \ControllerCreationEntreprise($this->twig))->render();
+                break;
+
+            case 'ficheEntreprise':
+                (new \ControllerFicheEntreprise($this->twig))->render();
+                break;
+
+            case 'parametreEntreprise':
+                (new \ControllerParametreEntreprise($this->twig))->render();
+                break;
+
+            case 'rechercheEntreprise':
+                (new \ControllerRechercheEntreprise($this->twig))->render();
+                break;
+
+            // --- Offres ---
+            case 'gestionOffre':
+                (new \ControllerGestionOffre($this->twig))->render();
+                break;
+
+            case 'creationOffre':
+                (new \ControllerCreationOffre($this->twig))->render();
+                break;
+
+            case 'offre':
+                (new \ControllerOffre($this->twig))->render();
+                break;
+
+            case 'parametreOffre':
+                (new \ControllerParametreOffre($this->twig))->render();
+                break;
+
+            case 'rechercheOffre':
+                (new \ControllerRechercheOffre($this->twig))->render();
+                break;
+
+            // --- Wishlist & Formulaire ---
+            case 'wishlist':
+                (new \ControllerWishlist($this->twig))->render();
+                break;
+
+            case 'formulaire':
+                (new \ControllerFormulaire($this->twig))->render();
+                break;
+
+            // --- 404 ---
             default:
                 http_response_code(404);
-                echo "404 - Page non trouvée";
+                echo "404 - Page non trouvée : " . htmlspecialchars($url);
+                break;
         }
     }
 }
