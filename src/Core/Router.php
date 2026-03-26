@@ -51,7 +51,7 @@ class Router
 
             // --- Authentification ---
             case 'connexion':
-                (new \ControllerConnexion($this->twig))->render();
+                (new \PageConnexion($this->twig))->render();
                 break;
 
             case 'deconnexion':
@@ -60,109 +60,109 @@ class Router
                 exit;
 
             case 'creationCompte':
-                (new \ControllerCreationCompte($this->twig))->render();
+                (new \PageCreationCompte($this->twig))->render();
                 break;
 
             // --- Invité ---
             case 'invite':
-                (new \ControllerInvite($this->twig))->render();
+                (new \PageInvite($this->twig))->render();
                 break;
 
             // --- Espaces utilisateurs ---
             case 'eleve':
-                (new \ControllerEleve($this->twig))->render();
+                (new \PageEleve($this->twig))->render();
                 break;
 
             case 'pilote':
-                (new \ControllerPilote($this->twig))->render();
+                (new \PagePilote($this->twig))->render();
                 break;
 
             case 'admin':
-                (new \ControllerAdmin($this->twig))->render();
+                (new \PageAdmin($this->twig))->render();
                 break;
 
             // --- Gestion compte ---
             case 'gestionCompte':
-                (new \ControllerGestionCompte($this->twig))->render();
+                (new \PageGestionCompte($this->twig))->render();
                 break;
 
             case 'gestionCompteEleveAdmin':
-                (new \ControllerGestionCompteEleveAdmin($this->twig))->render();
+                (new \PageGestionCompteEleveAdmin($this->twig))->render();
                 break;
 
             case 'gestionComptePiloteAdmin':
-                (new \ControllerGestionComptePiloteAdmin($this->twig))->render();
+                (new \PageGestionComptePiloteAdmin($this->twig))->render();
                 break;
 
             // --- Espace élève ---
             case 'espaceEleve':
-                (new \ControllerEspaceEleve($this->twig))->render();
+                (new \PageEspaceEleve($this->twig))->render();
                 break;
 
             case 'creationEleve':
-                (new \ControllerCreationEleve($this->twig))->render();
+                (new \PageCreationEleve($this->twig))->render();
                 break;
 
             case 'parametreEleve':
-                (new \ControllerParametreEleve($this->twig))->render();
+                (new \PageParametreEleve($this->twig))->render();
                 break;
 
             // --- Entreprises ---
             case 'gestionEntreprise':
-                (new \ControllerGestionEntreprise($this->twig))->render();
+                (new \PageGestionEntreprise($this->twig))->render();
                 break;
 
             case 'creationEntreprise':
-                (new \ControllerCreationEntreprise($this->twig))->render();
+                (new \PageCreationEntreprise($this->twig))->render();
                 break;
 
             case 'ficheEntreprise':
-                (new \ControllerFicheEntreprise($this->twig))->render();
+                (new \PageFicheEntreprise($this->twig))->render();
                 break;
 
             case 'parametreEntreprise':
-                (new \ControllerParametreEntreprise($this->twig))->render();
+                (new \PageParametreEntreprise($this->twig))->render();
                 break;
 
             case 'rechercheEntreprise':
-                (new \ControllerRechercheEntreprise($this->twig))->render();
+                (new \PageRechercheEntreprise($this->twig))->render();
                 break;
 
             // --- Offres ---
             case 'gestionOffre':
-                (new \ControllerGestionOffre($this->twig))->render();
+                (new \PageGestionOffre($this->twig))->render();
                 break;
 
             case 'creationOffre':
-                (new \ControllerCreationOffre($this->twig))->render();
+                (new \PageCreationOffre($this->twig))->render();
                 break;
 
             case 'offre':
-                (new \ControllerOffre($this->twig))->render();
+                (new \PageOffre($this->twig))->render();
                 break;
 
             case 'parametreOffre':
-                (new \ControllerParametreOffre($this->twig))->render();
+                (new \PageParametreOffre($this->twig))->render();
                 break;
 
             case 'rechercheOffre':
-                (new \ControllerRechercheOffre($this->twig))->render();
+                (new \PageRechercheOffre($this->twig))->render();
                 break;
 
             // --- Wishlist & Formulaire ---
             case 'wishlist':
-                (new \ControllerWishlist($this->twig))->render();
+                (new \PageWishlist($this->twig))->render();
                 break;
 
             case 'formulaire':
-                (new \ControllerFormulaire($this->twig))->render();
+                (new \PageFormulaire($this->twig))->render();
                 break;
 
             // --- 404 ---
-            // default:
-                //http_response_code(404);
-                //echo "404 - Page non trouvée : " . htmlspecialchars($url);
-                //break;
+            default:
+                http_response_code(404);
+                echo "404 - Page non trouvée : " . htmlspecialchars($url);
+                break;
         }
     }
 }
