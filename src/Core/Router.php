@@ -45,7 +45,7 @@ class Router
 
             // --- Accueil ---
             case 'home':
-            case '':
+            default :
                 (new \ControllerAccueil($this->twig))->render();
                 break;
 
@@ -159,10 +159,10 @@ class Router
                 break;
 
             // --- 404 ---
-            default:
-                http_response_code(404);
-                echo "404 - Page non trouvée : " . htmlspecialchars($url);
-                break;
+            // default:
+                //http_response_code(404);
+                //echo "404 - Page non trouvée : " . htmlspecialchars($url);
+                //break;
         }
     }
 }
