@@ -53,29 +53,38 @@ class PageConnexion
                     $erreur = 'Mot de passe incorrect.';
                 } else {
                     $_SESSION['utilisateur'] = [
-                        'id' => $utilisateur['ID_Utilisateur'],
-                        'nom' => $utilisateur['Nom'],
+                        'id'     => $utilisateur['ID_Utilisateur'],
+                        'nom'    => $utilisateur['Nom'],
                         'prenom' => $utilisateur['Prenom'],
-                        'email' => $utilisateur['Email'],
-                        'role' => $utilisateur['Role'],
+                        'email'  => $utilisateur['Email'],
+                        'role'   => $utilisateur['Role'],
                     ];
 
-                    $message = 'Connexion réussie.';
-
-                    // Exemple de redirection :
-                    // header('Location: /dashboard');
-                    // exit;
+                    switch ((int) $utilisateur['Role']) {
+                        case 1:
+                            header('Location: /eleve');
+                            break;
+                        case 2:
+                            header('Location: /pilote');
+                            break;
+                        case 3:
+                            header('Location: /admin');
+                            break;
+                        default:
+                            header('Location: /');
+                            break;
+                    }
+                    exit;
                 }
             }
         }
 
         echo $this->twig->render('connexion.html.twig', [
-            'page' => 'Connexion',
-            'title' => 'Connexion',
+            'page'          => 'Connexion',
+            'title'         => 'Connexion',
             'platform_name' => 'CESI-STAGES',
-            'erreur' => $erreur,
-            'message' => $message,
+            'erreur'        => $erreur,
+            'message'       => $message,
         ]);
     }
 }
-
