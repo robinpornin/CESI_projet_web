@@ -3,31 +3,31 @@
 namespace App\Core;
 
 use App\Controller\{
-    ControllerAccueil,
-    ControllerConnexion,
-    ControllerInvite,
-    ControllerAdmin,
-    ControllerFicheEntreprise,
-    ControllerCreationCompte,
-    ControllerCreationEleve,
-    ControllerCreationEntreprise,
-    ControllerCreationOffre,
-    ControllerEleve,
-    ControllerEspaceEleve,
-    ControllerFormulaire,
-    ControllerGestionCompte,
-    ControllerGestionEntreprise,
-    ControllerGestionOffre,
-    ControllerGestionCompteEleveAdmin,
-    ControllerGestionComptePiloteAdmin,
-    ControllerOffre,
-    ControllerParametreEleve,
-    ControllerParametreEntreprise,
-    ControllerParametreOffre,
-    ControllerPilote,
-    ControllerRechercheEntreprise,
-    ControllerRechercheOffre,
-    ControllerWishlist
+    PageAccueil,
+    PageConnexion,
+    PageInvite,
+    PageAdmin,
+    PageFicheEntreprise,
+    PageCreationCompte,
+    PageCreationEleve,
+    PageCreationEntreprise,
+    PageCreationOffre,
+    PageEleve,
+    PageEspaceEleve,
+    PageFormulaire,
+    PageGestionCompte,
+    PageGestionEntreprise,
+    PageGestionOffre,
+    PageGestionCompteEleveAdmin,
+    PageGestionComptePiloteAdmin,
+    PageOffre,
+    PageParametreEleve,
+    PageParametreEntreprise,
+    PageParametreOffre,
+    PagePilote,
+    PageRechercheEntreprise,
+    PageRechercheOffre,
+    PageWishlist
 };
 
 class Router
@@ -46,7 +46,7 @@ class Router
             // --- Accueil ---
             case 'home':
             default :
-                (new \ControllerAccueil($this->twig))->render();
+                (new \PageAccueil($this->twig))->render();
                 break;
 
             // --- Authentification ---

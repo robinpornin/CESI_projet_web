@@ -25,6 +25,7 @@ require_once __DIR__ . '/../src/Controller/espaceEleve.php';
 require_once __DIR__ . '/../src/Controller/formulaire.php';
 require_once __DIR__ . '/../src/Controller/gestionCompte.php';
 require_once __DIR__ . '/../src/Controller/gestionEntreprise.php';
+require_once __DIR__ . '/../src/Controller/gestionOffre.php';
 require_once __DIR__ . '/../src/Controller/gestionCompteEleveAdmin.php';
 require_once __DIR__ . '/../src/Controller/gestionComptePiloteAdmin.php';
 require_once __DIR__ . '/../src/Controller/offre.php';
