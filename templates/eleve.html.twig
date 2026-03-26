@@ -1,4 +1,4 @@
-{% extends "base.html.twig" %}
+% extends "base.html.twig" %}
 
 {% block title %}Page élève{% endblock %}
 
@@ -14,8 +14,6 @@
     </div>
   </div>
 
-  <!-- main -->
-
     <div class="separateur"></div>
     <div class="section-titre">Que voulez-vous faire ?</div>
 
@@ -24,44 +22,35 @@
       <div class="groupe-label">Recherches</div>
 
       <!-- recherche entreprise -->
-      <div class="action-bloc">
+      <a class="action-bloc" href="/rechercheEntreprise">
         <div class="action-icon">🏢</div>
         <div class="action-info">
           <span class="action-titre">Rechercher une entreprise</span>
           <span class="action-desc">→ Redirection vers la liste des entreprises</span>
-          <div class="action-input-row">
-            <input type="text" id="inputEntreprise" placeholder="Nom, secteur, ville...">
-            <button class="btn-action" onclick="go('/rechercheEntreprise', 'inputEntreprise')">Rechercher</button>
-          </div>
         </div>
-      </div>
+        <span style="font-size:1.2rem; color:#FFD700; font-weight:900;">›</span>
+      </a>
 
       <!-- recherche offre -->
-      <div class="action-bloc">
+      <a class="action-bloc" href="/rechercheOffre">
         <div class="action-icon">📋</div>
         <div class="action-info">
           <span class="action-titre">Rechercher une offre de stage</span>
           <span class="action-desc">→ Redirection vers la liste des offres</span>
-          <div class="action-input-row">
-            <input type="text" id="inputOffre" placeholder="Poste, compétence, ville...">
-            <button class="btn-action" onclick="go('recherche-offre.html', 'inputOffre')">Rechercher</button>
-          </div>
         </div>
-      </div>
+        <span style="font-size:1.2rem; color:#FFD700; font-weight:900;">›</span>
+      </a>
 
       <!-- recherche offre statistiques -->
-      <div class="action-bloc stat-bloc">
+      <a class="action-bloc stat-bloc" href="/rechercheOffre">
         <div class="action-icon">📊</div>
         <div class="action-info">
           <span class="action-titre">Rechercher une offre <em>(avec statistiques)</em></span>
           <span class="action-desc">→ Redirection vers la liste des offres avec statistiques</span>
           <span class="action-tag">Stats incluses</span>
-          <div class="action-input-row">
-            <input type="text" id="inputOffreStat" placeholder="Poste, compétence, ville...">
-            <button class="btn-action" onclick="go('recherche-offre-stats.html', 'inputOffreStat')">Rechercher</button>
-          </div>
         </div>
-      </div>
+        <span style="font-size:1.2rem; color:#FFD700; font-weight:900;">›</span>
+      </a>
     </div>
 
     <div class="divider"></div>
@@ -70,18 +59,15 @@
     <div class="groupe">
       <div class="groupe-label">Mon compte</div>
 
-      <!-- recherche compte étudiant -->
-      <div class="action-bloc">
+      <!-- accès compte étudiant -->
+      <a class="action-bloc" href="/gestionCompte">
         <div class="action-icon">🪪</div>
         <div class="action-info">
-          <span class="action-titre">Accéder à un compte étudiant</span>
-          <span class="action-desc">→ Redirection vers la page du compte étudiant recherché</span>
-          <div class="action-input-row">
-            <input type="text" id="inputCompte" placeholder="Nom, prénom, email...">
-            <button class="btn-action" onclick="go('compte-etudiant.html', 'inputCompte')">Rechercher</button>
-          </div>
+          <span class="action-titre">Accéder à mon compte étudiant</span>
+          <span class="action-desc">→ Redirection vers la page du compte étudiant</span>
         </div>
-      </div>
+        <span style="font-size:1.2rem; color:#FFD700; font-weight:900;">›</span>
+      </a>
     </div>
 
 {% endblock %}
