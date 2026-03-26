@@ -22,8 +22,14 @@
       <div class="divider-v"></div>
       <select id="filterDuree" onchange="filterOffres()">
         <option value="">⏱ Toutes durées</option>
-        <option value="3">3 mois</option>
-        <option value="6">6 mois</option>
+        <option value="10">8 semaines</option>
+        <option value="12">12 semaines</option>
+        <option value="14">14 semaines</option>
+        <option value="12">12 semaines</option>
+        <option value="14">14 semaines</option>
+        <option value="16">16 semaines</option>
+        <option value="18">18 semaines</option>
+        <option value="20">20 semaines</option>
       </select>
       <button class="btn-search" onclick="filterOffres()">Rechercher</button>
     </div>
@@ -105,7 +111,7 @@
       card.innerHTML = `
         <div class="offre-top">
           <span class="offre-titre">${o.Titre}</span>
-          <span class="offre-badge">${o.Duree} mois</span>
+          <span class="offre-badge">${o.Duree} semaines</span>
         </div>
         <div class="offre-meta">
           <span>🏢 ${o.Nom_entreprise}</span>
@@ -125,7 +131,7 @@
     document.getElementById('ficheEntreprise').textContent = o.Nom_entreprise;
     document.getElementById('ficheSecteur').textContent    = o.Secteur;
     document.getElementById('ficheVille').textContent      = o.Ville_CP;
-    document.getElementById('ficheDuree').textContent      = o.Duree + ' mois';
+    document.getElementById('ficheDuree').textContent      = o.Duree + ' semaines';
     document.getElementById('ficheGrat').textContent       = o.Remuneration + ' €/mois';
     document.getElementById('ficheDate').textContent       = o.Date_;
     document.getElementById('btnPostuler').onclick = () => {
