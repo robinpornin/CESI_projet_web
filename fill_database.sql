@@ -16,7 +16,7 @@ INSERT INTO Utilisateurs (Nom, Prenom, Email, Mdp, Role) VALUES
 ('Simon', 'Clémence', 'clemence.simon@cesi.fr', 'ClémenceMDP', 1),
 ('Guerin', 'Nathan', 'nathan.guerin@cesi.fr', 'NathanMDP', 1),
 ('Benoit', 'Chloé', 'chloe.benoit@cesi.fr', 'ChloéMDP', 1),
-('Carpentier', 'Ethan', 'ethan.carpentier@cesi.fr', 'EthanMDP', 1),
+('Forato', 'Hugo', 'hugo.forato@cesi.fr', 'HugoMDP', 1),
 ('Martinez', 'Inès', 'ines.martinez@cesi.fr', 'InèsMDP', 1),
 ('Dupont', 'Mathieu', 'mathieu.dupont@cesi.fr', 'MathieuMDP', 1),
 ('Giraud', 'Julie', 'julie.giraud@cesi.fr', 'JulieMDP', 1),
@@ -67,7 +67,7 @@ INSERT INTO Entreprises (Email_entreprise, Nom_entreprise, Secteur, Type_, Nb_st
 -- Table : Wishlists
 -- ---------------------------------------------------------
 INSERT INTO Wishlists (ID_Utilisateur) VALUES
-(1),(2),(3),(4),(5),(6),(7),(8),(9),(10);
+(1),(2),(3),(4),(5),(6),(7),(8),(9),(10),(11),(12),(13),(14),(15),(16),(17),(18),(19),(20);
 
 -- ---------------------------------------------------------
 -- Table : Offres
