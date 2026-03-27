@@ -41,6 +41,8 @@ class Router
 
     public function handle(string $url): void
     {
+        \App\Core\Middleware::check($url);
+
         switch ($url) {
 
             // --- Accueil ---
