@@ -1,50 +1,40 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Page ERP{% endblock %}
+{% block title %}Page Pilote{% endblock %}
 
 {% block content %}
 
-<!-- main -->
+  <div class="bienvenue">
+    <h1>Bienvenue, <span>{{ prenom }}</span> 👋</h1>
+    <p>Recherchez des entreprises ou des offres de stage disponibles sur la plateforme.</p>
+  </div>
 
-    <!-- bienvenue -->
-    <div class="bienvenue">
-      <h1>Bienvenue, <span> {{prenom}} </span> 👋</h1>
-      <p>Recherchez des entreprises ou des offres de stage disponibles sur la plateforme.</p>
-    </div>
+  <div class="separateur"></div>
 
-    <div class="separateur"></div>
+  <div class="bloc-actions">
+    <h2>Que voulez-vous faire ?</h2>
 
-    <!-- bloc actions -->
-    <div class="bloc-actions">
-      <h2>Que voulez-vous faire ?</h2>
+    <div class="search-rows">
 
-      <div class="search-rows">
-
-        <!-- recherche entreprise -->
-        <div class="search-item">
-          <label>Recherche d'entreprise</label>
-          <div class="search-row">
-            <input type="text" placeholder="Nom de l'entreprise...">
-            <a href="liste-entreprises.html">
-              <button class="btn-rechercher">Rechercher</button>
-            </a>
-          </div>
-          <span class="hint">→ Redirige vers la liste des entreprises</span>
-        </div>
-
-        <!-- recherche offre -->
-        <div class="search-item">
-          <label>Recherche d'offre de stage</label>
-          <div class="search-row">
-            <input type="text" placeholder="Titre, domaine, lieu...">
-            <a href="liste-offres.html">
-              <button class="btn-rechercher">Rechercher</button>
-            </a>
-          </div>
-          <span class="hint">→ Redirige vers la liste des offres</span>
-        </div>
-
+      <div class="search-item">
+        <label>Recherche d'entreprise</label>
+        <form method="GET" action="/rechercheEntreprise" class="search-row">
+          <input type="text" name="q" placeholder="Nom de l'entreprise...">
+          <button type="submit" class="btn-rechercher">Rechercher</button>
+        </form>
+        <span class="hint">→ Redirige vers la liste des entreprises</span>
       </div>
+
+      <div class="search-item">
+        <label>Recherche d'offre de stage</label>
+        <form method="GET" action="/rechercheOffre" class="search-row">
+          <input type="text" name="q" placeholder="Titre, domaine, lieu...">
+          <button type="submit" class="btn-rechercher">Rechercher</button>
+        </form>
+        <span class="hint">→ Redirige vers la liste des offres</span>
+      </div>
+
     </div>
+  </div>
 
 {% endblock %}

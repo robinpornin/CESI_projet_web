@@ -6,12 +6,8 @@
 
 <div class="bienvenue">
   <span class="tag">Mode Invité</span>
-  <h1>
-    Bienvenue sur <span>{{ platform_name }}</span>
-  </h1>
-  <p>
-    Vous naviguez en tant qu'invité. Vous pouvez rechercher des entreprises et des offres de stage sans vous connecter.
-  </p>
+  <h1>Bienvenue sur <span>{{ platform_name }}</span></h1>
+  <p>Vous naviguez en tant qu'invité. Vous pouvez rechercher des entreprises et des offres de stage sans vous connecter.</p>
 </div>
 
 <div class="separateur"></div>
@@ -25,10 +21,10 @@
     <div class="recherche-bloc-info">
       <span class="recherche-bloc-titre">Rechercher une entreprise</span>
       <span class="recherche-bloc-desc">→ Redirection vers la liste des entreprises</span>
-      <div class="recherche-input-row">
-        <input type="text" id="inputEntreprise" placeholder="Nom, secteur, ville...">
-        <button class="btn-rechercher">Rechercher</button>
-      </div>
+      <form method="GET" action="/rechercheEntreprise" class="recherche-input-row">
+        <input type="text" name="q" placeholder="Nom, secteur, ville...">
+        <button type="submit" class="btn-rechercher">Rechercher</button>
+      </form>
     </div>
   </div>
 
@@ -37,10 +33,10 @@
     <div class="recherche-bloc-info">
       <span class="recherche-bloc-titre">Rechercher une offre de stage</span>
       <span class="recherche-bloc-desc">→ Redirection vers la liste des offres</span>
-      <div class="recherche-input-row">
-        <input type="text" id="inputOffre" placeholder="Poste, compétence, ville...">
-        <button class="btn-rechercher">Rechercher</button>
-      </div>
+      <form method="GET" action="/rechercheOffre" class="recherche-input-row">
+        <input type="text" name="q" placeholder="Poste, compétence, ville...">
+        <button type="submit" class="btn-rechercher">Rechercher</button>
+      </form>
     </div>
   </div>
 
@@ -50,10 +46,7 @@
 
 <div class="connexion-bloc">
   <p>Vous avez un compte ? <span>Connectez-vous</span></p>
-
-  <a href="/connexion" class="btn-connecter">
-    Je veux me connecter
-  </a>
+  <a href="/connexion" class="btn-connecter">Je veux me connecter</a>
 </div>
 
 {% endblock %}

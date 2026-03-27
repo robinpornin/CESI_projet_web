@@ -12,60 +12,58 @@
     </div>
   </div>
 
-    <div class="separateur"></div>
-    <div class="section-titre">Que voulez-vous faire ?</div>
+  <div class="separateur"></div>
+  <div class="section-titre">Que voulez-vous faire ?</div>
 
-    <!-- GROUPE 1 : Recherches -->
-    <div class="groupe">
-      <div class="groupe-label">Recherches</div>
+  <div class="groupe">
+    <div class="groupe-label">Recherches</div>
 
-      <div class="action-bloc">
-        <div class="action-icon">🏢</div>
-        <div class="action-info">
-          <span class="action-titre">Rechercher une entreprise</span>
-          <span class="action-desc">→ Redirection vers la liste des entreprises</span>
-          <div class="action-input-row">
-            <input type="text" id="inputEntreprise" placeholder="Nom, secteur, ville...">
-            <button class="btn-action" onclick="go('recherche-entreprise.html', 'inputEntreprise')">🔍 Rechercher</button>
-          </div>
+    <form method="GET" action="/rechercheEntreprise" class="action-bloc">
+      <div class="action-icon">🏢</div>
+      <div class="action-info">
+        <span class="action-titre">Rechercher une entreprise</span>
+        <span class="action-desc">→ Redirection vers la liste des entreprises</span>
+        <div class="action-input-row">
+          <input type="text" name="q" placeholder="Nom, secteur, ville...">
+          <button type="submit" class="btn-action">🔍 Rechercher</button>
         </div>
       </div>
+    </form>
 
-      <div class="action-bloc">
-        <div class="action-icon">📋</div>
-        <div class="action-info">
-          <span class="action-titre">Rechercher une offre de stage</span>
-          <span class="action-desc">→ Redirection vers la liste des offres</span>
-          <div class="action-input-row">
-            <input type="text" id="inputOffre" placeholder="Poste, compétence, ville...">
-            <button class="btn-action" onclick="go('recherche-offre.html', 'inputOffre')">🔍 Rechercher</button>
-          </div>
+    <form method="GET" action="/rechercheOffre" class="action-bloc">
+      <div class="action-icon">📋</div>
+      <div class="action-info">
+        <span class="action-titre">Rechercher une offre de stage</span>
+        <span class="action-desc">→ Redirection vers la liste des offres</span>
+        <div class="action-input-row">
+          <input type="text" name="q" placeholder="Poste, compétence, ville...">
+          <button type="submit" class="btn-action">🔍 Rechercher</button>
         </div>
       </div>
+    </form>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="groupe">
+    <div class="groupe-label">Gestion des comptes</div>
+
+    <div class="action-bloc admin-action">
+      <div class="action-icon">🧑‍✈️</div>
+      <div class="action-info">
+        <span class="action-titre">Gestion des comptes Pilotes</span>
+        <span class="action-desc">→ Redirection vers la page de gestion du compte pilote</span>
+      </div>
+      <a href="/gestionComptePiloteAdmin" class="btn-gestion">Gérer →</a>
     </div>
 
-    <div class="divider"></div>
-
-    <!-- GROUPE 2 : Gestion comptes -->
-    <div class="groupe">
-      <div class="groupe-label">Gestion des comptes</div>
-
-      <div class="action-bloc admin-action">
-        <div class="action-icon">🧑‍✈️</div>
-        <div class="action-info">
-          <span class="action-titre">Gestion des comptes Pilotes</span>
-          <span class="action-desc">→ Redirection vers la page de gestion du compte pilote</span>
-        </div>
-        <button class="btn-gestion" onclick="window.location.href='gestion-pilote.html'">Gérer →</button>
+    <div class="action-bloc admin-action">
+      <div class="action-icon">🎓</div>
+      <div class="action-info">
+        <span class="action-titre">Gestion des comptes Étudiants</span>
+        <span class="action-desc">→ Redirection vers la page de gestion du compte étudiant</span>
       </div>
-
-      <div class="action-bloc admin-action">
-        <div class="action-icon">🎓</div>
-        <div class="action-info">
-          <span class="action-titre">Gestion des comptes Étudiants</span>
-          <span class="action-desc">→ Redirection vers la page de gestion du compte étudiant</span>
-        </div>
-        <button class="btn-gestion" onclick="window.location.href='gestion-etudiant.html'">Gérer →</button>
-      </div>
+      <a href="/gestionCompteEleveAdmin" class="btn-gestion">Gérer →</a>
     </div>
+  </div>
 {% endblock %}
