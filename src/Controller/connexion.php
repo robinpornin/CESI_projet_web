@@ -49,7 +49,7 @@ class PageConnexion
 
                 if (!$utilisateur) {
                     $erreur = 'Aucun compte trouvé avec cet email.';
-                } elseif ($motDePasse !== $utilisateur['Mdp']) {
+                } elseif (!password_verify($motDePasse, $utilisateur['Mdp'])) {
                     $erreur = 'Mot de passe incorrect.';
                 } else {
                     $_SESSION['utilisateur'] = [
