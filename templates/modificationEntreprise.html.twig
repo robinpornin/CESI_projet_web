@@ -1,0 +1,98 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Modifier l'entreprise{% endblock %}
+
+{% block content %}
+
+<div class="bandeau-nom">
+  <div class="entreprise-avatar">🏢</div>
+  <div class="entreprise-nom-bloc">
+    <span class="entreprise-nom">{{ entreprise.Nom_entreprise }}</span>
+    <span class="entreprise-secteur">{{ entreprise.Secteur }}</span>
+  </div>
+</div>
+
+<div class="separateur"></div>
+
+{% if succes %}
+  <div style="background:#e6f9ee;border:2px solid #00aa44;border-radius:10px;padding:12px 18px;font-size:0.88rem;font-weight:700;color:#00aa44;width:100%;">
+    ✅ Modifications enregistrées avec succès.
+  </div>
+{% endif %}
+
+{% if erreur %}
+  <div style="background:#fff0f0;border:2px solid #cc0000;border-radius:10px;padding:12px 18px;font-size:0.88rem;font-weight:700;color:#cc0000;width:100%;">
+    ❌ {{ erreur }}
+  </div>
+{% endif %}
+
+<div class="form-card">
+  <div class="form-card-header">
+    <span class="form-card-header-icon">✏️</span>
+    <span class="form-card-header-titre">Modifier les informations</span>
+  </div>
+
+  <form method="POST" action="/modificationEntreprise">
+    <input type="hidden" name="id" value="{{ entreprise.ID_Entreprise }}">
+
+    <div class="form-body">
+
+      <span class="section-label">Identité</span>
+      <div class="form-grid">
+        <div class="form-group full">
+          <label class="form-label">Nom de l'entreprise *</label>
+          <input class="form-input" type="text" name="nom"
+                 value="{{ entreprise.Nom_entreprise }}" required maxlength="255">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Secteur *</label>
+          <input class="form-input" type="text" name="secteur"
+                 value="{{ entreprise.Secteur }}" required maxlength="255">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Type</label>
+          <input class="form-input" type="text" name="type"
+                 value="{{ entreprise.Type_ }}" maxlength="255">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nombre de stagiaires</label>
+          <input class="form-input" type="number" name="nb_stagiaires"
+                 value="{{ entreprise.Nb_stagiaires }}" min="0">
+        </div>
+      </div>
+
+      <span class="section-label">Contact</span>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Email *</label>
+          <input class="form-input" type="email" name="email"
+                 value="{{ entreprise.Email_entreprise }}" required maxlength="255">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Téléphone</label>
+          <input class="form-input" type="tel" name="telephone"
+                 value="{{ entreprise.Telephone }}" maxlength="16">
+        </div>
+      </div>
+
+      <span class="section-label">Description</span>
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <textarea class="form-textarea" name="description"
+                  maxlength="512">{{ entreprise.Description_entreprise }}</textarea>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-enregistrer">Enregistrer</button>
+        <a href="/parametreEntreprise?id={{ entreprise.ID_Entreprise }}"
+           class="btn-supprimer"
+           style="display:flex;align-items:center;justify-content:center;text-decoration:none;">
+          Annuler
+        </a>
+      </div>
+
+    </div>
+  </form>
+</div>
+
+{% endblock %}

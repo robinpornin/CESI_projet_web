@@ -30,6 +30,7 @@ class Middleware
         'parametreEntreprise'     => [2, 3],
         'parametreOffre'          => [2, 3],
         'creationEleve'           => [2, 3],
+        'modificationEntreprise'  => [2, 3],
 
         // Rôle 3 — Admin uniquement
         'admin'                    => [3],

@@ -135,6 +135,10 @@ class Router
                 (new \PageRechercheEntreprise($this->twig))->render();
                 break;
 
+            case 'modificationEntreprise':
+                (new \PageModificationEntreprise($this->twig))->render();
+                break;
+
             // --- Offres ---
             case 'gestionOffre':
                 (new \PageGestionOffre($this->twig))->render();
