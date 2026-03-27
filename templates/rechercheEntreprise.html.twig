@@ -22,6 +22,26 @@
     <div class="liste-entreprises">
       <div class="liste-title">Liste des entreprises</div>
       <div id="listeContainer"></div>
+
+      {% if totalPages > 1 %}
+        <div class="pagination">
+          {% if currentPage > 1 %}
+            <a href="?page={{ currentPage - 1 }}" class="page-btn">Précédent</a>
+          {% endif %}
+
+          {% for i in 1..totalPages %}
+            {% if i == currentPage %}
+              <span class="page-btn active">{{ i }}</span>
+            {% else %}
+              <a href="?page={{ i }}" class="page-btn">{{ i }}</a>
+            {% endif %}
+          {% endfor %}
+
+          {% if currentPage < totalPages %}
+            <a href="?page={{ currentPage + 1 }}" class="page-btn">Suivant</a>
+          {% endif %}
+        </div>
+      {% endif %}
     </div>
 
     <div class="fiche-entreprise">
