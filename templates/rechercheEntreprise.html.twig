@@ -4,90 +4,131 @@
 
 {% block content %}
 
+<style>
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+    padding-top: 8px;
+  }
+
+  .pagination .page-btn {
+    display: inline-block;
+    padding: 8px 14px;
+    border: 1px solid #111;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #111;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+
+  .pagination .page-btn:hover {
+    background-color: #f7c600;
+    border-color: #f7c600;
+    color: #111;
+  }
+
+  .pagination .page-btn.active {
+    background-color: #111;
+    color: #f7c600;
+    border-color: #111;
+  }
+
+  .liste-entreprises .pagination {
+    width: 100%;
+  }
+</style>
+
 <div class="top-section">
-    <div class="bienvenue">
-      <h1>Recherche <span>Entreprise</span></h1>
-      <p>Trouvez une entreprise partenaire et accédez à sa fiche détaillée.</p>
+  <div class="bienvenue">
+    <h1>Recherche <span>Entreprise</span></h1>
+    <p>Trouvez une entreprise partenaire et accédez à sa fiche détaillée.</p>
+  </div>
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Nom, secteur, ville..." oninput="filterEntreprises()">
+    <button class="btn-search" onclick="filterEntreprises()">Rechercher</button>
+  </div>
+</div>
+
+<div class="separateur"></div>
+
+<div class="content-layout">
+
+  <div class="liste-entreprises">
+    <div class="liste-title">Liste des entreprises</div>
+    <div id="listeContainer"></div>
+
+    {% if totalPages > 1 %}
+      <div class="pagination">
+        {% if currentPage > 1 %}
+          <a href="?page={{ currentPage - 1 }}" class="page-btn">Précédent</a>
+        {% endif %}
+
+        {% for i in 1..totalPages %}
+          {% if i == currentPage %}
+            <span class="page-btn active">{{ i }}</span>
+          {% else %}
+            <a href="?page={{ i }}" class="page-btn">{{ i }}</a>
+          {% endif %}
+        {% endfor %}
+
+        {% if currentPage < totalPages %}
+          <a href="?page={{ currentPage + 1 }}" class="page-btn">Suivant</a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="fiche-entreprise">
+    <h3>Accéder à la fiche entreprise</h3>
+
+    <div class="fiche-placeholder" id="fichePlaceholder">
+      <span class="icon">🏢</span>
+      <span>Sélectionnez une entreprise pour voir sa fiche</span>
     </div>
-    <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="Nom, secteur, ville..." oninput="filterEntreprises()">
-      <button class="btn-search" onclick="filterEntreprises()">Rechercher</button>
+
+    <div class="fiche-content" id="ficheContent">
+      <div class="fiche-row">
+        <span class="fiche-label">Nom</span>
+        <span class="fiche-value" id="ficheNom">—</span>
+      </div>
+      <div class="fiche-row">
+        <span class="fiche-label">Secteur</span>
+        <span class="fiche-value" id="ficheSecteur">—</span>
+      </div>
+      <div class="fiche-row">
+        <span class="fiche-label">Type</span>
+        <span class="fiche-value" id="ficheType">—</span>
+      </div>
+      <div class="fiche-row">
+        <span class="fiche-label">Ville</span>
+        <span class="fiche-value" id="ficheVille">—</span>
+      </div>
+      <div class="fiche-row">
+        <span class="fiche-label">Email</span>
+        <span class="fiche-value" id="ficheEmail">—</span>
+      </div>
+      <div class="fiche-row">
+        <span class="fiche-label">Téléphone</span>
+        <span class="fiche-value" id="ficheTel">—</span>
+      </div>
+      <div class="fiche-row">
+        <span class="fiche-label">Note moyenne</span>
+        <span class="fiche-value" id="ficheNote">—</span>
+      </div>
+      <button class="btn-fiche" id="btnFiche">Voir la fiche complète →</button>
     </div>
   </div>
 
-  <div class="separateur"></div>
+</div>
 
-  <div class="content-layout">
-
-    <div class="liste-entreprises">
-      <div class="liste-title">Liste des entreprises</div>
-      <div id="listeContainer"></div>
-
-      {% if totalPages > 1 %}
-        <div class="pagination">
-          {% if currentPage > 1 %}
-            <a href="?page={{ currentPage - 1 }}" class="page-btn">Précédent</a>
-          {% endif %}
-
-          {% for i in 1..totalPages %}
-            {% if i == currentPage %}
-              <span class="page-btn active">{{ i }}</span>
-            {% else %}
-              <a href="?page={{ i }}" class="page-btn">{{ i }}</a>
-            {% endif %}
-          {% endfor %}
-
-          {% if currentPage < totalPages %}
-            <a href="?page={{ currentPage + 1 }}" class="page-btn">Suivant</a>
-          {% endif %}
-        </div>
-      {% endif %}
-    </div>
-
-    <div class="fiche-entreprise">
-      <h3>Accéder à la fiche entreprise</h3>
-
-      <div class="fiche-placeholder" id="fichePlaceholder">
-        <span class="icon">🏢</span>
-        <span>Sélectionnez une entreprise pour voir sa fiche</span>
-      </div>
-
-      <div class="fiche-content" id="ficheContent">
-        <div class="fiche-row">
-          <span class="fiche-label">Nom</span>
-          <span class="fiche-value" id="ficheNom">—</span>
-        </div>
-        <div class="fiche-row">
-          <span class="fiche-label">Secteur</span>
-          <span class="fiche-value" id="ficheSecteur">—</span>
-        </div>
-        <div class="fiche-row">
-          <span class="fiche-label">Type</span>
-          <span class="fiche-value" id="ficheType">—</span>
-        </div>
-        <div class="fiche-row">
-          <span class="fiche-label">Ville</span>
-          <span class="fiche-value" id="ficheVille">—</span>
-        </div>
-        <div class="fiche-row">
-          <span class="fiche-label">Email</span>
-          <span class="fiche-value" id="ficheEmail">—</span>
-        </div>
-        <div class="fiche-row">
-          <span class="fiche-label">Téléphone</span>
-          <span class="fiche-value" id="ficheTel">—</span>
-        </div>
-        <div class="fiche-row">
-          <span class="fiche-label">Note moyenne</span>
-          <span class="fiche-value" id="ficheNote">—</span>
-        </div>
-        <button class="btn-fiche" id="btnFiche">Voir la fiche complète →</button>
-      </div>
-    </div>
-
-  </div>
-
-  <script>
+<script>
   const entreprises = {{ entreprises | json_encode | raw }};
 
   let activeIndex = null;
@@ -95,10 +136,12 @@
   function renderEntreprises(list) {
     const container = document.getElementById('listeContainer');
     container.innerHTML = '';
+
     if (list.length === 0) {
       container.innerHTML = '<p style="color:#aaa;font-style:italic;font-size:0.85rem;padding:10px 0;">Aucune entreprise trouvée.</p>';
       return;
     }
+
     list.forEach((e, i) => {
       const card = document.createElement('div');
       card.className = 'entreprise-card' + (activeIndex === i ? ' active' : '');
@@ -117,28 +160,34 @@
   function selectEntreprise(index, list) {
     activeIndex = index;
     const e = list[index];
-    document.getElementById('ficheNom').textContent     = e.Nom_entreprise;
+
+    document.getElementById('ficheNom').textContent = e.Nom_entreprise;
     document.getElementById('ficheSecteur').textContent = e.Secteur;
-    document.getElementById('ficheType').textContent    = e.Type_;
-    document.getElementById('ficheVille').textContent   = e.Secteur.slice(0, -7);
-    document.getElementById('ficheEmail').textContent   = e.Email_entreprise;
-    document.getElementById('ficheTel').textContent     = e.Telephone;
-    document.getElementById('ficheNote').textContent    = e.Note_moyenne ? e.Note_moyenne + ' / 5' : 'Aucune évaluation';
+    document.getElementById('ficheType').textContent = e.Type_;
+    document.getElementById('ficheVille').textContent = e.Secteur.slice(0, -7);
+    document.getElementById('ficheEmail').textContent = e.Email_entreprise;
+    document.getElementById('ficheTel').textContent = e.Telephone;
+    document.getElementById('ficheNote').textContent = e.Note_moyenne ? e.Note_moyenne + ' / 5' : 'Aucune évaluation';
+
     document.getElementById('btnFiche').onclick = () => {
       window.location.href = `ficheEntreprise.php?id=${e.ID_Entreprise}`;
     };
+
     document.getElementById('fichePlaceholder').style.display = 'none';
     document.getElementById('ficheContent').classList.add('visible');
+
     renderEntreprises(list);
   }
 
   function filterEntreprises() {
     const q = document.getElementById('searchInput').value.toLowerCase();
+
     const filtered = entreprises.filter(e =>
       e.Nom_entreprise.toLowerCase().includes(q) ||
       e.Secteur.toLowerCase().includes(q) ||
       e.Ville_CP.toLowerCase().includes(q)
     );
+
     activeIndex = null;
     document.getElementById('fichePlaceholder').style.display = 'flex';
     document.getElementById('ficheContent').classList.remove('visible');
