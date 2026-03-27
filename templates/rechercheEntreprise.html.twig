@@ -85,7 +85,7 @@
       card.innerHTML = `
         <div class="card-info">
           <span class="card-name">${e.Nom_entreprise}</span>
-          <span class="card-meta">${e.Secteur} · ${e.Ville_CP}</span>
+          <span class="card-meta">${e.Type_}  ·  ${e.Secteur}</span>
         </div>
         <span class="card-arrow">›</span>
       `;
@@ -99,8 +99,8 @@
     const e = list[index];
     document.getElementById('ficheNom').textContent     = e.Nom_entreprise;
     document.getElementById('ficheSecteur').textContent = e.Secteur;
-    document.getElementById('ficheType').textContent    = e.Type;
-    document.getElementById('ficheVille').textContent   = e.Ville_CP;
+    document.getElementById('ficheType').textContent    = e.Type_;
+    document.getElementById('ficheVille').textContent   = e.Secteur.slice(0, -7);
     document.getElementById('ficheEmail').textContent   = e.Email_entreprise;
     document.getElementById('ficheTel').textContent     = e.Telephone;
     document.getElementById('ficheNote').textContent    = e.Note_moyenne ? e.Note_moyenne + ' / 5' : 'Aucune évaluation';
