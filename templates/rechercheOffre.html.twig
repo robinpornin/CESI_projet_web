@@ -4,7 +4,6 @@
 
 {% block content %}
 
-
   <div class="top-section">
     <div class="bienvenue">
       <h1>Recherche d'<span>Offres de Stage</span></h1>
@@ -45,6 +44,26 @@
         <span class="results-count" id="resultsCount"></span>
       </div>
       <div id="listeContainer"></div>
+
+      {% if totalPages > 1 %}
+        <div class="pagination">
+          {% if currentPage > 1 %}
+            <a href="?page={{ currentPage - 1 }}" class="page-btn">Précédent</a>
+          {% endif %}
+
+          {% for i in 1..totalPages %}
+            {% if i == currentPage %}
+              <span class="page-btn active">{{ i }}</span>
+            {% else %}
+              <a href="?page={{ i }}" class="page-btn">{{ i }}</a>
+            {% endif %}
+          {% endfor %}
+
+          {% if currentPage < totalPages %}
+            <a href="?page={{ currentPage + 1 }}" class="page-btn">Suivant</a>
+          {% endif %}
+        </div>
+      {% endif %}
     </div>
 
     <div class="fiche-offre">

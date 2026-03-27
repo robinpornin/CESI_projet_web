@@ -16,7 +16,15 @@ class PageRechercheOffre
 
     public function render(): void
     {
-        $stmt = $this->pdo->query("
+        $page = isset($_GET['page']) ? max(1, (int) $_GET['page']) : 1;
+        $limit = 5;
+        $offset = ($page - 1) * $limit;
+
+        $countStmt = $this->pdo->query("SELECT COUNT(*) FROM Offres");
+        $totalOffres = (int) $countStmt->fetchColumn();
+        $totalPages = (int) ceil($totalOffres / $limit);
+
+        $stmt = $this->pdo->prepare("
             SELECT 
                 o.ID_Offre,
                 o.Titre,
@@ -30,7 +38,12 @@ class PageRechercheOffre
             FROM Offres o
             JOIN Entreprises e ON o.ID_Entreprise = e.ID_Entreprise
             ORDER BY o.Date_ DESC
+            LIMIT :limit OFFSET :offset
         ");
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
+
         $offres = $stmt->fetchAll();
 
         $stmtVilles = $this->pdo->query("
@@ -39,10 +52,12 @@ class PageRechercheOffre
         $villes = $stmtVilles->fetchAll(PDO::FETCH_COLUMN);
 
         echo $this->twig->render('rechercheOffre.html.twig', [
-            'page'   => 'recherche_offre',
-            'title'  => 'Recherche Offre',
+            'page' => 'recherche_offre',
+            'title' => 'Recherche Offre',
             'offres' => $offres,
             'villes' => $villes,
+            'currentPage' => $page,
+            'totalPages' => $totalPages,
         ]);
     }
 }
