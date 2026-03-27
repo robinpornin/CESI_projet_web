@@ -45,7 +45,7 @@ require_once __DIR__ . '/../src/Core/Router.php';
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../templates');
 $twig   = new \Twig\Environment($loader, ['debug' => true]);
 $twig->addExtension(new \Twig\Extension\DebugExtension());
-$twig->addGlobal('user_role', $_SESSION['user_role'] ?? 0);
+$twig->addGlobal('user_role', $_SESSION['utilisateur']['role'] ?? 0);
 $twig->addGlobal('user_nom',  $_SESSION['user_nom']  ?? null);
 
 // Récupération de la route

@@ -2,23 +2,27 @@ document.addEventListener("DOMContentLoaded", function () {
   const container = document.getElementById("menu-container");
   if (!container) return;
 
-  // Récupération du rôle depuis l'attribut data-role injecté par Twig
   const role = parseInt(container.getAttribute("data-role"), 10);
+  let menuAffiche = false;
 
-  // Construction du menu selon le rôle
   if (role === 1) {
     renderMenuEtudiant(container);
+    menuAffiche = true;
   } else if (role === 2) {
     renderMenuPilote(container);
+    menuAffiche = true;
   } else if (role === 3) {
     renderMenuAdmin(container);
+    menuAffiche = true;
   } else {
-    // Pas connecté → pas de menu
-    return;
+    container.innerHTML = "";
   }
 
-  initialiserMenu();
+  if (menuAffiche) {
+    initialiserMenu();
+  }
 });
+
 
 
 // ─────────────────────────────────────────────
@@ -234,6 +238,15 @@ function renderMenuAdmin(container) {
   `;
 }
 
+function renderMenuInvite(container) {
+  container.innerHTML = `
+    <a href="/connexion" class="icon-btn" title="Se connecter">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+      </svg>
+    </a>
+  `;
+}
 
 // ─────────────────────────────────────────────
 // LOGIQUE OUVERTURE / FERMETURE

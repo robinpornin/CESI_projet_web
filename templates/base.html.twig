@@ -4,16 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}CESI-STAGES{% endblock %}</title>
-  <!-- CSS -->
-  <link rel="stylesheet" href="Styles.css">
+  <link rel="stylesheet" href="/Styles.css">
 </head>
 
 <body>
 
 <header>
   <div class="logo">CESI-STAGES</div>
-  <!-- Menu déroulant -->
-  <div id="menu-container" data-role="1"></div>
+  {% if utilisateur is defined and utilisateur %}
+    <div id="menu-container" data-role="{{ utilisateur.role }}"></div>
+  {% endif %}
+
 </header>
 
 <main>
