@@ -26,7 +26,6 @@ class PageRechercheEntreprise
                 e.Telephone,
                 e.Description_entreprise,
                 e.Nb_stagiaires,
-                e.Ville_CP,
                 ROUND(AVG(ev.Note), 1) AS Note_moyenne
             FROM Entreprises e
             LEFT JOIN Evaluations ev ON e.ID_Entreprise = ev.ID_Entreprise
