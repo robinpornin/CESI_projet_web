@@ -27,7 +27,8 @@ use App\Controller\{
     PagePilote,
     PageRechercheEntreprise,
     PageRechercheOffre,
-    PageWishlist
+    PageWishlist,
+    PageListeCandidatures
 };
 
 class Router
@@ -107,6 +108,10 @@ class Router
 
             case 'parametreEleve':
                 (new \PageParametreEleve($this->twig))->render();
+                break;
+            
+            case 'listeCandidatures':
+                (new \PageListeCandidatures($this->twig))->render();
                 break;
 
             // --- Entreprises ---

@@ -1,0 +1,60 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Mes Candidatures{% endblock %}
+
+{% block content %}
+
+<div class="profil-card">
+  <div class="profil-avatar">👤</div>
+  <div class="profil-info">
+    <span class="profil-nom">{{ utilisateur.Prenom }} {{ utilisateur.Nom }}</span>
+    <span class="profil-badge">Mes Candidatures</span>
+    <span class="profil-sous">Retrouvez toutes vos candidatures</span>
+  </div>
+</div>
+
+<div class="barre-titre">
+  <span class="titre-section">
+    Candidatures
+    <span class="compteur-badge">
+      {{ candidatures | length }}
+      {{ candidatures | length <= 1 ? 'candidature' : 'candidatures' }}
+    </span>
+  </span>
+  <a href="/rechercheOffre" class="btn-voir-liste">🔍 Voir les offres →</a>
+</div>
+
+{% if candidatures | length > 0 %}
+
+  <div class="offres-list">
+    {% for c in candidatures %}
+      <div class="offre-carte">
+        <div class="offre-num">{{ loop.index }}</div>
+        <div class="offre-info">
+          <span class="offre-titre">{{ c.Titre }}</span>
+          <div class="offre-meta">
+            <span>🏢 {{ c.Nom_entreprise }}</span>
+            <span>📍 {{ c.Ville_CP }}</span>
+            <span class="offre-tag">{{ c.Duree }} mois</span>
+            <span class="offre-tag">{{ c.Remuneration }} €/mois</span>
+          </div>
+        </div>
+        <div class="offre-actions">
+          <a href="/offre?id={{ c.ID_Offre }}" class="btn-offre btn-voir">👁️ Voir l'offre</a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+{% else %}
+
+  <div class="vide visible">
+    <span class="vide-icon">📄</span>
+    <span class="vide-titre">Aucune candidature pour l'instant</span>
+    <span class="vide-desc">Explorez les offres disponibles et postulez !</span>
+    <a href="/rechercheOffre" class="btn-explorer">Explorer les offres</a>
+  </div>
+
+{% endif %}
+
+{% endblock %}

@@ -19,6 +19,7 @@ class Middleware
         'formulaire'     => [1],
         'espaceEleve'    => [1],
         'parametreEleve' => [1],
+        'listeCandidatures' => [1],
 
         // Rôles 2 & 3 — Pilote + Admin
         'pilote'                  => [2, 3],
