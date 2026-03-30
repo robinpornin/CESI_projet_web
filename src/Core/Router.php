@@ -50,7 +50,7 @@ class Router
 
             // --- Accueil ---
             case 'home':
-            case '' :
+            case '':
                 (new \PageAccueil($this->twig))->render();
                 break;
 
@@ -64,14 +64,84 @@ class Router
                 break;
 
             case 'deconnexion':
+                if (session_status() === PHP_SESSION_NONE) {
+                    session_start();
+                }
+
+                session_unset();
                 session_destroy();
                 header('Location: /');
                 exit;
-            
+
             case 'suppressionCompte':
-                session_destroy();
-                header('Location: /');
-                exit;
+                if (session_status() === PHP_SESSION_NONE) {
+                    session_start();
+                }
+
+                $idUtilisateur = (int) ($_SESSION['utilisateur']['id'] ?? 0);
+
+                if ($idUtilisateur <= 0) {
+                    header('Location: /gestionCompte');
+                    exit;
+                }
+
+                require_once __DIR__ . '/../../database.php';
+                $pdo = getPDO();
+
+                try {
+                    $pdo->beginTransaction();
+
+                    $stmt = $pdo->prepare('DELETE FROM Requerir WHERE ID_Offre IN (
+                        SELECT ID_Offre FROM Offres WHERE ID_Entreprise IN (
+                            SELECT ID_Entreprise FROM Entreprises WHERE ID_Utilisateur = :id
+                        )
+                    )');
+                    $stmt->execute(['id' => $idUtilisateur]);
+
+
+                    $stmt = $pdo->prepare('DELETE FROM Contenir 
+                        WHERE ID_Wishlist IN (
+                            SELECT ID_Wishlist
+                            FROM Wishlists
+                            WHERE ID_Utilisateur = :id
+                        )');
+                    $stmt->execute(['id' => $idUtilisateur]);
+
+                    $stmt = $pdo->prepare('DELETE FROM Candidatures WHERE ID_Utilisateur = :id');
+                    $stmt->execute(['id' => $idUtilisateur]);
+
+                    $stmt = $pdo->prepare('DELETE FROM Evaluations WHERE ID_Utilisateur = :id');
+                    $stmt->execute(['id' => $idUtilisateur]);
+
+                    $stmt = $pdo->prepare('DELETE FROM Wishlists WHERE ID_Utilisateur = :id');
+                    $stmt->execute(['id' => $idUtilisateur]);
+
+                    $stmt = $pdo->prepare('DELETE FROM Entreprises WHERE ID_Utilisateur = :id');
+                    $stmt->execute(['id' => $idUtilisateur]);
+
+                    $stmt = $pdo->prepare('DELETE FROM Utilisateurs WHERE ID_Utilisateur = :id');
+                    $stmt->execute(['id' => $idUtilisateur]);
+
+                    $pdo->commit();
+
+                    session_unset();
+                    session_destroy();
+
+                    header('Location: /');
+                    exit;
+
+                } catch (\Throwable $e) {
+                    if ($pdo->inTransaction()) {
+                        $pdo->rollBack();
+                    }
+
+                    echo '<pre>';
+                    echo 'Erreur suppression compte :' . "\n";
+                    echo $e->getMessage() . "\n\n";
+                    print_r($e);
+                    echo '</pre>';
+                    exit;
+                }
 
 
             case 'creationCompte':
@@ -121,7 +191,7 @@ class Router
             case 'parametreEleve':
                 (new \PageParametreEleve($this->twig))->render();
                 break;
-            
+
             case 'listeCandidatures':
                 (new \PageListeCandidatures($this->twig))->render();
                 break;
@@ -180,7 +250,7 @@ class Router
             case 'formulaire':
                 (new \PageFormulaire($this->twig))->render();
                 break;
-            
+
             // --- Mentions Légales ---
             case 'mentionsLegales':
                 (new \PageMentionsLegales($this->twig))->render();
@@ -189,7 +259,7 @@ class Router
             // --- 404 ---
             default:
                 http_response_code(404);
-                echo "404 - Page non trouvée : " . htmlspecialchars($url);
+                echo '404 - Page non trouvée : ' . htmlspecialchars($url);
                 break;
         }
     }
