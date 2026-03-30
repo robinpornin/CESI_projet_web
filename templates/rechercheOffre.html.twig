@@ -51,26 +51,28 @@
     <p>Parcourez les offres disponibles et postulez en un clic.</p>
   </div>
   <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Titre, entreprise, secteur..." oninput="filterOffres()">
-    <div class="divider-v"></div>
-    <select id="filterVille" onchange="filterOffres()">
-      <option value="">Toutes les villes</option>
-      {% for ville in villes %}
-        <option value="{{ ville }}">{{ ville }}</option>
-      {% endfor %}
-    </select>
-    <div class="divider-v"></div>
-    <select id="filterDuree" onchange="filterOffres()">
-      <option value="">⏱ Toutes durées</option>
-      <option value="8">8 semaines</option>
-      <option value="10">10 semaines</option>
-      <option value="12">12 semaines</option>
-      <option value="14">14 semaines</option>
-      <option value="16">16 semaines</option>
-      <option value="18">18 semaines</option>
-      <option value="20">20 semaines</option>
-    </select>
-    <button class="btn-search" onclick="filterOffres()">Rechercher</button>
+    <form method="get" action="" style="display:flex; align-items:center; width:100%; gap:0;">
+      <input type="text" id="searchInput" name="search" placeholder="Titre, entreprise, secteur..." value="{{ search|default('') }}">
+      <div class="divider-v"></div>
+      <select id="filterVille" name="ville">
+        <option value="">Toutes les villes</option>
+        {% for ville in villes %}
+          <option value="{{ ville }}" {% if selectedVille is defined and selectedVille == ville %}selected{% endif %}>{{ ville }}</option>
+        {% endfor %}
+      </select>
+      <div class="divider-v"></div>
+      <select id="filterDuree" name="duree">
+        <option value="">⏱ Toutes durées</option>
+        <option value="8" {% if selectedDuree is defined and selectedDuree == '8' %}selected{% endif %}>8 semaines</option>
+        <option value="10" {% if selectedDuree is defined and selectedDuree == '10' %}selected{% endif %}>10 semaines</option>
+        <option value="12" {% if selectedDuree is defined and selectedDuree == '12' %}selected{% endif %}>12 semaines</option>
+        <option value="14" {% if selectedDuree is defined and selectedDuree == '14' %}selected{% endif %}>14 semaines</option>
+        <option value="16" {% if selectedDuree is defined and selectedDuree == '16' %}selected{% endif %}>16 semaines</option>
+        <option value="18" {% if selectedDuree is defined and selectedDuree == '18' %}selected{% endif %}>18 semaines</option>
+        <option value="20" {% if selectedDuree is defined and selectedDuree == '20' %}selected{% endif %}>20 semaines</option>
+      </select>
+      <button class="btn-search" type="submit">Rechercher</button>
+    </form>
   </div>
 </div>
 
@@ -89,19 +91,19 @@
     {% if totalPages > 1 %}
       <div class="pagination">
         {% if currentPage > 1 %}
-          <a href="?page={{ currentPage - 1 }}" class="page-btn">Précédent</a>
+          <a href="?page={{ currentPage - 1 }}&search={{ search|url_encode }}&ville={{ selectedVille|url_encode }}&duree={{ selectedDuree|url_encode }}" class="page-btn">Précédent</a>
         {% endif %}
 
         {% for i in 1..totalPages %}
           {% if i == currentPage %}
             <span class="page-btn active">{{ i }}</span>
           {% else %}
-            <a href="?page={{ i }}" class="page-btn">{{ i }}</a>
+            <a href="?page={{ i }}&search={{ search|url_encode }}&ville={{ selectedVille|url_encode }}&duree={{ selectedDuree|url_encode }}" class="page-btn">{{ i }}</a>
           {% endif %}
         {% endfor %}
 
         {% if currentPage < totalPages %}
-          <a href="?page={{ currentPage + 1 }}" class="page-btn">Suivant</a>
+          <a href="?page={{ currentPage + 1 }}&search={{ search|url_encode }}&ville={{ selectedVille|url_encode }}&duree={{ selectedDuree|url_encode }}" class="page-btn">Suivant</a>
         {% endif %}
       </div>
     {% endif %}
@@ -212,25 +214,6 @@
     document.getElementById('ficheContent').classList.add('visible');
 
     renderOffres(list);
-  }
-
-  function filterOffres() {
-    const q = document.getElementById('searchInput').value.toLowerCase();
-    const ville = document.getElementById('filterVille').value;
-    const duree = document.getElementById('filterDuree').value;
-
-    const filtered = offres.filter(o =>
-      (o.Titre.toLowerCase().includes(q) ||
-       o.Nom_entreprise.toLowerCase().includes(q) ||
-       o.Secteur.toLowerCase().includes(q)) &&
-      (ville === '' || o.Ville_CP === ville) &&
-      (duree === '' || String(o.Duree) === duree)
-    );
-
-    activeIndex = null;
-    document.getElementById('fichePlaceholder').style.display = 'flex';
-    document.getElementById('ficheContent').classList.remove('visible');
-    renderOffres(filtered);
   }
 
   renderOffres(offres);
