@@ -1456,3 +1456,145 @@ footer span { color: #FFD700; font-weight: bold; }
 .dropdown.visible {
   display: block;
 }
+
+.bandeau-nom {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.entreprise-avatar {
+  font-size: 40px;
+}
+
+.entreprise-nom-bloc {
+  display: flex;
+  flex-direction: column;
+}
+
+.entreprise-nom {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.entreprise-secteur {
+  color: #777;
+}
+
+.separateur {
+  height: 2px;
+  background: #ddd;
+  margin: 20px 0;
+}
+
+/* ALERTES */
+.alert {
+  border-radius: 10px;
+  padding: 12px 18px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.alert-success {
+  background: #e6f9ee;
+  border: 2px solid #00aa44;
+  color: #00aa44;
+}
+
+.alert-error {
+  background: #fff0f0;
+  border: 2px solid #cc0000;
+  color: #cc0000;
+}
+
+/* CARD */
+.form-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.form-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.form-card-header-icon {
+  font-size: 20px;
+}
+
+.form-card-header-titre {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+/* FORM */
+.section-label {
+  font-weight: bold;
+  margin-top: 15px;
+  display: block;
+}
+
+.form-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.form-group.full {
+  flex: 100%;
+}
+
+.form-label {
+  margin-bottom: 5px;
+}
+
+.form-input,
+.form-textarea {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.form-textarea {
+  min-height: 100px;
+}
+
+/* ACTIONS */
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn-enregistrer {
+  background: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-annuler {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  background: #ccc;
+  color: black;
+  padding: 10px 15px;
+  border-radius: 8px;
+}
