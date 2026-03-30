@@ -13,8 +13,10 @@ require_once __DIR__ . '/../vendor/autoload.php';
 // Controllers
 require_once __DIR__ . '/../src/Controller/accueil.php';
 require_once __DIR__ . '/../src/Controller/connexion.php';
+require_once __DIR__ . '/../src/Controller/contactAdmin.php';
 require_once __DIR__ . '/../src/Controller/invite.php';
 require_once __DIR__ . '/../src/Controller/admin.php';
+require_once __DIR__ . '/../src/Controller/mentionsLegales.php';
 require_once __DIR__ . '/../src/Controller/FicheEntreprise.php';
 require_once __DIR__ . '/../src/Controller/creationCompte.php';
 require_once __DIR__ . '/../src/Controller/creationEleve.php';
@@ -41,12 +43,17 @@ require_once __DIR__ . '/../src/Controller/listeCandidatures.php';
 // Router
 require_once __DIR__ . '/../src/Core/Router.php';
 
+// AppUser
+require_once __DIR__ . '/../src/Core/appUser.php';
+
+
 // Twig
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../templates');
 $twig   = new \Twig\Environment($loader, ['debug' => true]);
 $twig->addExtension(new \Twig\Extension\DebugExtension());
 $twig->addGlobal('user_role', $_SESSION['utilisateur']['role'] ?? 0);
 $twig->addGlobal('user_nom',  $_SESSION['user_nom']  ?? null);
+$twig->addGlobal('app_user', AppUser::fromSession());
 
 // Récupération de la route
 $requestUri = $_SERVER['REQUEST_URI'];

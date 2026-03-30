@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../../database.php';
 
+
 class PageGestionComptePiloteAdmin
 {
     private \Twig\Environment $twig;
@@ -29,6 +30,7 @@ class PageGestionComptePiloteAdmin
             'page'    => 'gestion_pilote_admin',
             'title'   => 'Gestion des comptes Pilotes',
             'pilotes' => $pilotes,
+            'app_user'  => AppUser::fromSession(),
         ]);
     }
 }

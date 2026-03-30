@@ -1,15 +1,10 @@
 <?php
-
 declare(strict_types=1);
 
 class AppUser
 {
     public static function fromSession(): ?array
     {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
         $utilisateur = $_SESSION['utilisateur'] ?? null;
 
         if ($utilisateur === null) {
