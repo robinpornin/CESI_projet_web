@@ -39,7 +39,7 @@ require_once __DIR__ . '/../src/Controller/rechercheEntreprise.php';
 require_once __DIR__ . '/../src/Controller/rechercheOffre.php';
 require_once __DIR__ . '/../src/Controller/wishlist.php';
 require_once __DIR__ . '/../src/Controller/listeCandidatures.php';
-
+require_once __DIR__ . '/../src/Controller/modificationEntreprise.php';
 // Router
 require_once __DIR__ . '/../src/Core/Router.php';
 

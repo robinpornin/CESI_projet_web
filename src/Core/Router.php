@@ -30,7 +30,8 @@ use App\Controller\{
     PageRechercheOffre,
     PageWishlist,
     PageListeCandidatures,
-    PageMentionsLegales
+    PageMentionsLegales,
+    PageModificationEntreprise
 };
 
 class Router
