@@ -1,10 +1,9 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Page de la geestion des comptes pilotes par l'administrateur{% endblock %}
+{% block title %}Page de la gestion des comptes pilotes par l'administrateur{% endblock %}
 
 {% block content %}
 
-<!-- bandeau -->
   <div class="bandeau">
     <div class="bandeau-icon">🧑‍✈️</div>
     <div class="bandeau-info">
@@ -14,97 +13,292 @@
     </div>
   </div>
 
-  <!-- main -->
-    <div class="separateur"></div>
+  <div class="separateur"></div>
 
-    <!-- créer compte pilote -->
-    <div class="creer-bloc">
-      <button class="creer-toggle-btn" onclick="toggleCreer()">
-        <span>Créer un compte Pilote</span>
-        <span class="creer-arrow" id="creerArrow">▼</span>
-      </button>
-      <div class="creer-form" id="creerForm">
-        <div class="form-grid">
-          <div class="form-group">
-            <label class="form-label">Prénom</label>
-            <input class="form-input" type="text" placeholder="Jean">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Nom</label>
-            <input class="form-input" type="text" placeholder="Dupont">
-          </div>
-          <div class="form-group full">
-            <label class="form-label">Email</label>
-            <input class="form-input" type="email" placeholder="jean.dupont@cesi.fr">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Mot de passe</label>
-            <input class="form-input" type="password" placeholder="••••••••">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Centre CESI</label>
-            <input class="form-input" type="text" placeholder="Paris, Lyon...">
-          </div>
+  <div class="creer-bloc">
+    <button type="button" class="creer-toggle-btn" onclick="toggleCreer()">
+      <span>Créer un compte Pilote</span>
+      <span class="creer-arrow" id="creerArrow">▼</span>
+    </button>
+
+    <div class="creer-form" id="creerForm">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Prénom</label>
+          <input class="form-input" id="createPrenom" type="text" placeholder="Jean">
         </div>
-        <button class="btn-creer">Créer le compte</button>
+        <div class="form-group">
+          <label class="form-label">Nom</label>
+          <input class="form-input" id="createNom" type="text" placeholder="Dupont">
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Email</label>
+          <input class="form-input" id="createEmail" type="email" placeholder="jean.dupont@cesi.fr">
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Mot de passe</label>
+          <input class="form-input" id="createPassword" type="password" placeholder="••••••••">
+        </div>
+      </div>
+      <button type="button" class="btn-creer" onclick="creerCompte()">Créer le compte</button>
+    </div>
+  </div>
+
+  <div class="recherche-bloc">
+    <div class="bloc-header">Rechercher un pilote</div>
+    <div class="bloc-body">
+      <div class="search-row">
+        <input type="text" id="searchPilote" placeholder="Nom, prénom, email...">
+        <button type="button" class="btn-search" onclick="rechercherPilote()">Rechercher</button>
       </div>
     </div>
+  </div>
 
-    <!-- recherche pilote -->
-    <div class="recherche-bloc">
-      <div class="bloc-header">Rechercher un pilote</div>
-      <div class="bloc-body">
-        <div class="search-row">
-          <input type="text" id="searchPilote" placeholder="Nom, prénom, email...">
-          <button class="btn-search" onclick="rechercherPilote()">Rechercher</button>
-        </div>
-      </div>
+  <div class="fiche-pilote" id="fichePilote">
+    <div class="bloc-header">Informations du pilote</div>
+
+    <div class="fiche-placeholder" id="fichePlaceholder">
+      <span class="big-icon">🧑‍✈️</span>
+      <span>Effectuez une recherche pour afficher et modifier les informations d'un pilote.</span>
     </div>
 
-    <!-- fiche pilote -->
-    <div class="fiche-pilote" id="fichePilote">
-      <div class="bloc-header">Informations du pilote</div>
-
-      <div class="fiche-placeholder" id="fichePlaceholder">
-        <span class="big-icon">🧑‍✈️</span>
-        <span>Effectuez une recherche pour afficher et modifier les informations d'un pilote.</span>
+    <div class="fiche-content" id="ficheContent" data-id="">
+      <div class="fiche-top">
+        <div class="pilote-avatar">🧑‍✈️</div>
+        <div>
+          <div class="pilote-nom" id="ficheNomAffiche"></div>
+          <div class="pilote-email" id="ficheEmailAffiche"></div>
+        </div>
       </div>
 
-      <div class="fiche-content" id="ficheContent">
-        <div class="fiche-top">
-          <div class="pilote-avatar">🧑‍✈️</div>
-          <div>
-            <div class="pilote-nom" id="ficheNomAffiche">Jean Dupont</div>
-            <div class="pilote-email" id="ficheEmailAffiche">jean.dupont@cesi.fr</div>
-          </div>
+      <div class="fiche-fields">
+        <div class="field-group">
+          <label class="field-label">Prénom</label>
+          <input class="field-input" id="fichePrenom" type="text" value="">
         </div>
-        <div class="fiche-fields">
-          <div class="field-group">
-            <label class="field-label">Prénom</label>
-            <input class="field-input" id="fichePrenom" type="text" value="Jean">
-          </div>
-          <div class="field-group">
-            <label class="field-label">Nom</label>
-            <input class="field-input" id="ficheNom" type="text" value="Dupont">
-          </div>
-          <div class="field-group full">
-            <label class="field-label">Email</label>
-            <input class="field-input" id="ficheEmail" type="email" value="jean.dupont@cesi.fr">
-          </div>
-          <div class="field-group">
-            <label class="field-label">Centre CESI</label>
-            <input class="field-input" id="ficheCentre" type="text" value="Paris">
-          </div>
-          <div class="field-group">
-            <label class="field-label">Statut</label>
-            <input class="field-input" id="ficheStatut" type="text" value="Actif">
-          </div>
+        <div class="field-group">
+          <label class="field-label">Nom</label>
+          <input class="field-input" id="ficheNom" type="text" value="">
         </div>
-        <div class="fiche-actions">
-          <button class="btn-enregistrer" onclick="enregistrer()">Enregistrer</button>
-          <button class="btn-supprimer" onclick="supprimerCompte()">Supprimer le compte</button>
+        <div class="field-group full">
+          <label class="field-label">Email</label>
+          <input class="field-input" id="ficheEmail" type="email" value="">
         </div>
+      </div>
+
+      <div class="fiche-actions">
+        <button type="button" class="btn-enregistrer" onclick="enregistrer()">Enregistrer</button>
+        <button type="button" class="btn-supprimer" onclick="supprimerCompte()">Supprimer le compte</button>
       </div>
     </div>
+  </div>
+
+  <script>
+    let pilotes = {{ pilotes|json_encode|raw }};
+
+    function toggleCreer() {
+      const form = document.getElementById('creerForm');
+      const arrow = document.getElementById('creerArrow');
+
+      if (form.style.display === 'block') {
+        form.style.display = 'none';
+        arrow.textContent = '▼';
+      } else {
+        form.style.display = 'block';
+        arrow.textContent = '▲';
+      }
+    }
+
+    function rechercherPilote() {
+      const valeur = document.getElementById('searchPilote').value.toLowerCase().trim();
+
+      if (!valeur) {
+        alert('Veuillez saisir un nom, prénom ou email.');
+        return;
+      }
+
+      const pilote = pilotes.find(p =>
+        (p.Nom && p.Nom.toLowerCase().includes(valeur)) ||
+        (p.Prenom && p.Prenom.toLowerCase().includes(valeur)) ||
+        (p.Email && p.Email.toLowerCase().includes(valeur))
+      );
+
+      if (!pilote) {
+        document.getElementById('fichePlaceholder').style.display = 'flex';
+        document.getElementById('ficheContent').style.display = 'none';
+        alert('Aucun pilote trouvé.');
+        return;
+      }
+
+      afficherPilote(pilote);
+    }
+
+    function afficherPilote(pilote) {
+      document.getElementById('fichePlaceholder').style.display = 'none';
+      document.getElementById('ficheContent').style.display = 'block';
+
+      document.getElementById('ficheContent').dataset.id = pilote.ID_Utilisateur;
+      document.getElementById('ficheNomAffiche').textContent = (pilote.Prenom || '') + ' ' + (pilote.Nom || '');
+      document.getElementById('ficheEmailAffiche').textContent = pilote.Email || '';
+
+      document.getElementById('fichePrenom').value = pilote.Prenom || '';
+      document.getElementById('ficheNom').value = pilote.Nom || '';
+      document.getElementById('ficheEmail').value = pilote.Email || '';
+    }
+
+    async function creerCompte() {
+      const prenom = document.getElementById('createPrenom').value.trim();
+      const nom = document.getElementById('createNom').value.trim();
+      const email = document.getElementById('createEmail').value.trim();
+      const mdp = document.getElementById('createPassword').value.trim();
+
+      if (!prenom || !nom || !email || !mdp) {
+        alert('Merci de remplir tous les champs.');
+        return;
+      }
+
+      try {
+        const response = await fetch('/gestionComptePiloteAdmin.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            action: 'create',
+            prenom: prenom,
+            nom: nom,
+            email: email,
+            mdp: mdp
+          })
+        });
+
+        const data = await response.json();
+
+        if (!data.success) {
+          alert(data.message || 'Erreur lors de la création.');
+          return;
+        }
+
+        pilotes.push(data.pilote);
+
+        document.getElementById('createPrenom').value = '';
+        document.getElementById('createNom').value = '';
+        document.getElementById('createEmail').value = '';
+        document.getElementById('createPassword').value = '';
+
+        alert('Compte pilote créé avec succès.');
+      } catch (error) {
+        alert('Erreur JavaScript / serveur lors de la création.');
+        console.error(error);
+      }
+    }
+
+    async function enregistrer() {
+      const id = document.getElementById('ficheContent').dataset.id;
+      const prenom = document.getElementById('fichePrenom').value.trim();
+      const nom = document.getElementById('ficheNom').value.trim();
+      const email = document.getElementById('ficheEmail').value.trim();
+
+      if (!id) {
+        alert('Aucun pilote sélectionné.');
+        return;
+      }
+
+      if (!prenom || !nom || !email) {
+        alert('Merci de remplir prénom, nom et email.');
+        return;
+      }
+
+      try {
+        const response = await fetch('/gestionComptePiloteAdmin.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            action: 'update',
+            id: id,
+            prenom: prenom,
+            nom: nom,
+            email: email
+          })
+        });
+
+        const data = await response.json();
+
+        if (!data.success) {
+          alert(data.message || 'Erreur lors de la modification.');
+          return;
+        }
+
+        const index = pilotes.findIndex(p => String(p.ID_Utilisateur) === String(id));
+        if (index !== -1) {
+          pilotes[index] = data.pilote;
+        }
+
+        afficherPilote(data.pilote);
+        alert('Compte pilote modifié avec succès.');
+      } catch (error) {
+        alert('Erreur JavaScript / serveur lors de la modification.');
+        console.error(error);
+      }
+    }
+
+    async function supprimerCompte() {
+      const id = document.getElementById('ficheContent').dataset.id;
+
+      if (!id) {
+        alert('Aucun pilote sélectionné.');
+        return;
+      }
+
+      if (!confirm('Voulez-vous vraiment supprimer ce compte pilote ?')) {
+        return;
+      }
+
+      try {
+        const response = await fetch('/gestionComptePiloteAdmin.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            action: 'delete',
+            id: id
+          })
+        });
+
+        const data = await response.json();
+
+        if (!data.success) {
+          alert(data.message || 'Erreur lors de la suppression.');
+          return;
+        }
+
+        pilotes = pilotes.filter(p => String(p.ID_Utilisateur) !== String(id));
+
+        document.getElementById('ficheContent').style.display = 'none';
+        document.getElementById('fichePlaceholder').style.display = 'flex';
+        document.getElementById('ficheContent').dataset.id = '';
+
+        document.getElementById('ficheNomAffiche').textContent = '';
+        document.getElementById('ficheEmailAffiche').textContent = '';
+        document.getElementById('fichePrenom').value = '';
+        document.getElementById('ficheNom').value = '';
+        document.getElementById('ficheEmail').value = '';
+
+        alert('Compte pilote supprimé avec succès.');
+      } catch (error) {
+        alert('Erreur JavaScript / serveur lors de la suppression.');
+        console.error(error);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('creerForm').style.display = 'none';
+      document.getElementById('ficheContent').style.display = 'none';
+      document.getElementById('fichePlaceholder').style.display = 'flex';
+    });
+  </script>
 
 {% endblock %}
