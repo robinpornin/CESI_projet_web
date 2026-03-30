@@ -1427,3 +1427,32 @@ footer span { color: #FFD700; font-weight: bold; }
   .fiche-entreprise,
   .fiche-offre     { position: static; min-width: unset; }
 }
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: none;
+  z-index: 150;
+}
+
+.overlay.visible {
+  display: block;
+}
+
+.dropdown {
+  position: absolute;
+  top: 70px;
+  right: 24px;
+  width: 320px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+  display: none;
+  z-index: 250;
+  overflow: hidden;
+}
+
+.dropdown.visible {
+  display: block;
+}

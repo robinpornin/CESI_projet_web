@@ -1,4 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
+  if (document.getElementById("menuButton")) {
+    initialiserMenu();
+    return;
+  }
+
+  // Ancien système JS (pages HTML statiques)
   const container = document.getElementById("menu-container");
   if (!container) return;
 
