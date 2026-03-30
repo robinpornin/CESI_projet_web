@@ -212,11 +212,11 @@
     document.getElementById('ficheDate').textContent = o.Date_;
 
     document.getElementById('btnPostuler').onclick = () => {
-      window.location.href = `postuler.php?id=${o.ID_Offre}`;
+      window.location.href = `formulaire?id=${o.ID_Offre}`;
     };
 
     document.getElementById('btnDetail').onclick = () => {
-      window.location.href = `ficheOffre.php?id=${o.ID_Offre}`;
+      window.location.href = `offre?id=${o.ID_Offre}`;
     };
 
     document.getElementById('fichePlaceholder').style.display = 'none';

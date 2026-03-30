@@ -172,7 +172,7 @@
     document.getElementById('ficheNote').textContent = e.Note_moyenne ? e.Note_moyenne + ' / 5' : 'Aucune évaluation';
 
     document.getElementById('btnFiche').onclick = () => {
-      window.location.href = `ficheEntreprise.php?id=${e.ID_Entreprise}`;
+      window.location.href = `ficheEntreprise?id=${e.ID_Entreprise}`;
     };
 
     document.getElementById('fichePlaceholder').style.display = 'none';
