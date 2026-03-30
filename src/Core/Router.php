@@ -5,6 +5,7 @@ namespace App\Core;
 use App\Controller\{
     PageAccueil,
     PageConnexion,
+    PageContactAdmin,
     PageInvite,
     PageAdmin,
     PageFicheEntreprise,
@@ -55,6 +56,10 @@ class Router
             // --- Authentification ---
             case 'connexion':
                 (new \PageConnexion($this->twig))->render();
+                break;
+
+            case 'contactAdmin':
+                (new \PageContactAdmin($this->twig))->render();
                 break;
 
             case 'deconnexion':
