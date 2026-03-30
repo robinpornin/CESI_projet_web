@@ -1,0 +1,130 @@
+<button class="avatar-btn" title="Mon compte {{ user.badge }}" id="menuButton" aria-label="Ouvrir le menu {{ user.badge }}">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+  </svg>
+</button>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="dropdown" id="dropdown" role="menu" aria-hidden="true">
+  <div class="dropdown-head">
+    <div class="dropdown-avatar">{{ user.avatar }}</div>
+    <div class="dropdown-user">
+      <span class="dropdown-nom">{{ user.nom }}</span>
+      <span class="dropdown-badge">{{ user.badge }}</span>
+    </div>
+  </div>
+
+  <div class="dropdown-body">
+
+    {# ── Liens selon le rôle ── #}
+    {% if user.role == 3 %}{# Admin #}
+
+      <a class="menu-item" href="/espaceEleve" onclick="closeMenu()">
+        <span class="menu-item-icon">🎓</span>
+        <div class="menu-item-info">
+          <span class="menu-item-titre">Espace élève</span>
+          <span class="menu-item-desc">→ Accéder à l'espace élève</span>
+        </div>
+      </a>
+
+      <a class="menu-item" href="/pilote" onclick="closeMenu()">
+        <span class="menu-item-icon">🧑‍✈️</span>
+        <div class="menu-item-info">
+          <span class="menu-item-titre">Espace pilote</span>
+          <span class="menu-item-desc">→ Accéder à l'espace pilote</span>
+        </div>
+      </a>
+
+      <a class="menu-item" href="/gestionEntreprise" onclick="closeMenu()">
+        <span class="menu-item-icon">🏢</span>
+        <div class="menu-item-info">
+          <span class="menu-item-titre">Espace gestion entreprise</span>
+          <span class="menu-item-desc">→ Gérer les entreprises</span>
+        </div>
+      </a>
+
+      <a class="menu-item" href="/gestionOffre" onclick="closeMenu()">
+        <span class="menu-item-icon">📋</span>
+        <div class="menu-item-info">
+          <span class="menu-item-titre">Espace gestion offre</span>
+          <span class="menu-item-desc">→ Gérer les offres de stage</span>
+        </div>
+      </a>
+
+    {% elseif user.role == 2 %}{# Pilote #}
+
+      <a class="menu-item" href="/espaceEleve" onclick="closeMenu()">
+        <span class="menu-item-icon">🎓</span>
+        <div class="menu-item-info">
+          <span class="menu-item-titre">Espace élève</span>
+          <span class="menu-item-desc">→ Accéder à l'espace élève</span>
+        </div>
+      </a>
+
+      <a class="menu-item" href="/gestionEntreprise" onclick="closeMenu()">
+        <span class="menu-item-icon">🏢</span>
+        <div class="menu-item-info">
+          <span class="menu-item-titre">Espace gestion entreprise</span>
+          <span class="menu-item-desc">→ Gérer les entreprises</span>
+        </div>
+      </a>
+
+      <a class="menu-item" href="/gestionOffre" onclick="closeMenu()">
+        <span class="menu-item-icon">📋</span>
+        <div class="menu-item-info">
+          <span class="menu-item-titre">Espace gestion offre</span>
+          <span class="menu-item-desc">→ Gérer les offres de stage</span>
+        </div>
+      </a>
+
+    {% elseif user.role == 1 %}{# Étudiant #}
+
+      <a class="menu-item" href="/listeCandidatures" onclick="closeMenu()">
+        <span class="menu-item-icon">📄</span>
+        <div class="menu-item-info">
+          <span class="menu-item-titre">Mes candidatures</span>
+          <span class="menu-item-desc">→ Voir la liste de mes candidatures</span>
+        </div>
+      </a>
+
+      <a class="menu-item" href="/wishlist" onclick="closeMenu()">
+        <span class="menu-item-icon">⭐</span>
+        <div class="menu-item-info">
+          <span class="menu-item-titre">Ma wish-list</span>
+          <span class="menu-item-desc">→ Voir ma liste d'offres favorites</span>
+        </div>
+      </a>
+
+    {% endif %}
+
+    <div class="menu-sep"></div>
+
+    <button class="menu-item deconnexion" onclick="seDeconnecter()">
+      <span class="menu-item-icon">🚪</span>
+      <div class="menu-item-info">
+        <span class="menu-item-titre">Se déconnecter</span>
+      </div>
+    </button>
+
+    <div class="menu-sep"></div>
+
+    <a class="menu-item" href="/gestionCompte" onclick="closeMenu()">
+      <span class="menu-item-icon">✏️</span>
+      <div class="menu-item-info">
+        <span class="menu-item-titre">Modifier le compte</span>
+      </div>
+    </a>
+
+    {# Supprimer le compte : uniquement pour étudiant et pilote, pas l'admin #}
+    {% if user.role != 3 %}
+      <button class="menu-item danger" onclick="supprimerCompte()">
+        <span class="menu-item-icon">🗑️</span>
+        <div class="menu-item-info">
+          <span class="menu-item-titre">Supprimer le compte</span>
+        </div>
+      </button>
+    {% endif %}
+
+  </div>
+</div>

@@ -24,6 +24,7 @@ class PageAccueil
             'page'     => 'accueil',
             'title'    => 'Accueil',
             'platform_name' => 'CESI-STAGES',
+            'utilisateur'    => $_SESSION['utilisateur'] ?? null,
         ]);
     }
 }

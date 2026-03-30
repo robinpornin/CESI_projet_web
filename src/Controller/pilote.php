@@ -32,7 +32,8 @@ class PagePilote
             'page'        => 'pilote',
             'title'       => 'Espace Pilote',
             'utilisateur' => $utilisateur,
-            'prenom'      => $utilisateur['Prenom']
+            'prenom'      => $utilisateur['Prenom'],
+            'app_user'      => AppUser::fromSession(),
         ]);
     }
 }

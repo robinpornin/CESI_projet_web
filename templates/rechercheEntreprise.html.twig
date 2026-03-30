@@ -51,8 +51,10 @@
     <p>Trouvez une entreprise partenaire et accédez à sa fiche détaillée.</p>
   </div>
   <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Nom, secteur, ville..." oninput="filterEntreprises()">
-    <button class="btn-search" onclick="filterEntreprises()">Rechercher</button>
+    <form method="get" action="" style="display:flex; gap:10px; width:100%;">
+      <input type="text" id="searchInput" name="search" placeholder="Nom, secteur, ville..." value="{{ search|default('') }}">
+      <button class="btn-search" type="submit">Rechercher</button>
+    </form>
   </div>
 </div>
 
@@ -67,19 +69,19 @@
     {% if totalPages > 1 %}
       <div class="pagination">
         {% if currentPage > 1 %}
-          <a href="?page={{ currentPage - 1 }}" class="page-btn">Précédent</a>
+          <a href="?page={{ currentPage - 1 }}&search={{ search|url_encode }}" class="page-btn">Précédent</a>
         {% endif %}
 
         {% for i in 1..totalPages %}
           {% if i == currentPage %}
             <span class="page-btn active">{{ i }}</span>
           {% else %}
-            <a href="?page={{ i }}" class="page-btn">{{ i }}</a>
+            <a href="?page={{ i }}&search={{ search|url_encode }}" class="page-btn">{{ i }}</a>
           {% endif %}
         {% endfor %}
 
         {% if currentPage < totalPages %}
-          <a href="?page={{ currentPage + 1 }}" class="page-btn">Suivant</a>
+          <a href="?page={{ currentPage + 1 }}&search={{ search|url_encode }}" class="page-btn">Suivant</a>
         {% endif %}
       </div>
     {% endif %}
@@ -164,7 +166,7 @@
     document.getElementById('ficheNom').textContent = e.Nom_entreprise;
     document.getElementById('ficheSecteur').textContent = e.Secteur;
     document.getElementById('ficheType').textContent = e.Type_;
-    document.getElementById('ficheVille').textContent = e.Secteur.slice(0, -7);
+    document.getElementById('ficheVille').textContent = e.Ville_CP ? e.Ville_CP : '—';
     document.getElementById('ficheEmail').textContent = e.Email_entreprise;
     document.getElementById('ficheTel').textContent = e.Telephone;
     document.getElementById('ficheNote').textContent = e.Note_moyenne ? e.Note_moyenne + ' / 5' : 'Aucune évaluation';
@@ -177,21 +179,6 @@
     document.getElementById('ficheContent').classList.add('visible');
 
     renderEntreprises(list);
-  }
-
-  function filterEntreprises() {
-    const q = document.getElementById('searchInput').value.toLowerCase();
-
-    const filtered = entreprises.filter(e =>
-      e.Nom_entreprise.toLowerCase().includes(q) ||
-      e.Secteur.toLowerCase().includes(q) ||
-      e.Ville_CP.toLowerCase().includes(q)
-    );
-
-    activeIndex = null;
-    document.getElementById('fichePlaceholder').style.display = 'flex';
-    document.getElementById('ficheContent').classList.remove('visible');
-    renderEntreprises(filtered);
   }
 
   renderEntreprises(entreprises);

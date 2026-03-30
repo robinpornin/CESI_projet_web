@@ -51,6 +51,7 @@ class PageWishlist
             'title'       => 'Ma Wishlist',
             'offres'      => $offres,
             'utilisateur' => $utilisateur,
+            'app_user'      => AppUser::fromSession(),
         ]);
     }
 }

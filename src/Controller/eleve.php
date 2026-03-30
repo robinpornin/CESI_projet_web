@@ -21,21 +21,15 @@ class PageEleve
 
     public function render(): void
     {
-        $idUtilisateur = $_SESSION['utilisateur']['id'] ?? null;
-
-        $stmt = $this->pdo->prepare("
-            SELECT Prenom 
-            FROM Utilisateurs 
-            WHERE ID_Utilisateur = :id
-        ");
-        $stmt->execute([':id' => $idUtilisateur]);
-        $utilisateur = $stmt->fetch(PDO::FETCH_ASSOC);
+        $utilisateurSession = $_SESSION['utilisateur'] ?? null;
+        $prenom = $utilisateurSession['prenom'] ?? '';
 
         echo $this->twig->render('eleve.html.twig', [
             'page'          => 'eleve',
             'title'         => 'Élève',
             'platform_name' => 'CESI-STAGES',
-            'prenom'        => $utilisateur['Prenom'] ?? ''
+            'prenom'        => $utilisateur['Prenom'] ?? '',
+            'utilisateur'   => $utilisateurSession,
         ]);
     }
 }
