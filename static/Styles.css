@@ -282,6 +282,9 @@ footer span { color: #FFD700; font-weight: bold; }
 .btn-connexion { background-color: #FFD700; color: #111111; }
 .btn-invite    { background-color: #111111; color: #ffffff; }
 
+
+
+
 .btn-submit {
   flex: 1;
   background-color: #FFD700;
@@ -655,6 +658,9 @@ footer span { color: #FFD700; font-weight: bold; }
 .btn-suppr { background-color: #fff0f0; color: #cc0000; border: 1.5px solid #f5c0c0 !important; }
 .btn-suppr:hover { background-color: #cc0000 !important; color: #ffffff !important; border-color: #cc0000 !important; }
 
+
+
+
 /* --- SECTION ACCÈS / BLOCS --- */
 .acces-section,
 .bloc {
@@ -665,6 +671,7 @@ footer span { color: #FFD700; font-weight: bold; }
   max-width: 500px;
   width: 100%;
 }
+
 .acces-section { padding: 35px 40px; max-width: 480px; text-align: center; }
 .acces-section h2, .bloc h2 {
   font-size: 0.9rem;

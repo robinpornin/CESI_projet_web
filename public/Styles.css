@@ -654,6 +654,9 @@ footer span { color: #FFD700; font-weight: bold; }
 .btn-suppr { background-color: #fff0f0; color: #cc0000; border: 1.5px solid #f5c0c0 !important; }
 .btn-suppr:hover { background-color: #cc0000 !important; color: #ffffff !important; border-color: #cc0000 !important; }
 
+
+
+
 /* --- SECTION ACCÈS / BLOCS --- */
 .acces-section,
 .bloc {
