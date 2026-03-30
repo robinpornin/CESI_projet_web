@@ -1678,9 +1678,6 @@ form textarea::placeholder {
   }
 }
 
-.justifier {
-    text-align: justify;
-}
 
 .pagination {
     display: flex;
@@ -1720,3 +1717,7 @@ form textarea::placeholder {
   .liste-entreprises .pagination {
     width: 100%;
   }
+
+  .texte-gauche {
+    text-align: left;
+}
