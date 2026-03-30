@@ -29,7 +29,8 @@ use App\Controller\{
     PageRechercheEntreprise,
     PageRechercheOffre,
     PageWishlist,
-    PageListeCandidatures
+    PageListeCandidatures,
+    PageMentionsLegales
 };
 
 class Router
@@ -172,6 +173,11 @@ class Router
 
             case 'formulaire':
                 (new \PageFormulaire($this->twig))->render();
+                break;
+            
+            // --- Mentions Légales ---
+            case 'mentionsLegales':
+                (new \PageMentionsLegales($this->twig))->render();
                 break;
 
             // --- 404 ---
