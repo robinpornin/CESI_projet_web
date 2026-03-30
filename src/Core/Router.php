@@ -67,6 +67,12 @@ class Router
                 session_destroy();
                 header('Location: /');
                 exit;
+            
+            case 'suppressionCompte':
+                session_destroy();
+                header('Location: /');
+                exit;
+
 
             case 'creationCompte':
                 (new \PageCreationCompte($this->twig))->render();

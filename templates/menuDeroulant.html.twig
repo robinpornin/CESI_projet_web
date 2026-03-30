@@ -1,4 +1,4 @@
-<button class="avatar-btn" title="Mon compte {{ user.badge }}" id="menuButton" aria-label="Ouvrir le menu {{ user.badge }}">
+<button class="avatar-btn" title="Mon compte {{ user.badge }}" id="menuButton" aria-label="Ouvrir le menu {{ user.badge }}" onclick="toggleMenu()">
   <svg viewBox="0 0 24 24" aria-hidden="true">
     <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
   </svg>
@@ -100,12 +100,12 @@
 
     <div class="menu-sep"></div>
 
-    <button class="menu-item deconnexion" onclick="seDeconnecter()">
+    <a class="menu-item deconnexion" href="/deconnexion" onclick="closeMenu()">
       <span class="menu-item-icon">🚪</span>
       <div class="menu-item-info">
         <span class="menu-item-titre">Se déconnecter</span>
       </div>
-    </button>
+    </a>
 
     <div class="menu-sep"></div>
 
@@ -117,14 +117,17 @@
     </a>
 
     {# Supprimer le compte : uniquement pour étudiant et pilote, pas l'admin #}
-    {% if user.role != 3 %}
-      <button class="menu-item danger" onclick="supprimerCompte()">
-        <span class="menu-item-icon">🗑️</span>
-        <div class="menu-item-info">
-          <span class="menu-item-titre">Supprimer le compte</span>
-        </div>
-      </button>
-    {% endif %}
+      {% if user.role != 3 %}
+        <a class="menu-item danger"
+          href="/suppressionCompte"
+          onclick="return confirm('Confirmer la suppression du compte ? Cette action est irréversible.');">
+          <span class="menu-item-icon">🗑️</span>
+          <div class="menu-item-info">
+            <span class="menu-item-titre">Supprimer le compte</span>
+          </div>
+        </a>
+      {% endif %}
+
 
   </div>
 </div>
