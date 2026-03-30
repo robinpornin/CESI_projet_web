@@ -32,6 +32,7 @@ class PageAdmin
             'page'        => 'admin',
             'title'       => 'Admin',
             'utilisateur' => $utilisateur,
+            'app_user'    => AppUser::fromSession(),
         ]);
     }
 }

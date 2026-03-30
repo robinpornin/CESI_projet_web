@@ -53,6 +53,7 @@ class PageListeCandidatures
             'title'        => 'Mes Candidatures',
             'candidatures' => $candidatures,
             'utilisateur'  => $utilisateur,
+            'app_user'      => AppUser::fromSession(),
         ]);
     }
 }

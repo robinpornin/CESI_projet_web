@@ -16,7 +16,6 @@ class PageGestionCompteEleveAdmin
 
     public function render(): void
     {
-        // Role 1 = étudiant (à adapter selon ta convention)
         $stmt = $this->pdo->query("
             SELECT ID_Utilisateur, Nom, Prenom, Email
             FROM Utilisateurs
@@ -29,6 +28,7 @@ class PageGestionCompteEleveAdmin
             'page'      => 'gestion_eleve_admin',
             'title'     => 'Gestion des comptes Étudiants',
             'etudiants' => $etudiants,
+            'app_user'  => AppUser::fromSession(),
         ]);
     }
 }

@@ -11,17 +11,16 @@
 
 <header>
   <div class="logo">CESI-STAGES</div>
-  {% if Utilisateurs is defined and Utilisateurs %}
-    <div id="menu-container" data-role="{{ Utilisateurs.Role }}"></div>
+  {% if app_user is defined and app_user %}
+    {% include 'menu_deroulant.html.twig' with { user: app_user } %}
   {% endif %}
-
 </header>
+
 
 <main>
   {% block content %}{% endblock %}
 </main>
 
-<!-- JS -->
 <script src="/JavaScript/menu_deroulant.js"></script>
 
 <footer>

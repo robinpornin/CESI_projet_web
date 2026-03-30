@@ -32,6 +32,7 @@ class PageGestionCompte
             'page'        => 'gestion_compte',
             'title'       => 'Gestion de votre compte',
             'utilisateur' => $utilisateur,
+            'app_user'      => AppUser::fromSession(),
         ]);
     }
 }
