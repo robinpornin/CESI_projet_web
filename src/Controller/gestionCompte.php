@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+require_once __DIR__ . '/appUser.php';
 require_once __DIR__ . '/../../database.php';
 
 class PageGestionCompte
