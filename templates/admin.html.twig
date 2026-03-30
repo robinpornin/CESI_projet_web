@@ -4,7 +4,7 @@
 
 {% block content %}
   <div class="bandeau-admin">
-    <div class="admin-avatar"></div>
+    <div class="admin-avatar">🛠️</div>
     <div class="admin-info">
       <span class="admin-nom">{{ utilisateur.Prenom }} {{ utilisateur.Nom }}</span>
       <span class="admin-badge">Administrateur</span>
@@ -43,25 +43,4 @@
 
   <div class="divider"></div>
 
-  <div class="groupe">
-    <div class="groupe-label">Gestion des comptes</div>
-
-    <div class="action-bloc admin-action">
-      <div class="action-icon">🧑‍✈️</div>
-      <div class="action-info">
-        <span class="action-titre">Gestion des comptes Pilotes</span>
-        <span class="action-desc">→ Redirection vers la page de gestion du compte pilote</span>
-      </div>
-      <a href="/gestionComptePiloteAdmin" class="btn-gestion">Gérer →</a>
-    </div>
-
-    <div class="action-bloc admin-action">
-      <div class="action-icon">🎓</div>
-      <div class="action-info">
-        <span class="action-titre">Gestion des comptes Étudiants</span>
-        <span class="action-desc">→ Redirection vers la page de gestion du compte étudiant</span>
-      </div>
-      <a href="/gestionCompteEleveAdmin" class="btn-gestion">Gérer →</a>
-    </div>
-  </div>
 {% endblock %}
