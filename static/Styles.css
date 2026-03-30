@@ -1678,6 +1678,10 @@ form textarea::placeholder {
   }
 }
 
+.justifier {
+    text-align: justify;
+}
+
 .pagination {
     display: flex;
     justify-content: center;

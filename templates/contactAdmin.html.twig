@@ -5,38 +5,51 @@
 {% block content %}
 
 <div class="bienvenue">
-  <h1>
-    Bienvenue sur <span>{{ platform_name }}</span>
-  </h1>
-  <p>
-    Bienvenue sur la page de contact avec les admin, Vous avez besoin de cela pour : <br>
-    Obtenir un compte <br>
-    Obtenir un nouveau mot de passe
-  </p>
+    <h1>
+        Bienvenue sur la page de contact administrateurs de <span>{{ platform_name }}</span>
+    </h1><br>
+
+    <p><em>
+    Cette page vous permet de contacter les administrateurs pour :
+    </em></p>
+
+    <div class="optionscontactadmin">
+      <table>
+        <th>
+          <div class="btn-neutre">Demander la création d'un compte</div>
+        </th>
+        <th>  
+          <div class="btn-neutre">Obtenir un nouveau mot de passe</div>
+        </th>
+      </table>  
+    </div>
+
+    
 </div>
 
 <div class="separateur"></div>
 
-<div class="acces-section">
-  <h2>Que voulez vous faire ?</h2>
+<section class="acces-section">
+    <h2>Que voulez-vous faire&nbsp;?</h2>
 
-  <div class="boutons">
-    <a class="btn btn-connexion">
-      Je veux obtenir un compte : <br>
-      -Envoyer un mail depuis l'addresse mail utilisée pour le compte <br>
-      -Indiquer nom et prénom <br>
-      Addresse mail : creation.compte@cesistages.fr
-    </a>
+    <div class="boutons">
 
-    <a class="btn btn-invite">
-      Je veux obtenir un nouveau mot de passe : <br>
-      -Envoyer un mail depuis l'addresse utilisée pour le compte dont le mot de passe à été perdu <br>
-      -L'Admin vérifiera votre identité <br>
-      -Un nouveau mot de passe temporaire sera envoyé <br>
-      -Vous devrez le modifier dans la gestion de compte
-    </a> 
+        <div class="btn btn-connexion texte-gauche">
+            <strong>Je veux obtenir un compte</strong><br><br>
+            • Envoyer un mail depuis l’adresse utilisée pour le futur compte<br>
+            • Indiquer votre nom et prénom<br>
+            • Adresse mail&nbsp;: <strong>creation.compte@cesistages.fr</strong>
+        </div>
 
-  </div>
-</div>
+        <div class="btn btn-invite texte-gauche">
+            <strong>Je veux obtenir un nouveau mot de passe</strong><br><br>
+            • Envoyer un mail depuis l’adresse liée au compte concerné<br>
+            • L’administrateur vérifiera votre identité<br>
+            • Un mot de passe temporaire vous sera envoyé<br>
+            • Vous devrez ensuite le modifier dans la gestion de compte
+        </div>
+
+    </div>
+</section>
 
 {% endblock %}

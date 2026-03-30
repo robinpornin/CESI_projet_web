@@ -281,6 +281,29 @@ footer span { color: #FFD700; font-weight: bold; }
 .btn-connexion { background-color: #FFD700; color: #111111; }
 .btn-invite    { background-color: #111111; color: #ffffff; }
 
+.btn-neutre {
+  display: block;
+  padding: 14px 20px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  text-decoration: none;
+  text-align: center;
+  cursor: default;
+  border: 2px solid #FFD700;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.optionscontactadmin{
+  display: flex;
+  justify-content: space-between; /* bouton gauche / bouton droit */
+  align-items: center;            /* aligne verticalement */
+  width: 400px;                   /* largeur totale du bloc */
+  margin: 0 auto;                 /* centre le bloc horizontalement */
+  gap: 20px;                      /* espace entre les boutons */
+}
+
 .btn-submit {
   flex: 1;
   background-color: #FFD700;
@@ -1637,3 +1660,7 @@ footer span { color: #FFD700; font-weight: bold; }
   .liste-entreprises .pagination {
     width: 100%;
   }
+
+  .texte-gauche {
+    text-align: left;
+}
