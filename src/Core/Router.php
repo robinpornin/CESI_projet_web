@@ -32,7 +32,7 @@ use App\Controller\{
     PageListeCandidatures,
     PageMentionsLegales,
     PageModificationEntreprise,
-    PageGestionCompteElevePilote
+    PageGestionCompteElevePilote,
 };
 
 class Router
@@ -205,7 +205,10 @@ class Router
             case 'listeCandidaturesPilote':
                 (new \PageListeCandidaturesPilote($this->twig))->render();
                 break;
-
+            
+            case 'file':
+                (new \PageFile($this->twig))->render();
+                break;
 
             // --- Entreprises ---
             case 'gestionEntreprise':
