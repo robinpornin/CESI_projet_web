@@ -1,6 +1,5 @@
 <?php
 declare(strict_types=1);
-
 require_once __DIR__ . '/../../database.php';
 
 class PageOffre
@@ -28,7 +27,7 @@ class PageOffre
         $stmt->execute([':id' => $id]);
         $offre = $stmt->fetch();
 
-        // Compétences liées à l'offre
+        // Compétences
         $stmt = $this->pdo->prepare("
             SELECT c.Nom_competence
             FROM Requerir r
@@ -38,33 +37,30 @@ class PageOffre
         $stmt->execute([':id' => $id]);
         $competences = $stmt->fetchAll();
 
-        // Nombre de candidatures
-        $stmtCandidatures = $this->pdo->prepare("
-            SELECT COUNT(*) 
-            FROM Candidatures 
-            WHERE ID_Offre = :id
-        ");
+        // Statistiques
+        $stmtCandidatures = $this->pdo->prepare("SELECT COUNT(*) FROM Candidatures WHERE ID_Offre = :id");
         $stmtCandidatures->execute([':id' => $id]);
         $nbCandidatures = (int) $stmtCandidatures->fetchColumn();
 
-        // Nombre d'ajouts à la wishlist
-        $stmtWishlist = $this->pdo->prepare("
-            SELECT COUNT(*) 
-            FROM Contenir 
-            WHERE ID_Offre = :id
-        ");
-
-        $stmtNote = $this->pdo->prepare("
-            SELECT ROUND(AVG(note), 1)
-            FROM Evaluations
-             WHERE ID_Entreprise = :idEntreprise
-        ");
-
-$stmtNote->execute([':idEntreprise' => $offre['ID_Entreprise']]);
-$noteEntreprise = $stmtNote->fetchColumn();
-
+        $stmtWishlist = $this->pdo->prepare("SELECT COUNT(*) FROM Contenir WHERE ID_Offre = :id");
         $stmtWishlist->execute([':id' => $id]);
         $nbWishlist = (int) $stmtWishlist->fetchColumn();
+
+        $tauxWishlist = $nbCandidatures > 0 ? round(($nbWishlist / $nbCandidatures) * 100) : 0;
+
+        // ✅ Vérifier si l'offre est déjà dans la wishlist
+        $inWishlistStmt = $this->pdo->prepare("
+            SELECT COUNT(*) 
+            FROM Contenir c
+            JOIN Wishlists w ON c.ID_Wishlist = w.ID_Wishlist
+            WHERE w.ID_Utilisateur = :user 
+            AND c.ID_Offre = :offre
+        ");
+        $inWishlistStmt->execute([
+            ':user' => $_SESSION['utilisateur']['id'] ?? 0,
+            ':offre' => $id
+        ]);
+        $inWishlist = $inWishlistStmt->fetchColumn() > 0;
 
         echo $this->twig->render('offre.html.twig', [
             'page'        => 'offre',
@@ -72,10 +68,11 @@ $noteEntreprise = $stmtNote->fetchColumn();
             'offre'       => $offre,
             'competences' => $competences,
             'stats'       => [
-                'nb_postulations' => $nbCandidatures,
-                'nb_wishlist'     => $nbWishlist,
-                'note_entreprise' => $noteEntreprise,
+                'nb_vues'        => 0,
+                'nb_candidatures'=> $nbCandidatures,
+                'taux_wishlist'  => $tauxWishlist,
             ],
+            'inWishlist' => $inWishlist,
         ]);
     }
 }

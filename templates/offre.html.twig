@@ -54,7 +54,10 @@
     <!-- actions -->
     <div class="actions-row">
       <button class="btn-postuler" onclick="window.location.href='/formulaire'">Postuler</button>
-      <button class="btn-wishlist" id="btnWishlist" onclick="toggleWishlist()">Ajouter à la wishlist</button>
+      <button class="btn-wishlist {% if inWishlist %}active{% endif %}" 
+              id="btnWishlist" onclick="toggleWishlist()">
+          {{ inWishlist ? 'Retirer de la wishlist' : 'Ajouter à la wishlist' }}
+      </button>
     </div>
 
 <!-- statistiques -->
@@ -87,6 +90,32 @@
   </div>
 
 </div>
+
+
+
+<script>
+let dansMaWishlist = {{ inWishlist ? 'true' : 'false' }};
+
+async function toggleWishlist() {
+    const btn = document.getElementById('btnWishlist');
+    const idOffre = {{ offre.ID_Offre }};
+
+    const url = dansMaWishlist ? '/supprimerWishlist.php' : '/ajouterWishlist.php';
+    const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id_offre: idOffre })
+    });
+    const data = await res.json();
+    if (data.success) {
+        dansMaWishlist = !dansMaWishlist;
+        btn.textContent = dansMaWishlist ? 'Retirer de la wishlist' : 'Ajouter à la wishlist';
+        btn.classList.toggle('active');
+    } else {
+        alert(data.message || 'Erreur');
+    }
+}
+</script>
 
 
 {% endblock %}
