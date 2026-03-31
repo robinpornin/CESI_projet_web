@@ -57,39 +57,36 @@
       <button class="btn-wishlist" id="btnWishlist" onclick="toggleWishlist()">Ajouter à la wishlist</button>
     </div>
 
-    <!-- statistiques -->
-    <div class="stats-card">
-      <button class="stats-toggle" onclick="toggleStats()">
-        <span>Afficher les statistiques de l'offre</span>
-        <span class="stats-arrow" id="statsArrow">▼</span>
-      </button>
-      <div class="stats-body" id="statsBody">
+<!-- statistiques -->
+<div class="stats-card">
 
-        <div class="stats-grid">
-          <div class="stat-item highlight">
-            <span class="stat-icon">👁️</span>
-            <span class="stat-value">{{ stats.nb_vues }}</span>
-            <span class="stat-label">Vues</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-icon">📩</span>
-            <span class="stat-value">{{ stats.nb_candidatures }}</span>
-            <span class="stat-label">Candidatures</span>
-          </div>
-        </div>
+  <div class="stats-body" style="display: block;">
 
-        <div class="progress-bar-bg">
-          <div class="progress-bar-fill" style="width: {{ stats.taux_wishlist }}%"></div>
-        </div>
+    <div class="stats-grid">
 
-        <div class="progress-row">
-          <div class="progress-label-row">
-            <span>Taux d'ajout wishlist : </span>
-            <span>{{ stats.taux_wishlist }} %</span>
-          </div>
-        </div>
+  <div class="stat-item">
+    <span class="stat-icon">📩</span>
+    <span class="stat-value">{{ stats.nb_postulations }}</span>
+    <span class="stat-label">Postulations</span>
+  </div>
 
-      </div>
-    </div>
+  <div class="stat-item">
+    <span class="stat-icon">❤️</span>
+    <span class="stat-value">{{ stats.nb_wishlist }}</span>
+    <span class="stat-label">Wishlist</span>
+  </div>
+
+  <div class="stat-item">
+    <span class="stat-icon">⭐</span>
+    <span class="stat-value">{{ stats.note_entreprise|default('—') }}</span>
+    <span class="stat-label">Note entreprise</span>
+  </div>
+
+</div>
+
+  </div>
+
+</div>
+
 
 {% endblock %}

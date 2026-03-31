@@ -38,22 +38,33 @@ class PageOffre
         $stmt->execute([':id' => $id]);
         $competences = $stmt->fetchAll();
 
-        // Statistiques
+        // Nombre de candidatures
         $stmtCandidatures = $this->pdo->prepare("
-            SELECT COUNT(*) FROM Candidatures WHERE ID_Offre = :id
+            SELECT COUNT(*) 
+            FROM Candidatures 
+            WHERE ID_Offre = :id
         ");
         $stmtCandidatures->execute([':id' => $id]);
         $nbCandidatures = (int) $stmtCandidatures->fetchColumn();
 
+        // Nombre d'ajouts à la wishlist
         $stmtWishlist = $this->pdo->prepare("
-            SELECT COUNT(*) FROM Contenir WHERE ID_Offre = :id
+            SELECT COUNT(*) 
+            FROM Contenir 
+            WHERE ID_Offre = :id
         ");
+
+        $stmtNote = $this->pdo->prepare("
+            SELECT ROUND(AVG(note), 1)
+            FROM Evaluations
+             WHERE ID_Entreprise = :idEntreprise
+        ");
+
+$stmtNote->execute([':idEntreprise' => $offre['ID_Entreprise']]);
+$noteEntreprise = $stmtNote->fetchColumn();
+
         $stmtWishlist->execute([':id' => $id]);
         $nbWishlist = (int) $stmtWishlist->fetchColumn();
-
-        $tauxWishlist = $nbCandidatures > 0
-            ? round(($nbWishlist / $nbCandidatures) * 100)
-            : 0;
 
         echo $this->twig->render('offre.html.twig', [
             'page'        => 'offre',
@@ -61,9 +72,9 @@ class PageOffre
             'offre'       => $offre,
             'competences' => $competences,
             'stats'       => [
-                'nb_vues'        => 0, // non stocké en BDD pour l'instant
-                'nb_candidatures'=> $nbCandidatures,
-                'taux_wishlist'  => $tauxWishlist,
+                'nb_postulations' => $nbCandidatures,
+                'nb_wishlist'     => $nbWishlist,
+                'note_entreprise' => $noteEntreprise,
             ],
         ]);
     }
