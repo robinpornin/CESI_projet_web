@@ -27,6 +27,7 @@ header {
   text-transform: uppercase;
   flex: 1;
   text-align: center;
+  text-decoration: none !important;
 }
 
 .icon-btn {

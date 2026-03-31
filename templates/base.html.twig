@@ -10,7 +10,17 @@
 <body>
 
 <header>
-  <div class="logo">CESI-STAGES</div>
+  <a href="
+    {%- if app_user is defined and app_user -%}
+      {%- if app_user.role == 1 -%}/eleve
+      {%- elseif app_user.role == 2 -%}/pilote
+      {%- else -%}/admin
+      {%- endif -%}
+    {%- else -%}
+      /
+    {%- endif -%} 
+  "class="logo">CESI-STAGES</a>
+
   {% if app_user is defined and app_user %}
     {% include 'menuDeroulant.html.twig' with { user: app_user } %}
   {% endif %}
