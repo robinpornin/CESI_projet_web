@@ -132,7 +132,7 @@
     }
   }
 
-  function rechercherEtudiant() {
+    function rechercherEtudiant() {
     const valeur = document.getElementById('searchEtudiant').value.toLowerCase().trim();
 
     if (!valeur) {
@@ -141,10 +141,21 @@
     }
 
     const etudiant = etudiants.find(function(e) {
-      return e && (
-        (e.Nom && e.Nom.toLowerCase().includes(valeur)) ||
-        (e.Prenom && e.Prenom.toLowerCase().includes(valeur)) ||
-        (e.Email && e.Email.toLowerCase().includes(valeur))
+      if (!e) return false;
+
+      const nom = (e.Nom || '').toLowerCase().trim();
+      const prenom = (e.Prenom || '').toLowerCase().trim();
+      const email = (e.Email || '').toLowerCase().trim();
+
+      const nomPrenom = (nom + ' ' + prenom).trim();
+      const prenomNom = (prenom + ' ' + nom).trim();
+
+      return (
+        nom.includes(valeur) ||
+        prenom.includes(valeur) ||
+        email.includes(valeur) ||
+        nomPrenom.includes(valeur) ||
+        prenomNom.includes(valeur)
       );
     });
 

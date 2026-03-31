@@ -110,32 +110,45 @@
       }
     }
 
-    function rechercherPilote() {
-      const valeur = document.getElementById('searchPilote').value.toLowerCase().trim();
+     function rechercherPilote() {
+    const valeur = document.getElementById('searchPilote').value
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, ' ');
 
-      if (!valeur) {
-        alert('Veuillez saisir un nom, prénom ou email.');
-        return;
-      }
-
-      const pilote = pilotes.find(p =>
-        p &&
-        (
-          (p.Nom && p.Nom.toLowerCase().includes(valeur)) ||
-          (p.Prenom && p.Prenom.toLowerCase().includes(valeur)) ||
-          (p.Email && p.Email.toLowerCase().includes(valeur))
-        )
-      );
-
-      if (!pilote) {
-        document.getElementById('fichePlaceholder').style.display = 'flex';
-        document.getElementById('ficheContent').style.display = 'none';
-        alert('Aucun pilote trouvé.');
-        return;
-      }
-
-      afficherPilote(pilote);
+    if (!valeur) {
+      alert('Veuillez saisir un nom, prénom ou email.');
+      return;
     }
+
+    const pilote = pilotes.find(function(p) {
+      if (!p) return false;
+
+      const nom = (p.Nom || '').toLowerCase().trim();
+      const prenom = (p.Prenom || '').toLowerCase().trim();
+      const email = (p.Email || '').toLowerCase().trim();
+
+      const nomPrenom = (nom + ' ' + prenom).replace(/\s+/g, ' ').trim();
+      const prenomNom = (prenom + ' ' + nom).replace(/\s+/g, ' ').trim();
+
+      return (
+        nom.includes(valeur) ||
+        prenom.includes(valeur) ||
+        email.includes(valeur) ||
+        nomPrenom.includes(valeur) ||
+        prenomNom.includes(valeur)
+      );
+    });
+
+    if (!pilote) {
+      document.getElementById('fichePlaceholder').style.display = 'flex';
+      document.getElementById('ficheContent').style.display = 'none';
+      alert('Aucun pilote trouvé.');
+      return;
+    }
+
+    afficherPilote(pilote);
+  }
 
     function afficherPilote(pilote) {
       if (!pilote) {
