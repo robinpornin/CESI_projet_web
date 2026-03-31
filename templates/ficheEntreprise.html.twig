@@ -4,7 +4,6 @@
 
 {% block content %}
 
-<!-- bandeau nom entreprise -->
   <div class="bandeau-nom">
     <div class="entreprise-avatar">🏢</div>
     <div class="entreprise-nom-bloc">
@@ -13,94 +12,132 @@
     </div>
   </div>
 
-    <div class="separateur"></div>
+  <div class="separateur"></div>
 
-    <!-- fiche informations -->
-    <div class="fiche-bloc">
-      <div class="fiche-bloc-header">Fiche Entreprise</div>
-      <div class="fiche-bloc-body">
-        <div class="fiche-row">
-          <span class="fiche-label">Raison sociale</span>
-          <span class="fiche-value">{{ entreprise.Nom_entreprise }}</span>
-        </div>
-        <div class="fiche-row">
-          <span class="fiche-label">Secteur</span>
-          <span class="fiche-value">{{ entreprise.Secteur }}</span>
-        </div>
-        <div class="fiche-row">
-          <span class="fiche-label">Type</span>
-          <span class="fiche-value">{{ entreprise.Type_ }}</span>
-        </div>
-        <div class="fiche-row">
-          <span class="fiche-label">Effectif stagiaires</span>
-          <span class="fiche-value">{{ entreprise.Nb_stagiaires }}</span>
-        </div>
-        <div class="fiche-row">
-          <span class="fiche-label">Contact RH</span>
-          <span class="fiche-value">{{ entreprise.Email_entreprise }}</span>
-        </div>
-        <div class="fiche-row">
-          <span class="fiche-label">Téléphone</span>
-          <span class="fiche-value">{{ entreprise.Telephone }}</span>
-        </div>
-        <div class="fiche-row full">
-          <span class="fiche-label">Description</span>
-          <span class="fiche-value" style="font-weight:400;line-height:1.6;font-size:0.88rem;">
-            {{ entreprise.Description_entreprise }}
-          </span>
-        </div>
+  <div class="fiche-bloc">
+    <div class="fiche-bloc-header">Fiche Entreprise</div>
+    <div class="fiche-bloc-body">
+      <div class="fiche-row">
+        <span class="fiche-label">Raison sociale</span>
+        <span class="fiche-value">{{ entreprise.Nom_entreprise }}</span>
+      </div>
+      <div class="fiche-row">
+        <span class="fiche-label">Secteur</span>
+        <span class="fiche-value">{{ entreprise.Secteur }}</span>
+      </div>
+      <div class="fiche-row">
+        <span class="fiche-label">Type</span>
+        <span class="fiche-value">{{ entreprise.Type_ }}</span>
+      </div>
+      <div class="fiche-row">
+        <span class="fiche-label">Effectif stagiaires</span>
+        <span class="fiche-value">{{ entreprise.Nb_stagiaires }}</span>
+      </div>
+      <div class="fiche-row">
+        <span class="fiche-label">Contact RH</span>
+        <span class="fiche-value">{{ entreprise.Email_entreprise }}</span>
+      </div>
+      <div class="fiche-row">
+        <span class="fiche-label">Téléphone</span>
+        <span class="fiche-value">{{ entreprise.Telephone }}</span>
+      </div>
+      <div class="fiche-row full">
+        <span class="fiche-label">Description</span>
+        <span class="fiche-value" style="font-weight:400;line-height:1.6;font-size:0.88rem;">
+          {{ entreprise.Description_entreprise }}
+        </span>
       </div>
     </div>
+  </div>
 
-    <!-- offres liées -->
-    <div class="fiche-bloc">
-      <div class="fiche-bloc-header">Offres de stage disponibles</div>
-      <div class="fiche-bloc-body" style="display:flex;flex-direction:column;gap:10px;">
-        <div class="offres-liees">
-          {% for offre in offres %}
-            <div class="offre-mini">
-              <div class="offre-mini-info">
-                <span class="offre-mini-titre">{{ offre.Titre }}</span>
-                <span class="offre-mini-meta">{{ offre.Ville_CP }} · {{ offre.Remuneration }} €/mois</span>
-              </div>
-              <span class="offre-mini-badge">{{ offre.Duree }} semaines</span>
+  <div class="fiche-bloc">
+    <div class="fiche-bloc-header">Offres de stage disponibles</div>
+    <div class="fiche-bloc-body" style="display:flex;flex-direction:column;gap:10px;">
+      <div class="offres-liees">
+        {% for offre in offres %}
+          <div class="offre-mini">
+            <div class="offre-mini-info">
+              <span class="offre-mini-titre">{{ offre.Titre }}</span>
+              <span class="offre-mini-meta">{{ offre.Ville_CP }} · {{ offre.Remuneration }} €/mois</span>
             </div>
-          {% else %}
-            <p>Aucune offre disponible pour cette entreprise.</p>
-          {% endfor %}
-        </div>
-      </div>
-    </div>
-
-    <!-- evaluer -->
-    <div class="evaluer-section">
-      <h2>Évaluer l'entreprise</h2>
-
-      <!-- avis existants -->
-      <div class="avis-list">
-        {% for avis in evaluations %}
-          <div class="avis-card">
-            <div class="avis-top">
-              <span class="avis-auteur">{{ avis.Prenom }} {{ avis.Nom }}</span>
-              <span class="avis-etoiles">{{ avis.Note }} ★</span>
-            </div>
+            <span class="offre-mini-badge">{{ offre.Duree }} semaines</span>
           </div>
         {% else %}
-          <p>Aucun avis pour le moment.</p>
+          <p>Aucune offre disponible pour cette entreprise.</p>
         {% endfor %}
       </div>
-
-      <!-- formulaire avis -->
-      <div class="stars" id="starsContainer">
-        <span class="star" onclick="setNote(1)">★</span>
-        <span class="star" onclick="setNote(2)">★</span>
-        <span class="star" onclick="setNote(3)">★</span>
-        <span class="star" onclick="setNote(4)">★</span>
-        <span class="star" onclick="setNote(5)">★</span>
-      </div>
-
-      <textarea placeholder="Partagez votre expérience dans cette entreprise..."></textarea>
-      <button class="btn-evaluer">Envoyer mon avis</button>
     </div>
+  </div>
+
+  <div class="evaluer-section">
+    <h2>Évaluations</h2>
+
+    {% if message %}
+      <div class="message-success">{{ message }}</div>
+    {% endif %}
+
+    {% if erreur %}
+      <div class="message-erreur">{{ erreur }}</div>
+    {% endif %}
+
+    <div class="avis-list">
+      {% for avis in evaluations %}
+        <div class="avis-card">
+          <div class="avis-top">
+            <span class="avis-auteur">{{ avis.Prenom }} {{ avis.Nom }}</span>
+            <span class="avis-etoiles">{{ avis.Note }} ★</span>
+          </div>
+        </div>
+      {% else %}
+        <p>Aucun avis pour le moment.</p>
+      {% endfor %}
+    </div>
+
+    {% if estConnecte %}
+      {% if not aDejaNote %}
+        <h2>Évaluer l'entreprise</h2>
+
+        <form method="post">
+          <input type="hidden" name="note" id="noteInput" value="0">
+
+          <div class="stars" id="starsContainer">
+            <span class="star" data-note="1">★</span>
+            <span class="star" data-note="2">★</span>
+            <span class="star" data-note="3">★</span>
+            <span class="star" data-note="4">★</span>
+            <span class="star" data-note="5">★</span>
+          </div>
+
+          <button type="submit" class="btn-evaluer">Envoyer ma note</button>
+        </form>
+      {% endif %}
+    {% else %}
+      <p>Connectez-vous pour laisser un avis.</p>
+    {% endif %}
+  </div>
+
+  {% if estConnecte and not aDejaNote %}
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const stars = document.querySelectorAll(".star");
+        const noteInput = document.getElementById("noteInput");
+
+        function updateStars(note) {
+          stars.forEach((star) => {
+            const value = parseInt(star.dataset.note, 10);
+            star.classList.toggle("active", value <= note);
+          });
+        }
+
+        stars.forEach((star) => {
+          star.addEventListener("click", function () {
+            const note = parseInt(this.dataset.note, 10);
+            noteInput.value = note;
+            updateStars(note);
+          });
+        });
+      });
+    </script>
+  {% endif %}
 
 {% endblock %}
