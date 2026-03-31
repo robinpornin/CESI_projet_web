@@ -20,9 +20,10 @@ class PageGestionCompteElevePilote
             SELECT ID_Utilisateur, Nom, Prenom, Email
             FROM Utilisateurs
             WHERE Role = 1
-            ORDER BY Nom ASC
+            ORDER BY Nom ASC, Prenom ASC
         ");
-        $etudiants = $stmt->fetchAll();
+
+        $etudiants = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         echo $this->twig->render('gestionCompteEleve_Pilote.html.twig', [
             'page'      => 'gestion_eleve_pilote',
