@@ -41,6 +41,9 @@ require_once __DIR__ . '/../src/Controller/wishlist.php';
 require_once __DIR__ . '/../src/Controller/listeCandidatures.php';
 require_once __DIR__ . '/../src/Controller/modificationEntreprise.php';
 require_once __DIR__ . '/../src/Controller/gestionCompteElevePilote.php';
+require_once __DIR__ . '/../src/Controller/listeCandidaturesPilote.php';
+
+
 
 // Router
 require_once __DIR__ . '/../src/Core/Router.php';

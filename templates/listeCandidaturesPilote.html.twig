@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Candidatures{% endblock %}
+
+{% block content %}
+
+<div class="bandeau">
+  <div class="bandeau-icon">📋</div>
+  <div class="bandeau-info">
+    <span class="bandeau-titre">Mes Candidatures</span>
+    <span class="bandeau-badge">Élève</span>
+  </div>
+</div>
+
+{% if candidatures is empty %}
+
+  <div class="demo-hint">
+    <div class="big">📭</div>
+    <strong>Aucune candidature pour le moment</strong>
+  </div>
+
+{% else %}
+
+  <div class="liste-offres">
+    {% for c in candidatures %}
+    <div class="offre-card">
+
+      <div class="offre-top">
+        <span class="offre-titre">{{ c.Titre }}</span>
+        <span class="offre-badge">{{ c.Nom_entreprise }}</span>
+      </div>
+
+      <div class="offre-meta">
+        <span>📅 {{ c.Date_ }}</span>
+        <span>📍 {{ c.Ville_CP }}</span>
+      </div>
+
+      <div class="fiche-actions">
+        <a href="/uploads/cv/{{ c.CV }}" class="btn-offre btn-voir" target="_blank">📄 CV</a>
+        <a href="/uploads/lettres/{{ c.Lettre_de_motivation }}" class="btn-offre btn-action" target="_blank">✉️ Lettre de motivation</a>
+      </div>
+
+    </div>
+    {% endfor %}
+  </div>
+
+{% endif %}
+
+{% endblock %}

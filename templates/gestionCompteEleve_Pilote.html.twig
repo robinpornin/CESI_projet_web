@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Page de la gestion des comptes des élèves par le pilote{% endblock %}
+{% block title %}Gestion des comptes Étudiants{% endblock %}
 
 {% block content %}
 
@@ -15,8 +15,9 @@
 
 <div class="separateur"></div>
 
+{# ── Créer un compte ── #}
 <div class="creer-bloc">
-  <button type="button" class="creer-toggle-btn" id="creerBtn" onclick="toggleCreer()">
+  <button type="button" class="creer-toggle-btn" id="creerBtn">
     <span>Créer un compte Étudiant</span>
     <span class="creer-arrow" id="creerArrow">▼</span>
   </button>
@@ -27,37 +28,35 @@
         <label class="form-label" for="createPrenom">Prénom</label>
         <input class="form-input" id="createPrenom" type="text" placeholder="Alice">
       </div>
-
       <div class="form-group">
         <label class="form-label" for="createNom">Nom</label>
         <input class="form-input" id="createNom" type="text" placeholder="Martin">
       </div>
-
       <div class="form-group full">
         <label class="form-label" for="createEmail">Email</label>
         <input class="form-input" id="createEmail" type="email" placeholder="alice.martin@viacesi.fr">
       </div>
-
       <div class="form-group full">
         <label class="form-label" for="createPassword">Mot de passe</label>
         <input class="form-input" id="createPassword" type="password" placeholder="••••••••">
       </div>
     </div>
-
-    <button type="button" class="btn-creer" onclick="creerCompte()">Créer le compte</button>
+    <button type="button" class="btn-creer" id="btnCreerCompte">Créer le compte</button>
   </div>
 </div>
 
+{# ── Recherche ── #}
 <div class="recherche-bloc">
   <div class="bloc-header">Rechercher un étudiant</div>
   <div class="bloc-body">
     <div class="search-row">
       <input type="text" id="searchEtudiant" placeholder="Nom, prénom, email...">
-      <button type="button" class="btn-search" onclick="rechercherEtudiant()">Rechercher</button>
+      <button type="button" class="btn-search" id="btnRechercher">Rechercher</button>
     </div>
   </div>
 </div>
 
+{# ── Fiche étudiant ── #}
 <div class="fiche-etudiant">
   <div class="bloc-header">Informations de l'étudiant</div>
 
@@ -80,307 +79,34 @@
     <div class="fiche-fields">
       <div class="field-group">
         <label class="field-label" for="fichePrenom">Prénom</label>
-        <input class="field-input" id="fichePrenom" type="text" value="">
+        <input class="field-input" id="fichePrenom" type="text">
       </div>
-
       <div class="field-group">
         <label class="field-label" for="ficheNom">Nom</label>
-        <input class="field-input" id="ficheNom" type="text" value="">
+        <input class="field-input" id="ficheNom" type="text">
       </div>
-
       <div class="field-group full">
         <label class="field-label" for="ficheEmail">Email</label>
-        <input class="field-input" id="ficheEmail" type="email" value="">
+        <input class="field-input" id="ficheEmail" type="email">
       </div>
     </div>
 
     <div class="fiche-actions">
-      <button type="button" class="btn-enregistrer" onclick="enregistrer()">Enregistrer</button>
-      <button type="button" class="btn-supprimer" onclick="supprimerCompte()">Supprimer le compte</button>
+      <button type="button" class="btn-enregistrer" id="btnEnregistrer">Enregistrer</button>
+      <button type="button" class="btn-supprimer"   id="btnSupprimer">Supprimer le compte</button>
     </div>
+
+    <a id="btnVoirCandidatures" href="#" class="btn-gestion"
+       style="display:block; margin-top:12px; text-align:center; text-decoration:none;">
+      📋 Voir les candidatures
+    </a>
   </div>
 </div>
 
+{# ── Données JSON pour le JS ── #}
 <script>
-  let etudiants = [];
-
-  try {
-    etudiants = {{ etudiants|json_encode|raw }};
-    if (!Array.isArray(etudiants)) {
-      etudiants = [];
-    }
-  } catch (e) {
-    console.error('Erreur chargement etudiants :', e);
-    etudiants = [];
-  }
-
-  function toggleCreer() {
-    const form = document.getElementById('creerForm');
-    const arrow = document.getElementById('creerArrow');
-
-    if (!form || !arrow) {
-      console.error('Bloc création introuvable');
-      return;
-    }
-
-    if (form.style.display === 'none' || form.style.display === '') {
-      form.style.display = 'block';
-      arrow.textContent = '▲';
-    } else {
-      form.style.display = 'none';
-      arrow.textContent = '▼';
-    }
-  }
-
-    function rechercherEtudiant() {
-    const valeur = document.getElementById('searchEtudiant').value.toLowerCase().trim();
-
-    if (!valeur) {
-      alert('Veuillez saisir un nom, prénom ou email.');
-      return;
-    }
-
-    const etudiant = etudiants.find(function(e) {
-      if (!e) return false;
-
-      const nom = (e.Nom || '').toLowerCase().trim();
-      const prenom = (e.Prenom || '').toLowerCase().trim();
-      const email = (e.Email || '').toLowerCase().trim();
-
-      const nomPrenom = (nom + ' ' + prenom).trim();
-      const prenomNom = (prenom + ' ' + nom).trim();
-
-      return (
-        nom.includes(valeur) ||
-        prenom.includes(valeur) ||
-        email.includes(valeur) ||
-        nomPrenom.includes(valeur) ||
-        prenomNom.includes(valeur)
-      );
-    });
-
-    if (!etudiant) {
-      document.getElementById('fichePlaceholder').style.display = 'flex';
-      document.getElementById('ficheContent').style.display = 'none';
-      alert('Aucun étudiant trouvé.');
-      return;
-    }
-
-    afficherEtudiant(etudiant);
-  }
-
-  function afficherEtudiant(etudiant) {
-    if (!etudiant) {
-      console.error('Etudiant invalide');
-      return;
-    }
-
-    document.getElementById('fichePlaceholder').style.display = 'none';
-    document.getElementById('ficheContent').style.display = 'block';
-    document.getElementById('ficheContent').dataset.id = etudiant.ID_Utilisateur || '';
-
-    document.getElementById('ficheNomAffiche').textContent = ((etudiant.Prenom || '') + ' ' + (etudiant.Nom || '')).trim();
-    document.getElementById('ficheEmailAffiche').textContent = etudiant.Email || '';
-
-    document.getElementById('fichePrenom').value = etudiant.Prenom || '';
-    document.getElementById('ficheNom').value = etudiant.Nom || '';
-    document.getElementById('ficheEmail').value = etudiant.Email || '';
-  }
-
-  async function creerCompte() {
-    const prenom = document.getElementById('createPrenom').value.trim();
-    const nom = document.getElementById('createNom').value.trim();
-    const email = document.getElementById('createEmail').value.trim();
-    const mdp = document.getElementById('createPassword').value.trim();
-
-    if (!prenom || !nom || !email || !mdp) {
-      alert('Merci de remplir tous les champs.');
-      return;
-    }
-
-    try {
-      const response = await fetch('/gestionCompteEtudiantAdmin.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          action: 'create',
-          prenom: prenom,
-          nom: nom,
-          email: email,
-          mdp: mdp
-        })
-      });
-
-      const text = await response.text();
-      let data;
-
-      try {
-        data = JSON.parse(text);
-      } catch (e) {
-        console.error('Réponse brute serveur :', text);
-        alert('Le serveur ne renvoie pas un JSON valide.');
-        return;
-      }
-
-      if (!data.success) {
-        alert(data.message || 'Erreur lors de la création.');
-        return;
-      }
-
-      if (data.etudiant) {
-        etudiants.push(data.etudiant);
-        afficherEtudiant(data.etudiant);
-      }
-
-      document.getElementById('createPrenom').value = '';
-      document.getElementById('createNom').value = '';
-      document.getElementById('createEmail').value = '';
-      document.getElementById('createPassword').value = '';
-
-      alert(data.message || 'Compte étudiant créé avec succès.');
-    } catch (error) {
-      console.error(error);
-      alert('Erreur JavaScript / serveur lors de la création.');
-    }
-  }
-
-  async function enregistrer() {
-    const id = document.getElementById('ficheContent').dataset.id;
-    const prenom = document.getElementById('fichePrenom').value.trim();
-    const nom = document.getElementById('ficheNom').value.trim();
-    const email = document.getElementById('ficheEmail').value.trim();
-
-    if (!id) {
-      alert('Aucun étudiant sélectionné.');
-      return;
-    }
-
-    if (!prenom || !nom || !email) {
-      alert('Merci de remplir prénom, nom et email.');
-      return;
-    }
-
-    try {
-      const response = await fetch('/gestionCompteEtudiantAdmin.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          action: 'update',
-          id: id,
-          prenom: prenom,
-          nom: nom,
-          email: email
-        })
-      });
-
-      const text = await response.text();
-      let data;
-
-      try {
-        data = JSON.parse(text);
-      } catch (e) {
-        console.error('Réponse brute serveur :', text);
-        alert('Le serveur ne renvoie pas un JSON valide.');
-        return;
-      }
-
-      if (!data.success) {
-        alert(data.message || 'Erreur lors de la modification.');
-        return;
-      }
-
-      if (data.etudiant) {
-        const index = etudiants.findIndex(function(e) {
-          return e && String(e.ID_Utilisateur) === String(id);
-        });
-
-        if (index !== -1) {
-          etudiants[index] = data.etudiant;
-        } else {
-          etudiants.push(data.etudiant);
-        }
-
-        afficherEtudiant(data.etudiant);
-      }
-
-      alert(data.message || 'Compte étudiant modifié avec succès.');
-    } catch (error) {
-      console.error(error);
-      alert('Erreur JavaScript / serveur lors de la modification.');
-    }
-  }
-
-  async function supprimerCompte() {
-    const id = document.getElementById('ficheContent').dataset.id;
-
-    if (!id) {
-      alert('Aucun étudiant sélectionné.');
-      return;
-    }
-
-    if (!confirm('Voulez-vous vraiment supprimer ce compte étudiant ?')) {
-      return;
-    }
-
-    try {
-      const response = await fetch('/gestionCompteEtudiantAdmin.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          action: 'delete',
-          id: id
-        })
-      });
-
-      const text = await response.text();
-      let data;
-
-      try {
-        data = JSON.parse(text);
-      } catch (e) {
-        console.error('Réponse brute serveur :', text);
-        alert('Le serveur ne renvoie pas un JSON valide.');
-        return;
-      }
-
-      if (!data.success) {
-        alert(data.message || 'Erreur lors de la suppression.');
-        return;
-      }
-
-      etudiants = etudiants.filter(function(e) {
-        return e && String(e.ID_Utilisateur) !== String(id);
-      });
-
-      document.getElementById('ficheContent').style.display = 'none';
-      document.getElementById('fichePlaceholder').style.display = 'flex';
-      document.getElementById('ficheContent').dataset.id = '';
-
-      document.getElementById('ficheNomAffiche').textContent = '';
-      document.getElementById('ficheEmailAffiche').textContent = '';
-      document.getElementById('fichePrenom').value = '';
-      document.getElementById('ficheNom').value = '';
-      document.getElementById('ficheEmail').value = '';
-
-      alert(data.message || 'Compte étudiant supprimé avec succès.');
-    } catch (error) {
-      console.error(error);
-      alert('Erreur JavaScript / serveur lors de la suppression.');
-    }
-  }
-
-  window.toggleCreer = toggleCreer;
-  window.rechercherEtudiant = rechercherEtudiant;
-  window.afficherEtudiant = afficherEtudiant;
-  window.creerCompte = creerCompte;
-  window.enregistrer = enregistrer;
-  window.supprimerCompte = supprimerCompte;
+  const etudiants = {{ etudiants|json_encode|raw }};
 </script>
+<script src="/JavaScript/gestionCompteEleve_Pilote.js"></script>
 
 {% endblock %}

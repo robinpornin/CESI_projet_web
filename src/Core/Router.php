@@ -201,6 +201,11 @@ class Router
             case 'listeCandidatures':
                 (new \PageListeCandidatures($this->twig))->render();
                 break;
+            
+            case 'listeCandidaturesPilote':
+                (new \PageListeCandidaturesPilote($this->twig))->render();
+                break;
+
 
             // --- Entreprises ---
             case 'gestionEntreprise':
