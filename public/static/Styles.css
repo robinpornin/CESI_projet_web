@@ -79,7 +79,11 @@ header {
   padding: 18px 24px;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 18px;
+  width: 100%;
+  max-width: 600px;
+  margin: 30px auto;
+  ;
 }
 .bandeau-admin { gap: 16px; }
 .profil-card { gap: 16px; padding: 20px 24px; }
@@ -610,6 +614,7 @@ footer span { color: #FFD700; font-weight: bold; }
 .btn-explorer {
   background-color: #111111;
   color: #FFD700;
+  align-items : center;
   border: none;
   padding: 10px 22px;
   border-radius: 8px;
@@ -619,6 +624,9 @@ footer span { color: #FFD700; font-weight: bold; }
   cursor: pointer;
   text-transform: uppercase;
   transition: opacity 0.2s;
+  display: block;
+  margin: 20px auto 0;
+  text-align: center;
 }
 .btn-explorer:hover { opacity: 0.8; }
 
@@ -959,17 +967,26 @@ footer span { color: #FFD700; font-weight: bold; }
 /* --- BARRE DE RECHERCHE --- */
 .search-bar {
   display: flex;
-  gap: 10px;
-  align-items: center;
+  flex-direction: column;
+  gap: 12px;
+  align-items: stretch;
   background-color: #f9f9f9;
   border: 2px solid #111111;
   border-radius: 8px;
-  padding: 10px 14px;
-  flex-wrap: wrap;
+  padding: 12px;
+  width: 100%;
 }
-.search-bar input, .search-bar select {
-  flex: 1;
-  min-width: 140px;
+
+.search-bar input,
+.search-bar select,
+.search-bar button,
+.search-item {
+  width: 100%;
+  min-width: 0;
+}
+
+.search-bar input,
+.search-bar select {
   border: none;
   outline: none;
   font-size: 0.88rem;
@@ -977,13 +994,49 @@ footer span { color: #FFD700; font-weight: bold; }
   background: transparent;
   color: #111111;
 }
-.search-bar input::placeholder { color: #aaaaaa; font-style: italic; }
-.divider-v { width: 1px; height: 22px; background-color: #dddddd; }
 
-.search-item { display: flex; flex-direction: column; gap: 6px; }
-.search-item label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #111111; }
-.search-item .hint { font-size: 0.75rem; color: #888888; font-style: italic; margin-top: 2px; }
-.search-rows { display: flex; flex-direction: column; gap: 14px; }
+.search-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.divider-v {
+  display: none;
+}
+
+/* tablette et plus */
+@media (min-width: 768px) {
+  .search-bar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: end;
+    padding: 10px 14px;
+  }
+
+  .search-item {
+    flex: 1 1 180px;
+    width: auto;
+  }
+
+  .search-bar button {
+    width: auto;
+    flex: 0 0 auto;
+  }
+
+  .divider-v {
+    display: block;
+    width: 1px;
+    height: 22px;
+    background-color: #dddddd;
+  }
+}
+
+.search-bar input,
+.search-bar select {
+  flex: 1;
+  min-width: 140px;
+}
 
 /* --- GROUPE / ACTION BLOC --- */
 .groupe { width: 100%; display: flex; flex-direction: column; gap: 4px; }

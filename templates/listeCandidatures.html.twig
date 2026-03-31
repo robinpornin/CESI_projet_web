@@ -21,6 +21,7 @@
       {{ candidatures | length <= 1 ? 'candidature' : 'candidatures' }}
     </span>
   </span>
+  <br>
   <a href="/rechercheOffre" class="btn-voir-liste">🔍 Voir les offres →</a>
 </div>
 
@@ -39,6 +40,7 @@
             <span class="offre-tag">{{ c.Remuneration }} €/mois</span>
           </div>
         </div>
+        <br>
         <div class="offre-actions">
           <a href="/offre?id={{ c.ID_Offre }}" class="btn-offre btn-voir">👁️ Voir l'offre</a>
         </div>
@@ -52,6 +54,7 @@
     <span class="vide-icon">📄</span>
     <span class="vide-titre">Aucune candidature pour l'instant</span>
     <span class="vide-desc">Explorez les offres disponibles et postulez !</span>
+    <br><br>
     <a href="/rechercheOffre" class="btn-explorer">Explorer les offres</a>
   </div>
 
