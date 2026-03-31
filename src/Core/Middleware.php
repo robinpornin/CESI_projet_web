@@ -10,7 +10,7 @@ class Middleware
         'home', '', 'connexion', 'invite',
         'rechercheEntreprise', 'rechercheOffre',
         'creationCompte', 'ficheEntreprise', 'offre',
-        'deconnexion', 'suppressionCompte', 'contactAdmin'
+        'deconnexion', 'suppressionCompte',
     ];
 
     private const ROUTES_PAR_ROLE = [
@@ -75,7 +75,7 @@ class Middleware
             1       => '/eleve',
             2       => '/pilote',
             3       => '/admin',
-            default => '/connexion',
+            default => '/home',
         };
 
         header('Location: ' . $destination);
