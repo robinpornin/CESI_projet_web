@@ -26,11 +26,13 @@ class PageRechercheEntreprise
         if ($search !== '') {
             $where = "WHERE e.Nom_entreprise LIKE :search_nom
                       OR e.Secteur LIKE :search_secteur
-                      OR o.Ville_CP LIKE :search_ville";
+                      OR o.Ville_CP LIKE :search_ville
+                      OR e.Type_ LIKE :search_type";
 
             $params[':search_nom'] = '%' . $search . '%';
             $params[':search_secteur'] = '%' . $search . '%';
             $params[':search_ville'] = '%' . $search . '%';
+            $params[':search_type'] = '%' . $search . '%';
         }
 
         $countSql = "
