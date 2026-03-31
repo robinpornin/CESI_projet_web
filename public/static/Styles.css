@@ -1634,3 +1634,39 @@ form textarea::placeholder {
   .texte-gauche {
     text-align: left;
 }
+
+/* ===================== OVERLAY + DROPDOWN MENU ===================== */
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 100; backdrop-filter: blur(2px); }
+.overlay.visible { display: block; }
+
+.dropdown { position: fixed; top: 70px; right: 24px; width: 300px; background-color: #ffffff; border-radius: 14px; box-shadow: 0 8px 32px rgba(0,0,0,0.22); z-index: 150; overflow: hidden; transform: translateY(-10px) scale(0.97); opacity: 0; pointer-events: none; transition: transform 0.22s ease, opacity 0.22s ease; }
+.dropdown.visible { transform: translateY(0) scale(1); opacity: 1; pointer-events: all; }
+
+.dropdown-head { background-color: #111111; padding: 18px 20px; display: flex; align-items: center; gap: 14px; border-bottom: 3px solid #FFD700; }
+.dropdown-avatar { width: 46px; height: 46px; background-color: #FFD700; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+.dropdown-user   { display: flex; flex-direction: column; gap: 3px; }
+.dropdown-nom    { font-size: 0.95rem; font-weight: 900; color: #ffffff; }
+.dropdown-badge  { background-color: #FFD700; color: #111111; font-size: 0.65rem; font-weight: 700; padding: 2px 9px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; align-self: flex-start; }
+
+.dropdown-body { display: flex; flex-direction: column; padding: 10px 0; }
+.menu-item { display: flex; align-items: center; gap: 12px; padding: 13px 20px; cursor: pointer; border: none; background: none; width: 100%; text-align: left; font-family: 'Montserrat', sans-serif; transition: background-color 0.15s; text-decoration: none; color: #111111; }
+.menu-item { display: flex; align-items: center; gap: 12px; padding: 13px 20px; cursor: pointer; border: none; background: none; width: 100%; text-align: left; font-family: 'Montserrat', sans-serif; transition: background-color 0.15s; text-decoration: none; color: #111111; }
+.menu-item:hover { background-color: #fffbea; }
+.menu-item:hover { background-color: #fffbea; }
+.menu-item-icon  { font-size: 1.1rem; flex-shrink: 0; width: 26px; text-align: center; }
+.menu-item-icon  { font-size: 1.1rem; flex-shrink: 0; width: 26px; text-align: center; }
+.menu-item-info  { display: flex; flex-direction: column; gap: 2px; }
+.menu-item-info  { display: flex; flex-direction: column; gap: 2px; }
+.menu-item-titre { font-size: 0.85rem; font-weight: 700; color: #111111; }
+.menu-item-titre { font-size: 0.85rem; font-weight: 700; color: #111111; }
+.menu-item-desc  { font-size: 0.72rem; color: #888888; font-style: italic; }
+.menu-item-desc  { font-size: 0.72rem; color: #888888; font-style: italic; }
+.menu-sep { height: 1px; background-color: #eeeeee; margin: 6px 16px; }
+.menu-item.deconnexion .menu-item-titre { color: #cc6600; }
+.menu-item.deconnexion .menu-item-titre { color: #cc6600; }
+.menu-item.deconnexion:hover { background-color: #fff5ea; }
+.menu-item.deconnexion:hover { background-color: #fff5ea; }
+.menu-item.danger .menu-item-titre { color: #cc0000; }
+.menu-item.danger .menu-item-titre { color: #cc0000; }
+.menu-item.danger:hover { background-color: #fff0f0; }
+.menu-item.danger:hover { background-color: #fff0f0; }
