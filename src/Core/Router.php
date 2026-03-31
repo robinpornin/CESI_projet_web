@@ -31,7 +31,8 @@ use App\Controller\{
     PageWishlist,
     PageListeCandidatures,
     PageMentionsLegales,
-    PageModificationEntreprise
+    PageModificationEntreprise,
+    PageGestionCompteElevePilote
 };
 
 class Router
@@ -174,6 +175,10 @@ class Router
 
             case 'gestionCompteEleveAdmin':
                 (new \PageGestionCompteEleveAdmin($this->twig))->render();
+                break;
+            
+            case 'gestionCompteElevePilote':
+                (new \PageGestionCompteElevePilote($this->twig))->render();
                 break;
 
             case 'gestionComptePiloteAdmin':

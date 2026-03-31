@@ -24,19 +24,19 @@
     <div class="creer-form" id="creerForm">
       <div class="form-grid">
         <div class="form-group">
-          <label class="form-label">Prénom</label>
+          <label class="form-label" for="createPrenom">Prénom</label>
           <input class="form-input" id="createPrenom" type="text" placeholder="Jean">
         </div>
         <div class="form-group">
-          <label class="form-label">Nom</label>
+          <label class="form-label" for="createNom">Nom</label>
           <input class="form-input" id="createNom" type="text" placeholder="Dupont">
         </div>
         <div class="form-group full">
-          <label class="form-label">Email</label>
+          <label class="form-label" for="createEmail">Email</label>
           <input class="form-input" id="createEmail" type="email" placeholder="jean.dupont@cesi.fr">
         </div>
         <div class="form-group full">
-          <label class="form-label">Mot de passe</label>
+          <label class="form-label" for="createPassword">Mot de passe</label>
           <input class="form-input" id="createPassword" type="password" placeholder="••••••••">
         </div>
       </div>
@@ -73,15 +73,15 @@
 
       <div class="fiche-fields">
         <div class="field-group">
-          <label class="field-label">Prénom</label>
+          <label class="field-label" for="fichePrenom">Prénom</label>
           <input class="field-input" id="fichePrenom" type="text" value="">
         </div>
         <div class="field-group">
-          <label class="field-label">Nom</label>
+          <label class="field-label" for="ficheNom">Nom</label>
           <input class="field-input" id="ficheNom" type="text" value="">
         </div>
         <div class="field-group full">
-          <label class="field-label">Email</label>
+          <label class="field-label" for="ficheEmail">Email</label>
           <input class="field-input" id="ficheEmail" type="email" value="">
         </div>
       </div>
@@ -95,6 +95,7 @@
 
   <script>
     let pilotes = {{ pilotes|json_encode|raw }};
+    pilotes = Array.isArray(pilotes) ? pilotes.filter(p => p && p.ID_Utilisateur) : [];
 
     function toggleCreer() {
       const form = document.getElementById('creerForm');
@@ -118,9 +119,12 @@
       }
 
       const pilote = pilotes.find(p =>
-        (p.Nom && p.Nom.toLowerCase().includes(valeur)) ||
-        (p.Prenom && p.Prenom.toLowerCase().includes(valeur)) ||
-        (p.Email && p.Email.toLowerCase().includes(valeur))
+        p &&
+        (
+          (p.Nom && p.Nom.toLowerCase().includes(valeur)) ||
+          (p.Prenom && p.Prenom.toLowerCase().includes(valeur)) ||
+          (p.Email && p.Email.toLowerCase().includes(valeur))
+        )
       );
 
       if (!pilote) {
@@ -134,11 +138,16 @@
     }
 
     function afficherPilote(pilote) {
+      if (!pilote) {
+        console.error('Pilote invalide reçu dans afficherPilote :', pilote);
+        return;
+      }
+
       document.getElementById('fichePlaceholder').style.display = 'none';
       document.getElementById('ficheContent').style.display = 'block';
 
-      document.getElementById('ficheContent').dataset.id = pilote.ID_Utilisateur;
-      document.getElementById('ficheNomAffiche').textContent = (pilote.Prenom || '') + ' ' + (pilote.Nom || '');
+      document.getElementById('ficheContent').dataset.id = pilote.ID_Utilisateur || '';
+      document.getElementById('ficheNomAffiche').textContent = ((pilote.Prenom || '') + ' ' + (pilote.Nom || '')).trim();
       document.getElementById('ficheEmailAffiche').textContent = pilote.Email || '';
 
       document.getElementById('fichePrenom').value = pilote.Prenom || '';
@@ -179,14 +188,19 @@
           return;
         }
 
-        pilotes.push(data.pilote);
+        if (data.pilote) {
+          pilotes.push(data.pilote);
+          afficherPilote(data.pilote);
+        } else {
+          console.error('Réponse create sans pilote :', data);
+        }
 
         document.getElementById('createPrenom').value = '';
         document.getElementById('createNom').value = '';
         document.getElementById('createEmail').value = '';
         document.getElementById('createPassword').value = '';
 
-        alert('Compte pilote créé avec succès.');
+        alert(data.message || 'Compte pilote créé avec succès.');
       } catch (error) {
         alert('Erreur JavaScript / serveur lors de la création.');
         console.error(error);
@@ -231,13 +245,21 @@
           return;
         }
 
-        const index = pilotes.findIndex(p => String(p.ID_Utilisateur) === String(id));
-        if (index !== -1) {
-          pilotes[index] = data.pilote;
+        if (data.pilote) {
+          const index = pilotes.findIndex(p => p && String(p.ID_Utilisateur) === String(id));
+
+          if (index !== -1) {
+            pilotes[index] = data.pilote;
+          } else {
+            pilotes.push(data.pilote);
+          }
+
+          afficherPilote(data.pilote);
+        } else {
+          console.error('Réponse update sans pilote :', data);
         }
 
-        afficherPilote(data.pilote);
-        alert('Compte pilote modifié avec succès.');
+        alert(data.message || 'Compte pilote modifié avec succès.');
       } catch (error) {
         alert('Erreur JavaScript / serveur lors de la modification.');
         console.error(error);
@@ -275,7 +297,7 @@
           return;
         }
 
-        pilotes = pilotes.filter(p => String(p.ID_Utilisateur) !== String(id));
+        pilotes = pilotes.filter(p => p && String(p.ID_Utilisateur) !== String(id));
 
         document.getElementById('ficheContent').style.display = 'none';
         document.getElementById('fichePlaceholder').style.display = 'flex';
@@ -287,7 +309,7 @@
         document.getElementById('ficheNom').value = '';
         document.getElementById('ficheEmail').value = '';
 
-        alert('Compte pilote supprimé avec succès.');
+        alert(data.message || 'Compte pilote supprimé avec succès.');
       } catch (error) {
         alert('Erreur JavaScript / serveur lors de la suppression.');
         console.error(error);

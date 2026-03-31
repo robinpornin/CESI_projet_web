@@ -17,7 +17,7 @@ class PageGestionComptePiloteAdmin
     public function render(): void
     {
         $stmt = $this->pdo->query("
-            SELECT ID_Utilisateur, Nom, Prenom, Email
+            SELECT ID_Utilisateur, Nom, Prenom, Email, Role
             FROM Utilisateurs
             WHERE Role = 2
             ORDER BY Nom ASC, Prenom ASC
@@ -27,7 +27,7 @@ class PageGestionComptePiloteAdmin
 
         echo $this->twig->render('gestionComptePilote_admin.html.twig', [
             'page'     => 'gestion_pilote_admin',
-            'title'    => 'Gestion des comptes Pilotes',
+            'title'    => 'Gestion des comptes pilotes',
             'pilotes'  => $pilotes,
             'app_user' => AppUser::fromSession(),
         ]);

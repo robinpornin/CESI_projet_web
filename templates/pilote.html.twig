@@ -11,24 +11,34 @@
 
   <div class="separateur"></div>
 
-  <div class="bloc-actions">
-    <h2>QUE VOULEZ-VOUS FAIRE ?</h2>
+  <div class="section-titre">Que voulez-vous faire ?</div>
 
-    <div class="search-rows">
+  <div class="groupe">
+    <div class="groupe-label">Recherches</div>
 
-      <div class="search-item">
-        <form method="GET" action="/rechercheEntreprise" class="search-btn-row">
-          <button type="submit" class="btn-rechercher">RECHERCHE ENTREPRISE</button>
-        </form>
+    <form method="GET" action="/rechercheEntreprise" class="action-bloc">
+      <div class="action-icon">🏢</div>
+      <div class="action-info">
+        <span class="action-titre">Rechercher une entreprise</span>
+        <span class="action-desc">→ Redirection vers la liste des entreprises</span>
+        <div class="action-btn-row">
+          <button type="submit" class="btn-action">Rechercher</button>
+        </div>
       </div>
+    </form>
 
-      <div class="search-item">
-        <form method="GET" action="/rechercheOffre" class="search-btn-row">
-          <button type="submit" class="btn-rechercher">RECHERCHE OFFRE DE STAGE</button>
-        </form>
+    <form method="GET" action="/rechercheOffre" class="action-bloc">
+      <div class="action-icon">📋</div>
+      <div class="action-info">
+        <span class="action-titre">Rechercher une offre de stage</span>
+        <span class="action-desc">→ Redirection vers la liste des offres</span>
+        <div class="action-btn-row">
+          <button type="submit" class="btn-action">Rechercher</button>
+        </div>
       </div>
-
-    </div>
+    </form>
   </div>
+
+  <div class="divider"></div>
 
 {% endblock %}
