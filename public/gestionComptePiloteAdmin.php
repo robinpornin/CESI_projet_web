@@ -13,7 +13,7 @@ try {
 
     $input = json_decode(file_get_contents('php://input'), true);
 
-    if (!$input || !isset($input['action'])) {
+    if (!is_array($input) || !isset($input['action'])) {
         echo json_encode([
             'success' => false,
             'message' => 'Requête invalide.'
@@ -21,13 +21,13 @@ try {
         exit;
     }
 
-    $action = $input['action'];
+    $action = (string)$input['action'];
 
     if ($action === 'create') {
-        $prenom = trim($input['prenom'] ?? '');
-        $nom = trim($input['nom'] ?? '');
-        $email = trim($input['email'] ?? '');
-        $mdp = trim($input['mdp'] ?? '');
+        $prenom = trim((string)($input['prenom'] ?? ''));
+        $nom    = trim((string)($input['nom'] ?? ''));
+        $email  = trim((string)($input['email'] ?? ''));
+        $mdp    = trim((string)($input['mdp'] ?? ''));
 
         if ($prenom === '' || $nom === '' || $email === '' || $mdp === '') {
             echo json_encode([
@@ -38,8 +38,8 @@ try {
         }
 
         $check = $pdo->prepare("
-            SELECT COUNT(*) 
-            FROM Utilisateurs 
+            SELECT COUNT(*)
+            FROM Utilisateurs
             WHERE Email = :email
         ");
         $check->execute([
@@ -62,26 +62,36 @@ try {
         ");
 
         $stmt->execute([
-            ':nom' => $nom,
+            ':nom'    => $nom,
             ':prenom' => $prenom,
-            ':email' => $email,
-            ':mdp' => $mdpHash,
-            ':role' => 2
+            ':email'  => $email,
+            ':mdp'    => $mdpHash,
+            ':role'   => 2
         ]);
+
+        $id = (int)$pdo->lastInsertId();
+
+        $pilote = [
+            'ID_Utilisateur' => $id,
+            'Nom'            => $nom,
+            'Prenom'         => $prenom,
+            'Email'          => $email,
+            'Role'           => 2
+        ];
 
         echo json_encode([
             'success' => true,
             'message' => 'Compte pilote créé avec succès.',
-            'id' => $pdo->lastInsertId()
+            'pilote'  => $pilote
         ]);
         exit;
     }
 
     if ($action === 'update') {
-        $id = (int)($input['id'] ?? 0);
-        $prenom = trim($input['prenom'] ?? '');
-        $nom = trim($input['nom'] ?? '');
-        $email = trim($input['email'] ?? '');
+        $id     = (int)($input['id'] ?? 0);
+        $prenom = trim((string)($input['prenom'] ?? ''));
+        $nom    = trim((string)($input['nom'] ?? ''));
+        $email  = trim((string)($input['email'] ?? ''));
 
         if ($id <= 0 || $prenom === '' || $nom === '' || $email === '') {
             echo json_encode([
@@ -95,11 +105,11 @@ try {
             SELECT COUNT(*)
             FROM Utilisateurs
             WHERE Email = :email
-            AND ID_Utilisateur != :id
+              AND ID_Utilisateur != :id
         ");
         $check->execute([
             ':email' => $email,
-            ':id' => $id
+            ':id'    => $id
         ]);
 
         if ((int)$check->fetchColumn() > 0) {
@@ -116,18 +126,48 @@ try {
                 Prenom = :prenom,
                 Email = :email
             WHERE ID_Utilisateur = :id
+              AND Role = 2
         ");
 
         $stmt->execute([
-            ':nom' => $nom,
+            ':nom'    => $nom,
             ':prenom' => $prenom,
-            ':email' => $email,
-            ':id' => $id
+            ':email'  => $email,
+            ':id'     => $id
         ]);
+
+        if ($stmt->rowCount() === 0) {
+            $exists = $pdo->prepare("
+                SELECT COUNT(*)
+                FROM Utilisateurs
+                WHERE ID_Utilisateur = :id
+                  AND Role = 2
+            ");
+            $exists->execute([
+                ':id' => $id
+            ]);
+
+            if ((int)$exists->fetchColumn() === 0) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Aucun pilote trouvé à modifier.'
+                ]);
+                exit;
+            }
+        }
+
+        $pilote = [
+            'ID_Utilisateur' => $id,
+            'Nom'            => $nom,
+            'Prenom'         => $prenom,
+            'Email'          => $email,
+            'Role'           => 2
+        ];
 
         echo json_encode([
             'success' => true,
-            'message' => 'Compte modifié avec succès.'
+            'message' => 'Compte modifié avec succès.',
+            'pilote'  => $pilote
         ]);
         exit;
     }
@@ -146,10 +186,19 @@ try {
         $stmt = $pdo->prepare("
             DELETE FROM Utilisateurs
             WHERE ID_Utilisateur = :id
+              AND Role = 2
         ");
         $stmt->execute([
             ':id' => $id
         ]);
+
+        if ($stmt->rowCount() === 0) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Aucun pilote trouvé à supprimer.'
+            ]);
+            exit;
+        }
 
         echo json_encode([
             'success' => true,
@@ -159,17 +208,17 @@ try {
     }
 
     if ($action === 'search') {
-        $terme = trim($input['terme'] ?? '');
+        $terme = trim((string)($input['terme'] ?? ''));
 
         $stmt = $pdo->prepare("
             SELECT ID_Utilisateur, Nom, Prenom, Email, Role
             FROM Utilisateurs
             WHERE Role = 2
-            AND (
-                Nom LIKE :terme
-                OR Prenom LIKE :terme
-                OR Email LIKE :terme
-            )
+              AND (
+                    Nom LIKE :terme
+                 OR Prenom LIKE :terme
+                 OR Email LIKE :terme
+              )
             ORDER BY Nom ASC, Prenom ASC
         ");
 
@@ -180,7 +229,7 @@ try {
         $resultats = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         echo json_encode([
-            'success' => true,
+            'success'   => true,
             'resultats' => $resultats
         ]);
         exit;
