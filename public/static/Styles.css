@@ -514,6 +514,7 @@ footer span { color: #FFD700; font-weight: bold; }
   transition: opacity 0.2s, transform 0.2s;
   width: 100%;
   max-width: 320px;
+  text-decoration: none;
 }
 .btn-connecter:hover { opacity: 0.88; transform: translateY(-2px); }
 
@@ -673,7 +674,7 @@ footer span { color: #FFD700; font-weight: bold; }
 /* --- SECTION ACCÈS / BLOCS --- */
 .acces-section,
 .bloc {
-  background-color: #585151;
+  background-color: #ebeaea;
   border: none;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
   border-radius: 12px;
