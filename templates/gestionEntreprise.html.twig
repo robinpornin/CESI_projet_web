@@ -1,48 +1,86 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Accueil{% endblock %}
+{% block title %}Gestion des entreprises{% endblock %}
 
 {% block content %}
 
-<!-- bandeau -->
+  <!-- bandeau -->
   <div class="bandeau">
     <div class="bandeau-icon">🏢</div>
     <div class="bandeau-info">
       <span class="bandeau-titre">Espace Gestion des Entreprises</span>
-      <span class="bandeau-badge">Entreprises</span>
+      <span class="bandeau-badge">ENTREPRISES</span>
       <span class="bandeau-sous">Consultez les entreprises partenaires ou ajoutez-en une nouvelle.</span>
     </div>
   </div>
 
-  <!-- main -->
+  <div class="separateur"></div>
 
-    <div class="separateur"></div>
+  {% if erreur %}
+    <div class="carte carte-liste">
+      <span class="carte-icon">⚠️</span>
+      <span class="carte-titre">Accès impossible</span>
+      <span class="carte-desc">{{ erreur }}</span>
+    </div>
+  {% else %}
+
+    {% if entreprises is not empty %}
+      {% for entreprise in entreprises %}
+        <div class="grid-main">
+          <div class="carte carte-liste">
+            <span class="carte-icon">🏭</span>
+            <span class="carte-titre">{{ entreprise.Nom_entreprise }}</span>
+            <span class="carte-desc">{{ entreprise.Secteur }} · {{ entreprise.Type_ }}</span>
+            <span class="carte-badge">Entreprise créée</span>
+          </div>
+
+          <a class="carte carte-param" href="/parametreEntreprise?id={{ entreprise.ID_Entreprise }}">
+            <span class="carte-icon">⚙️</span>
+            <span class="carte-titre">Paramètres</span>
+          </a>
+        </div>
+      {% endfor %}
+
+      {% if totalPages > 1 %}
+        <div class="pagination">
+          {% if currentPage > 1 %}
+            <a href="?page={{ currentPage - 1 }}" class="page-btn">Précédent</a>
+          {% endif %}
+
+          {% for i in 1..totalPages %}
+            {% if i == currentPage %}
+              <span class="page-btn active">{{ i }}</span>
+            {% else %}
+              <a href="?page={{ i }}" class="page-btn">{{ i }}</a>
+            {% endif %}
+          {% endfor %}
+
+          {% if currentPage < totalPages %}
+            <a href="?page={{ currentPage + 1 }}" class="page-btn">Suivant</a>
+          {% endif %}
+        </div>
+      {% endif %}
+
+    {% else %}
+      <div class="grid-main">
+        <div class="carte carte-liste">
+          <span class="carte-icon">🏭</span>
+          <span class="carte-titre">Aucune entreprise</span>
+          <span class="carte-desc">Vous n'avez encore créé aucune entreprise.</span>
+          <span class="carte-badge">Créez-en une ci-dessous</span>
+        </div>
+      </div>
+    {% endif %}
 
     <div class="grid-main">
-
-      <!-- liste entreprises -->
-      <a class="carte carte-liste" href="liste-entreprises.html">
-        <span class="carte-icon">🏭</span>
-        <span class="carte-titre">Listes entreprises</span>
-        <span class="carte-desc">Consulter et gérer toutes les entreprises</span>
-        <span class="carte-badge">Voir les entreprises →</span>
-      </a>
-
-      <!-- paramètres -->
-      <a class="carte carte-param" href="parametreEntreprise">
-        <span class="carte-icon">⚙️</span>
-        <span class="carte-titre">Paramètres</span>
-      </a>
-
-      <!-- créer une entreprise -->
-      <a class="carte carte-creer" href="creationEntreprise">
+      <a class="carte carte-creer" href="/creationEntreprise">
         <span class="carte-icon">➕</span>
         <span class="carte-titre">Créer une entreprise</span>
         <span class="carte-desc">Ajouter une nouvelle entreprise partenaire</span>
         <span class="carte-badge light">Nouvelle entreprise →</span>
       </a>
-
     </div>
 
+  {% endif %}
 
 {% endblock %}

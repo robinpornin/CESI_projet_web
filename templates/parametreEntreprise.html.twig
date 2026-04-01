@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<!-- bandeau -->
+  <!-- bandeau -->
   <div class="bandeau">
     <div class="bandeau-icon">⚙️</div>
     <div class="bandeau-info">
@@ -14,8 +14,17 @@
     </div>
   </div>
 
-    <div class="separateur"></div>
+  <div class="separateur"></div>
 
+  {% if erreur %}
+    <div class="carte carte-liste">
+      <span class="carte-icon">⚠️</span>
+      <span class="carte-titre">Erreur</span>
+      <span class="carte-desc">{{ erreur }}</span>
+    </div>
+  {% endif %}
+
+  {% if entreprise %}
     <!-- fiche entreprise -->
     <div class="fiche">
       <div class="fiche-logo">🏢</div>
@@ -40,13 +49,25 @@
     <div class="divider"></div>
 
     <!-- supprimer -->
-    <button class="action-carte danger" onclick="ouvrirModal()">
-      <span class="action-carte-icon">🗑️</span>
-      <div class="action-carte-info">
-        <span class="action-carte-titre">Supprimer l'entreprise</span>
-        <span class="action-carte-desc">→ Suppression définitive et irréversible</span>
-      </div>
-      <span class="action-carte-arrow">›</span>
-    </button>
+    <form method="post" action="/parametreEntreprise?id={{ entreprise.ID_Entreprise }}" onsubmit="return confirm('Voulez-vous vraiment supprimer cette entreprise ? Cette action est définitive.');">
+      <input type="hidden" name="id_entreprise" value="{{ entreprise.ID_Entreprise }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+      <button type="submit" class="action-carte danger">
+        <span class="action-carte-icon">🗑️</span>
+        <div class="action-carte-info">
+          <span class="action-carte-titre">Supprimer l'entreprise</span>
+          <span class="action-carte-desc">→ Suppression définitive et irréversible</span>
+        </div>
+        <span class="action-carte-arrow">›</span>
+      </button>
+    </form>
+  {% else %}
+    <div class="carte carte-liste">
+      <span class="carte-icon">⚠️</span>
+      <span class="carte-titre">Entreprise introuvable</span>
+      <span class="carte-desc">L'entreprise demandée n'existe pas ou plus.</span>
+    </div>
+  {% endif %}
 
 {% endblock %}
