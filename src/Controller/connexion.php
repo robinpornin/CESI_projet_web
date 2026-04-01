@@ -17,6 +17,8 @@ class PageConnexion
 
     public function render(): void
     {
+
+        unset($_SESSION['login_attempts_' . md5($_SERVER['REMOTE_ADDR'] ?? 'unknown')]); // ← temporaire
         $erreur = null;
         $message = null;
 
@@ -29,6 +31,28 @@ class PageConnexion
                 http_response_code(403);
                 die('Requête invalide.');
             }
+
+            // Rate limiting : max 10 tentatives par IP sur 15 minutes
+            $ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+            $key = 'login_attempts_' . md5($ip);
+
+            if (!isset($_SESSION[$key])) {
+                $_SESSION[$key] = ['count' => 0, 'first_attempt' => time()];
+            }
+
+            $elapsed = time() - $_SESSION[$key]['first_attempt'];
+
+            if ($elapsed > 900) {
+                $_SESSION[$key] = ['count' => 0, 'first_attempt' => time()];
+            }
+
+            if ($_SESSION[$key]['count'] >= 10) {
+                $remaining = 900 - $elapsed;
+                http_response_code(429);
+                die('Trop de tentatives. Réessayez dans ' . ceil($remaining / 60) . ' minute(s).');
+            }
+
+            $_SESSION[$key]['count']++;
 
             $email = trim($_POST['email'] ?? '');
             $motDePasse = $_POST['mot_de_passe'] ?? '';
@@ -51,7 +75,8 @@ class PageConnexion
                 } elseif (!password_verify($motDePasse, $utilisateur['Mdp'])) {
                     $erreur = 'Mot de passe incorrect.';
                 } else {
-                    // session_regenerate_id(true); // commenté temporairement
+                    session_regenerate_id(true);
+                    unset($_SESSION[$key]);
 
                     $_SESSION['utilisateur'] = [
                         'id'     => $utilisateur['ID_Utilisateur'],
