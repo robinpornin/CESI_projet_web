@@ -76,7 +76,6 @@ class Router
                 exit;
 
             case 'suppressionCompte':
-
                 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
                     http_response_code(405);
                     exit;
@@ -90,16 +89,14 @@ class Router
                     die('Requête invalide.');
                 }
 
-                if (session_status() === PHP_SESSION_NONE) {
-                    session_start();
-                }
-
-                $idUtilisateur = (int) ($_SESSION['utilisateur']['id'] ?? 0);
+                $jwtUser       = \App\Core\Middleware::getUtilisateur();
+                $idUtilisateur = (int) ($jwtUser?->id ?? 0);  // ✅ JWT
 
                 if ($idUtilisateur <= 0) {
                     header('Location: /gestionCompte');
                     exit;
                 }
+
 
                 require_once __DIR__ . '/../../database.php';
                 $pdo = getPDO();

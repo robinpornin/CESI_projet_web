@@ -2,7 +2,9 @@
     "name": "cesi/meilleur_groupe",
     "type": "project",
     "require": {
-        "twig/twig": "^3.16"
+        "twig/twig": "^3.16",
+        "firebase/php-jwt": "^7.0",
+        "vlucas/phpdotenv": "^5.6"
     },
     "require-dev": {
         "phpunit/phpunit": "^11.5"

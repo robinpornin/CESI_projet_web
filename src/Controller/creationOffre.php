@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../../database.php';
 
+use App\Core\Middleware;
+
 class PageCreationOffre
 {
     private \Twig\Environment $twig;
@@ -12,50 +14,44 @@ class PageCreationOffre
     public function __construct(\Twig\Environment $twig)
     {
         $this->twig = $twig;
-        $this->pdo = getPDO();
-
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        $this->pdo  = getPDO();
     }
 
     public function render(): void
     {
-        $error = null;
+        $error   = null;
         $success = false;
 
         $form = [
-            'titre' => '',
+            'titre'         => '',
             'id_entreprise' => '',
-            'ville_cp' => '',
-            'duree' => '',
-            'remuneration' => '',
-            'date_debut' => '',
-            'description' => '',
-            'competences' => [],
+            'ville_cp'      => '',
+            'duree'         => '',
+            'remuneration'  => '',
+            'date_debut'    => '',
+            'description'   => '',
+            'competences'   => [],
         ];
 
-        if (
-            !isset($_SESSION['utilisateur']) ||
-            !isset($_SESSION['utilisateur']['id']) ||
-            empty($_SESSION['utilisateur']['id'])
-        ) {
+        $jwtUser = Middleware::getUtilisateur();
+
+        if ($jwtUser === null || empty($jwtUser->id)) {
             $error = "Vous devez être connecté pour créer une offre.";
 
             echo $this->twig->render('creationOffre.html.twig', [
-                'page' => 'creation_offre',
-                'title' => 'Création d\'une offre',
+                'page'          => 'creation_offre',
+                'title'         => 'Création d\'une offre',
                 'platform_name' => 'CESI-STAGES',
-                'error' => $error,
-                'success' => $success,
-                'form' => $form,
-                'competences' => [],
-                'entreprises' => [],
+                'error'         => $error,
+                'success'       => $success,
+                'form'          => $form,
+                'competences'   => [],
+                'entreprises'   => [],
             ]);
             return;
         }
 
-        $idUtilisateur = (int) $_SESSION['utilisateur']['id'];
+        $idUtilisateur = (int) $jwtUser->id;
 
         $stmtCompetences = $this->pdo->query("
             SELECT ID_Competence, Nom_competence
@@ -70,9 +66,7 @@ class PageCreationOffre
             WHERE ID_Utilisateur = :id_utilisateur
             ORDER BY Nom_entreprise ASC
         ");
-        $stmtEntreprises->execute([
-            ':id_utilisateur' => $idUtilisateur,
-        ]);
+        $stmtEntreprises->execute([':id_utilisateur' => $idUtilisateur]);
         $entreprises = $stmtEntreprises->fetchAll();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -85,22 +79,22 @@ class PageCreationOffre
                 die('Requête invalide.');
             }
 
-            $form['titre'] = trim($_POST['titre'] ?? '');
+            $form['titre']         = trim($_POST['titre'] ?? '');
             $form['id_entreprise'] = trim($_POST['id_entreprise'] ?? '');
-            $form['ville_cp'] = trim($_POST['ville_cp'] ?? '');
-            $form['duree'] = trim($_POST['duree'] ?? '');
-            $form['remuneration'] = trim($_POST['remuneration'] ?? '');
-            $form['date_debut'] = trim($_POST['date_debut'] ?? '');
-            $form['description'] = trim($_POST['description'] ?? '');
-            $form['competences'] = $_POST['competences'] ?? [];
+            $form['ville_cp']      = trim($_POST['ville_cp'] ?? '');
+            $form['duree']         = trim($_POST['duree'] ?? '');
+            $form['remuneration']  = trim($_POST['remuneration'] ?? '');
+            $form['date_debut']    = trim($_POST['date_debut'] ?? '');
+            $form['description']   = trim($_POST['description'] ?? '');
+            $form['competences']   = $_POST['competences'] ?? [];
 
-            $titre = $form['titre'];
-            $idEntreprise = (int) $form['id_entreprise'];
-            $villeCp = $form['ville_cp'];
-            $duree = (int) $form['duree'];
-            $remuneration = (float) $form['remuneration'];
-            $dateDebut = $form['date_debut'];
-            $description = $form['description'];
+            $titre                    = $form['titre'];
+            $idEntreprise             = (int) $form['id_entreprise'];
+            $villeCp                  = $form['ville_cp'];
+            $duree                    = (int) $form['duree'];
+            $remuneration             = (float) $form['remuneration'];
+            $dateDebut                = $form['date_debut'];
+            $description              = $form['description'];
             $competencesSelectionnees = array_map('intval', $form['competences']);
 
             if (
@@ -138,51 +132,51 @@ class PageCreationOffre
                     try {
                         $this->pdo->beginTransaction();
 
-                        $sqlOffre = "INSERT INTO Offres
-                            (Titre, Remuneration, Date_, Description, Duree, Ville_CP, ID_Entreprise, ID_Utilisateur)
+                        $stmtOffre = $this->pdo->prepare("
+                            INSERT INTO Offres
+                                (Titre, Remuneration, Date_, Description, Duree, Ville_CP, ID_Entreprise, ID_Utilisateur)
                             VALUES
-                            (:titre, :remuneration, :date_debut, :description, :duree, :ville_cp, :id_entreprise, :id_utilisateur)";
-
-                        $stmtOffre = $this->pdo->prepare($sqlOffre);
+                                (:titre, :remuneration, :date_debut, :description, :duree, :ville_cp, :id_entreprise, :id_utilisateur)
+                        ");
                         $stmtOffre->execute([
-                            ':titre' => $titre,
-                            ':remuneration' => $remuneration,
-                            ':date_debut' => $dateDebut,
-                            ':description' => $description,
-                            ':duree' => $duree,
-                            ':ville_cp' => $villeCp,
-                            ':id_entreprise' => $idEntreprise,
+                            ':titre'          => $titre,
+                            ':remuneration'   => $remuneration,
+                            ':date_debut'     => $dateDebut,
+                            ':description'    => $description,
+                            ':duree'          => $duree,
+                            ':ville_cp'       => $villeCp,
+                            ':id_entreprise'  => $idEntreprise,
                             ':id_utilisateur' => $idUtilisateur,
                         ]);
 
                         $idOffre = (int) $this->pdo->lastInsertId();
 
                         if (!empty($competencesSelectionnees)) {
-                            $sqlCompetence = "INSERT INTO Requerir (ID_Offre, ID_Competence)
-                                              VALUES (:id_offre, :id_competence)";
-                            $stmtCompetence = $this->pdo->prepare($sqlCompetence);
+                            $stmtCompetence = $this->pdo->prepare("
+                                INSERT INTO Requerir (ID_Offre, ID_Competence)
+                                VALUES (:id_offre, :id_competence)
+                            ");
 
                             foreach ($competencesSelectionnees as $idCompetence) {
                                 $stmtCompetence->execute([
-                                    ':id_offre' => $idOffre,
+                                    ':id_offre'      => $idOffre,
                                     ':id_competence' => $idCompetence,
                                 ]);
                             }
                         }
 
                         $this->pdo->commit();
-
                         $success = true;
 
                         $form = [
-                            'titre' => '',
+                            'titre'         => '',
                             'id_entreprise' => '',
-                            'ville_cp' => '',
-                            'duree' => '',
-                            'remuneration' => '',
-                            'date_debut' => '',
-                            'description' => '',
-                            'competences' => [],
+                            'ville_cp'      => '',
+                            'duree'         => '',
+                            'remuneration'  => '',
+                            'date_debut'    => '',
+                            'description'   => '',
+                            'competences'   => [],
                         ];
                     } catch (\PDOException $e) {
                         if ($this->pdo->inTransaction()) {
@@ -196,14 +190,14 @@ class PageCreationOffre
         }
 
         echo $this->twig->render('creationOffre.html.twig', [
-            'page' => 'creation_offre',
-            'title' => 'Création d\'une offre',
+            'page'          => 'creation_offre',
+            'title'         => 'Création d\'une offre',
             'platform_name' => 'CESI-STAGES',
-            'error' => $error,
-            'success' => $success,
-            'form' => $form,
-            'competences' => $competences,
-            'entreprises' => $entreprises,
+            'error'         => $error,
+            'success'       => $success,
+            'form'          => $form,
+            'competences'   => $competences,
+            'entreprises'   => $entreprises,
         ]);
     }
 }

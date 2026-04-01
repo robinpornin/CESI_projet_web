@@ -6,23 +6,44 @@ ini_set('display_errors', '0');
 ini_set('display_startup_errors', '0');
 error_reporting(E_ALL);
 
-// --- Sécurité HTTP ---
-header('X-Frame-Options: SAMEORIGIN');
-header('X-Content-Type-Options: nosniff');
-header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; frame-src 'self'");
+header("Access-Control-Allow-Origin: http://cesi_projet_web.local");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(204);
+    exit();
+}
 
 // --- Session sécurisée ---
+$isHttps = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on';
+
 session_start([
-    'cookie_httponly' => true,     // JS ne peut pas lire le cookie
-    'cookie_samesite' => 'Strict', // Protège contre CSRF
-    'cookie_secure'   => false,    // Passer à true en production (HTTPS)
+    'cookie_httponly' => true,
+    'cookie_samesite' => 'Strict',
+    'cookie_secure'   => $isHttps,  // ✅ false en HTTP local, true en prod HTTPS
 ]);
 
-// --- Token CSRF (généré une seule fois par session) ---
+// --- Token CSRF ---
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
+// --- Sécurité HTTP ---
+header('X-Frame-Options: SAMEORIGIN');
+header('X-Content-Type-Options: nosniff');
+header("Content-Security-Policy: " . implode('; ', [
+    "default-src 'self'",
+    "script-src 'self' 'unsafe-inline'",
+    "style-src 'self' 'unsafe-inline'",
+    "font-src 'self' data:",
+    "img-src 'self' data: blob:",
+    "connect-src 'self'",
+    "frame-src 'self'",
+    "form-action 'self'",
+    "base-uri 'self'",
+    "object-src 'none'",
+]));
 // --- Autoload ---
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -33,9 +54,14 @@ if (file_exists($envFile)) {
         if (str_starts_with(trim($line), '#')) continue;
         if (!str_contains($line, '=')) continue;
         [$key, $value] = explode('=', $line, 2);
-        $_ENV[trim($key)] = trim($value);
+        $key   = trim($key);
+        $value = trim($value);
+        // ✅ Supprime les guillemets simples ou doubles autour de la valeur
+        $value = trim($value, '"\'');
+        $_ENV[$key] = $value;
     }
 }
+
 
 // --- Controllers ---
 require_once __DIR__ . '/../src/Controller/accueil.php';
@@ -80,8 +106,10 @@ require_once __DIR__ . '/../src/Core/appUser.php';
 // --- Twig ---
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../templates');
 $twig   = new \Twig\Environment($loader, ['debug' => false]);
-$twig->addGlobal('user_role',      $_SESSION['utilisateur']['role'] ?? 0);
-$twig->addGlobal('user_nom',       $_SESSION['user_nom']            ?? null);
+// Via JWT
+$jwtUser = \App\Core\Middleware::getUtilisateur();
+$twig->addGlobal('user_role', $jwtUser?->role ?? 0);
+$twig->addGlobal('user_nom',  $jwtUser ? ($jwtUser->prenom . ' ' . $jwtUser->nom) : null);
 $twig->addGlobal('app_user',       AppUser::fromSession());
 $twig->addGlobal('app_csrf_token', $_SESSION['csrf_token']);
 

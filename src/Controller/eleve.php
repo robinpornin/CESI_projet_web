@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../../database.php';
 
+use App\Core\Middleware;
+
 class PageEleve
 {
     private \Twig\Environment $twig;
@@ -13,24 +15,20 @@ class PageEleve
     {
         $this->twig = $twig;
         $this->pdo  = getPDO();
-
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
     }
 
     public function render(): void
     {
-        $utilisateurSession = $_SESSION['utilisateur'] ?? null;
-        $prenom = $utilisateurSession['prenom'] ?? '';
+        $jwtUser = Middleware::getUtilisateur();
+        $prenom  = $jwtUser?->prenom ?? '';
 
         echo $this->twig->render('eleve.html.twig', [
             'page'          => 'eleve',
             'title'         => 'Élève',
             'platform_name' => 'CESI-STAGES',
-            'prenom'        => $utilisateur['Prenom'] ?? $prenom,
-            'utilisateur'   => $utilisateurSession,
-            'initiale'      => $utilisateur['Prenom'][0] ?? $prenom[0],
+            'prenom'        => $prenom,
+            'utilisateur'   => $jwtUser,
+            'initiale'      => $prenom[0] ?? '',
         ]);
     }
 }

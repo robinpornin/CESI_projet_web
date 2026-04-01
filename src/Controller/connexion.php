@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../../database.php';
 
+use Firebase\JWT\JWT;
+
 class PageConnexion
 {
     private \Twig\Environment $twig;
@@ -12,17 +14,17 @@ class PageConnexion
     public function __construct(\Twig\Environment $twig)
     {
         $this->twig = $twig;
-        $this->pdo = getPDO();
+        $this->pdo  = getPDO();
     }
 
     public function render(): void
     {
-
-        $erreur = null;
+        $erreur  = null;
         $message = null;
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+            // Vérification CSRF
             if (
                 empty($_POST['csrf_token']) ||
                 !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])
@@ -31,8 +33,8 @@ class PageConnexion
                 die('Requête invalide.');
             }
 
-            // Rate limiting : max 10 tentatives par IP sur 15 minutes
-            $ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+            // Rate limiting
+            $ip  = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
             $key = 'login_attempts_' . md5($ip);
 
             if (!isset($_SESSION[$key])) {
@@ -53,7 +55,7 @@ class PageConnexion
 
             $_SESSION[$key]['count']++;
 
-            $email = trim($_POST['email'] ?? '');
+            $email      = trim($_POST['email'] ?? '');
             $motDePasse = $_POST['mot_de_passe'] ?? '';
 
             if ($email === '' || $motDePasse === '') {
@@ -61,12 +63,12 @@ class PageConnexion
             } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $erreur = 'Adresse email invalide.';
             } else {
-                $sql = "SELECT ID_Utilisateur, Nom, Prenom, Email, Mdp, Role
-                        FROM Utilisateurs
-                        WHERE Email = :email";
-
-                $stmt = $this->pdo->prepare($sql);
-                $stmt->execute(['email' => $email]);
+                $stmt = $this->pdo->prepare("
+                    SELECT ID_Utilisateur, Nom, Prenom, Email, Mdp, Role
+                    FROM Utilisateurs
+                    WHERE Email = :email
+                ");
+                $stmt->execute([':email' => $email]);
                 $utilisateur = $stmt->fetch();
 
                 if (!$utilisateur) {
@@ -74,16 +76,39 @@ class PageConnexion
                 } elseif (!password_verify($motDePasse, $utilisateur['Mdp'])) {
                     $erreur = 'Mot de passe incorrect.';
                 } else {
-                    session_regenerate_id(true);
-                    unset($_SESSION[$key]);
-
-                    $_SESSION['utilisateur'] = [
+                    // ✅ Génération du JWT
+                    $payload = [
                         'id'     => $utilisateur['ID_Utilisateur'],
                         'nom'    => $utilisateur['Nom'],
                         'prenom' => $utilisateur['Prenom'],
                         'email'  => $utilisateur['Email'],
                         'role'   => $utilisateur['Role'],
+                        'iat'    => time(),
+                        'exp'    => time() + 3600, // Expire dans 1h
                     ];
+
+                    $token = JWT::encode($payload, $_ENV['JWT_SECRET'], 'HS256');
+
+                    setcookie('auth_token', $token, [
+                        'expires'  => time() + 3600,
+                        'path'     => '/',
+                        'secure'   => true, // ✅ toujours true maintenant qu'on est en HTTPS
+                        'httponly' => true,
+                        'samesite' => 'Strict',
+                    ]);
+
+                    // ✅ Fix boucle de redirection : session en fallback du JWT
+                    $_SESSION['utilisateur'] = [
+                        'id'     => $utilisateur['ID_Utilisateur'],
+                        'nom'    => $utilisateur['Nom'],
+                        'prenom' => $utilisateur['Prenom'],
+                        'email'  => $utilisateur['Email'],
+                        'role'   => (int) $utilisateur['Role'],
+                    ];
+
+
+
+                    unset($_SESSION[$key]);
 
                     switch ((int) $utilisateur['Role']) {
                         case 1:

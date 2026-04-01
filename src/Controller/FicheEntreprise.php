@@ -1,7 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 require_once __DIR__ . '/../../database.php';
+
+use App\Core\Middleware;
 
 class PageFicheEntreprise
 {
@@ -12,39 +15,32 @@ class PageFicheEntreprise
     {
         $this->twig = $twig;
         $this->pdo  = getPDO();
-
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
     }
 
     public function render(): void
     {
-        $id = (int) ($_GET['id'] ?? 0);
+        $id      = (int) ($_GET['id'] ?? 0);
         $message = null;
-        $erreur = null;
+        $erreur  = null;
 
         if ($id <= 0) {
             die("Entreprise introuvable.");
         }
 
-        if (empty($_SESSION['csrf_token'])) {
-            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-        }
-
-        $idUtilisateur = $_SESSION['utilisateur']['id'] ?? null;
-        $estConnecte = $idUtilisateur !== null;
-        $aDejaNote = false;
+        $jwtUser       = Middleware::getUtilisateur();
+        $idUtilisateur = $jwtUser?->id ?? null;
+        $estConnecte   = $idUtilisateur !== null;
+        $aDejaNote     = false;
 
         if ($estConnecte) {
             $stmt = $this->pdo->prepare("
-                SELECT COUNT(*) 
+                SELECT COUNT(*)
                 FROM Evaluations
-                WHERE ID_Entreprise = :idEntreprise
+                WHERE ID_Entreprise  = :idEntreprise
                   AND ID_Utilisateur = :idUtilisateur
             ");
             $stmt->execute([
-                ':idEntreprise' => $id,
+                ':idEntreprise'  => $id,
                 ':idUtilisateur' => $idUtilisateur,
             ]);
             $aDejaNote = (int) $stmt->fetchColumn() > 0;
@@ -73,12 +69,12 @@ class PageFicheEntreprise
                     VALUES (:idEntreprise, :idUtilisateur, :note)
                 ");
                 $stmt->execute([
-                    ':idEntreprise' => $id,
+                    ':idEntreprise'  => $id,
                     ':idUtilisateur' => $idUtilisateur,
-                    ':note' => $note,
+                    ':note'          => $note,
                 ]);
 
-                $message = "Avis envoyé.";
+                $message   = "Avis envoyé.";
                 $aDejaNote = true;
             }
         }

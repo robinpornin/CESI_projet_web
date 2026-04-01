@@ -51,7 +51,7 @@ class PageGestionCompteEleveAdmin
         header('Content-Type: application/json; charset=utf-8');
 
         $appUser = AppUser::fromSession();
-        if (!$appUser || (int)$appUser->role !== 3) {
+        if (!$appUser || (int)$appUser['role'] !== 3) {
             $this->json(['success' => false, 'message' => 'Accès refusé.']);
             return;
         }

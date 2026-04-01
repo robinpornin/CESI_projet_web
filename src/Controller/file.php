@@ -1,5 +1,8 @@
 <?php
+
 declare(strict_types=1);
+
+use App\Core\Middleware;
 
 class PageFile
 {
@@ -12,17 +15,18 @@ class PageFile
 
     public function render(): void
     {
-        // Vérifier que l'utilisateur est connecté
-        if (empty($_SESSION['utilisateur'])) {
+        $jwtUser = Middleware::getUtilisateur();
+
+        if ($jwtUser === null) {
             http_response_code(403);
             echo 'Accès refusé';
             exit;
         }
 
-        $role      = $_SESSION['utilisateur']['role'] ?? 0;
-        $basePath  = realpath(__DIR__ . '/../../uploads/');
-        $rawPath   = rawurldecode($_GET['path'] ?? '');
-        $rawPath   = str_replace("\0", '', $rawPath);
+        $role     = (int) ($jwtUser->role ?? 0);
+        $basePath = realpath(__DIR__ . '/../../uploads/');
+        $rawPath  = rawurldecode($_GET['path'] ?? '');
+        $rawPath  = str_replace("\0", '', $rawPath);
         $requested = realpath($basePath . '/' . $rawPath);
 
         // Anti path traversal
@@ -39,7 +43,7 @@ class PageFile
         }
 
         // Vérifier le rôle
-        if (!in_array((int)$role, [1, 2, 3])) {
+        if (!in_array($role, [1, 2, 3], true)) {
             http_response_code(403);
             echo 'Accès refusé';
             exit;
@@ -47,7 +51,7 @@ class PageFile
 
         // Servir le fichier
         $ext  = strtolower(pathinfo($requested, PATHINFO_EXTENSION));
-        $mime = match($ext) {
+        $mime = match ($ext) {
             'pdf'         => 'application/pdf',
             'jpg', 'jpeg' => 'image/jpeg',
             'png'         => 'image/png',

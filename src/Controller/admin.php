@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../../database.php';
 
+use App\Core\Middleware;
+
 class PageAdmin
 {
     private \Twig\Environment $twig;
@@ -12,15 +14,12 @@ class PageAdmin
     {
         $this->twig = $twig;
         $this->pdo  = getPDO();
-
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
     }
 
     public function render(): void
     {
-        $idUtilisateur = $_SESSION['utilisateur']['id'] ?? null;
+        $jwtUser = Middleware::getUtilisateur();
+        $idUtilisateur = $jwtUser?->id ?? null;
 
         $stmt = $this->pdo->prepare("
             SELECT Nom, Prenom FROM Utilisateurs WHERE ID_Utilisateur = :id
@@ -32,7 +31,7 @@ class PageAdmin
             'page'        => 'admin',
             'title'       => 'Admin',
             'utilisateur' => $utilisateur,
-            'app_user'    => AppUser::fromSession(),
+            'app_user'    => $jwtUser,
         ]);
     }
 }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../../database.php';
 
+use App\Core\Middleware;
+
 class PageCreationEntreprise
 {
     private \Twig\Environment $twig;
@@ -13,46 +15,40 @@ class PageCreationEntreprise
     {
         $this->twig = $twig;
         $this->pdo = getPDO();
-
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
     }
 
     public function render(): void
     {
-        $error = null;
+        $error   = null;
         $success = false;
 
         $form = [
-            'nom_entreprise' => '',
-            'email_entreprise' => '',
-            'secteur' => '',
-            'type' => '',
-            'nb_stagiaires' => '',
-            'telephone' => '',
+            'nom_entreprise'         => '',
+            'email_entreprise'       => '',
+            'secteur'                => '',
+            'type'                   => '',
+            'nb_stagiaires'          => '',
+            'telephone'              => '',
             'description_entreprise' => '',
         ];
 
-        if (
-            !isset($_SESSION['utilisateur']) ||
-            !isset($_SESSION['utilisateur']['id']) ||
-            empty($_SESSION['utilisateur']['id'])
-        ) {
+        $jwtUser = Middleware::getUtilisateur();
+
+        if ($jwtUser === null || empty($jwtUser->id)) {
             $error = "Vous devez être connecté pour créer une entreprise.";
 
             echo $this->twig->render('creationEntreprise.html.twig', [
-                'page' => 'creation_entreprise',
-                'title' => 'Création d\'une entreprise',
+                'page'          => 'creation_entreprise',
+                'title'         => 'Création d\'une entreprise',
                 'platform_name' => 'CESI-STAGES',
-                'error' => $error,
-                'success' => $success,
-                'form' => $form,
+                'error'         => $error,
+                'success'       => $success,
+                'form'          => $form,
             ]);
             return;
         }
 
-        $idUtilisateur = (int) $_SESSION['utilisateur']['id'];
+        $idUtilisateur = (int) $jwtUser->id;
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -64,21 +60,21 @@ class PageCreationEntreprise
                 die('Requête invalide.');
             }
 
-            $form['email_entreprise'] = trim($_POST['email_entreprise'] ?? '');
-            $form['nom_entreprise'] = trim($_POST['nom_entreprise'] ?? '');
-            $form['secteur'] = trim($_POST['secteur'] ?? '');
-            $form['type'] = trim($_POST['type'] ?? '');
-            $form['nb_stagiaires'] = trim($_POST['nb_stagiaires'] ?? '');
+            $form['email_entreprise']       = trim($_POST['email_entreprise'] ?? '');
+            $form['nom_entreprise']         = trim($_POST['nom_entreprise'] ?? '');
+            $form['secteur']                = trim($_POST['secteur'] ?? '');
+            $form['type']                   = trim($_POST['type'] ?? '');
+            $form['nb_stagiaires']          = trim($_POST['nb_stagiaires'] ?? '');
             $form['description_entreprise'] = trim($_POST['description_entreprise'] ?? '');
-            $form['telephone'] = trim($_POST['telephone'] ?? '');
+            $form['telephone']              = trim($_POST['telephone'] ?? '');
 
-            $emailEntreprise = $form['email_entreprise'];
-            $nomEntreprise = $form['nom_entreprise'];
-            $secteur = $form['secteur'];
-            $type = $form['type'];
-            $nbStagiaires = (int) $form['nb_stagiaires'];
+            $emailEntreprise       = $form['email_entreprise'];
+            $nomEntreprise         = $form['nom_entreprise'];
+            $secteur               = $form['secteur'];
+            $type                  = $form['type'];
+            $nbStagiaires          = (int) $form['nb_stagiaires'];
             $descriptionEntreprise = $form['description_entreprise'];
-            $telephone = $form['telephone'];
+            $telephone             = $form['telephone'];
 
             if (
                 $emailEntreprise === '' ||
@@ -96,51 +92,50 @@ class PageCreationEntreprise
                 $error = "Le nombre de stagiaires ne peut pas être négatif.";
             } else {
                 try {
-                    $sql = "INSERT INTO Entreprises
-                            (Email_entreprise, Nom_entreprise, Secteur, Type_, Nb_stagiaires, Description_entreprise, Telephone, ID_Utilisateur)
-                            VALUES
-                            (:email_entreprise, :nom_entreprise, :secteur, :type, :nb_stagiaires, :description_entreprise, :telephone, :id_utilisateur)";
-
-                    $stmt = $this->pdo->prepare($sql);
+                    $stmt = $this->pdo->prepare("
+                        INSERT INTO Entreprises
+                            (Email_entreprise, Nom_entreprise, Secteur, Type_, Nb_stagiaires,
+                             Description_entreprise, Telephone, ID_Utilisateur)
+                        VALUES
+                            (:email_entreprise, :nom_entreprise, :secteur, :type, :nb_stagiaires,
+                             :description_entreprise, :telephone, :id_utilisateur)
+                    ");
                     $stmt->execute([
-                        ':email_entreprise' => $emailEntreprise,
-                        ':nom_entreprise' => $nomEntreprise,
-                        ':secteur' => $secteur,
-                        ':type' => $type,
-                        ':nb_stagiaires' => $nbStagiaires,
+                        ':email_entreprise'       => $emailEntreprise,
+                        ':nom_entreprise'         => $nomEntreprise,
+                        ':secteur'                => $secteur,
+                        ':type'                   => $type,
+                        ':nb_stagiaires'          => $nbStagiaires,
                         ':description_entreprise' => $descriptionEntreprise,
-                        ':telephone' => $telephone,
-                        ':id_utilisateur' => $idUtilisateur,
+                        ':telephone'              => $telephone,
+                        ':id_utilisateur'         => $idUtilisateur,
                     ]);
 
                     $success = true;
-
                     $form = [
-                        'nom_entreprise' => '',
-                        'email_entreprise' => '',
-                        'secteur' => '',
-                        'type' => '',
-                        'nb_stagiaires' => '',
-                        'telephone' => '',
+                        'nom_entreprise'         => '',
+                        'email_entreprise'       => '',
+                        'secteur'                => '',
+                        'type'                   => '',
+                        'nb_stagiaires'          => '',
+                        'telephone'              => '',
                         'description_entreprise' => '',
                     ];
                 } catch (\PDOException $e) {
-                    if ($e->getCode() === '23000') {
-                        $error = "Une entreprise avec cet email existe déjà.";
-                    } else {
-                        $error = "Erreur lors de la création de l'entreprise : " . $e->getMessage();
-                    }
+                    $error = $e->getCode() === '23000'
+                        ? "Une entreprise avec cet email existe déjà."
+                        : "Erreur lors de la création de l'entreprise : " . $e->getMessage();
                 }
             }
         }
 
         echo $this->twig->render('creationEntreprise.html.twig', [
-            'page' => 'creation_entreprise',
-            'title' => 'Création d\'une entreprise',
+            'page'          => 'creation_entreprise',
+            'title'         => 'Création d\'une entreprise',
             'platform_name' => 'CESI-STAGES',
-            'error' => $error,
-            'success' => $success,
-            'form' => $form,
+            'error'         => $error,
+            'success'       => $success,
+            'form'          => $form,
         ]);
     }
 }
