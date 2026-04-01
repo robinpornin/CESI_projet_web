@@ -3,7 +3,7 @@
         'name' => 'cesi/meilleur_groupe',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '5b77c3f2ba89c472bd2387bafddbaf2b672a6302',
+        'reference' => 'fa122172392848fcefc8669938cae7760f3703ee',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'cesi/meilleur_groupe' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '5b77c3f2ba89c472bd2387bafddbaf2b672a6302',
+            'reference' => 'fa122172392848fcefc8669938cae7760f3703ee',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
