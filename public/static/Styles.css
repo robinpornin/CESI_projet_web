@@ -496,6 +496,8 @@ footer span { color: #FFD700; font-weight: bold; }
   white-space: nowrap;
   transition: background-color 0.2s, transform 0.15s;
   flex-shrink: 0;
+  text-align: center;
+  text-decoration: none;
 }
 .btn-rechercher:hover { background-color: #FFD700; color: #111111; transform: translateY(-1px); }
 
