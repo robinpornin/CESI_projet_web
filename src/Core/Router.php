@@ -257,9 +257,19 @@ class Router
                 break;
 
             // --- Wishlist & Formulaire ---
+            // --- Wishlist & Formulaire ---
             case 'wishlist':
-                (new \PageWishlist($this->twig))->render();
-                break;
+            (new \PageWishlist($this->twig))->render();
+            break;
+
+            case 'wishlist/ajouter':
+            (new \PageWishlist($this->twig))->ajouter();
+            break;
+
+            case 'wishlist/supprimer':
+            (new \PageWishlist($this->twig))->supprimer();
+            break;
+
 
             case 'formulaire':
                 (new \PageFormulaire($this->twig))->render();

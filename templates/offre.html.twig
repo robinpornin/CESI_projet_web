@@ -55,67 +55,69 @@
     <div class="actions-row">
       <button class="btn-postuler" onclick="window.location.href='/formulaire'">Postuler</button>
       <button class="btn-wishlist {% if inWishlist %}active{% endif %}" 
-              id="btnWishlist" onclick="toggleWishlist()">
+              id="btnWishlist" 
+              onclick="toggleWishlist()">
           {{ inWishlist ? 'Retirer de la wishlist' : 'Ajouter à la wishlist' }}
       </button>
     </div>
 
-<!-- statistiques -->
-<div class="stats-card">
+    <!-- statistiques -->
+    <div class="stats-card">
+      <div class="stats-body" style="display: block;">
+        <div class="stats-grid">
 
-  <div class="stats-body" style="display: block;">
+          <div class="stat-item">
+            <span class="stat-icon">📩</span>
+            <span class="stat-value">{{ stats.nb_postulations }}</span>
+            <span class="stat-label">Postulations</span>
+          </div>
 
-    <div class="stats-grid">
+          <div class="stat-item">
+            <span class="stat-icon">❤️</span>
+            <span class="stat-value">{{ stats.nb_wishlist }}</span>
+            <span class="stat-label">Wishlist</span>
+          </div>
 
-  <div class="stat-item">
-    <span class="stat-icon">📩</span>
-    <span class="stat-value">{{ stats.nb_postulations }}</span>
-    <span class="stat-label">Postulations</span>
-  </div>
+          <div class="stat-item">
+            <span class="stat-icon">⭐</span>
+            <span class="stat-value">{{ stats.note_entreprise|default('—') }}</span>
+            <span class="stat-label">Note entreprise</span>
+          </div>
 
-  <div class="stat-item">
-    <span class="stat-icon">❤️</span>
-    <span class="stat-value">{{ stats.nb_wishlist }}</span>
-    <span class="stat-label">Wishlist</span>
-  </div>
+        </div>
+      </div>
+    </div>
 
-  <div class="stat-item">
-    <span class="stat-icon">⭐</span>
-    <span class="stat-value">{{ stats.note_entreprise|default('—') }}</span>
-    <span class="stat-label">Note entreprise</span>
-  </div>
+    <script>
+      let dansMaWishlist = {{ inWishlist ? 'true' : 'false' }};
 
-</div>
+      async function toggleWishlist() {
+          const btn = document.getElementById('btnWishlist');
+          const idOffre = {{ offre.ID_Offre }};
+          const url = dansMaWishlist ? '/wishlist/supprimer' : '/wishlist/ajouter';
 
-  </div>
+          try {
+              const res = await fetch(url, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ id_offre: idOffre })
+              });
 
-</div>
+              const data = await res.json();
 
-
-
-<script>
-let dansMaWishlist = {{ inWishlist ? 'true' : 'false' }};
-
-async function toggleWishlist() {
-    const btn = document.getElementById('btnWishlist');
-    const idOffre = {{ offre.ID_Offre }};
-
-    const url = dansMaWishlist ? '/supprimerWishlist.php' : '/ajouterWishlist.php';
-    const res = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id_offre: idOffre })
-    });
-    const data = await res.json();
-    if (data.success) {
-        dansMaWishlist = !dansMaWishlist;
-        btn.textContent = dansMaWishlist ? 'Retirer de la wishlist' : 'Ajouter à la wishlist';
-        btn.classList.toggle('active');
-    } else {
-        alert(data.message || 'Erreur');
-    }
-}
-</script>
-
+              if (data.success) {
+                  dansMaWishlist = !dansMaWishlist;
+                  btn.textContent = dansMaWishlist
+                      ? 'Retirer de la wishlist'
+                      : 'Ajouter à la wishlist';
+                  btn.classList.toggle('active');
+              } else {
+                  alert(data.message || 'Erreur');
+              }
+          } catch (e) {
+              alert('Erreur serveur ou route introuvable');
+          }
+      }
+    </script>
 
 {% endblock %}
