@@ -10,7 +10,7 @@ class Middleware
         'home', '', 'connexion', 'invite',
         'rechercheEntreprise', 'rechercheOffre',
         'creationCompte', 'ficheEntreprise', 'offre',
-        'deconnexion', 'suppressionCompte', 'mentionsLegales',
+        'deconnexion', 'mentionsLegales',
         'contactAdmin',
     ];
 
@@ -22,6 +22,8 @@ class Middleware
         'espaceEleve'       => [1],
         'parametreEleve'    => [1],
         'listeCandidatures' => [1],
+        'wishlist/ajouter'  => [1],
+        'wishlist/supprimer'=> [1],
 
         // Rôles 2 & 3 — Pilote + Admin
         'pilote'                 => [2, 3],
