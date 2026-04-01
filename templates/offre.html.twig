@@ -25,12 +25,13 @@
       <div class="desc-body">
 
         <span class="desc-section-titre">Missions</span>
-        <p class="desc-texte">{{ offre.Description }}</p>
+        <p class="tag">{{ offre.Description }}</p>
 
         <span class="desc-section-titre">Compétences requises</span>
         <div class="tags-list">
+          <span class="desc-texte">|</span>
           {% for competence in competences %}
-            <span class="tag">{{ competence.Nom_competence }}</span>
+            <span class="desc-texte">{{ competence.Nom_competence }} |</span>
           {% else %}
             <span>Aucune compétence renseignée.</span>
           {% endfor %}
@@ -40,7 +41,7 @@
         <div class="infos-grid">
           <div class="info-item">
             <span class="info-label">Durée</span>
-            <span class="info-value">{{ offre.Duree }} mois</span>
+            <span class="info-value">{{ offre.Duree }} semaines</span>
           </div>
           <div class="info-item">
             <span class="info-label">Date de début</span>

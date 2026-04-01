@@ -1073,7 +1073,7 @@ footer span { color: #FFD700; font-weight: bold; }
 .action-icon { font-size: 1.6rem; flex-shrink: 0; }
 .action-info { flex: 1; display: flex; flex-direction: column; gap: 3px; }
 .action-titre { font-size: 0.92rem; font-weight: 700; color: #111111; }
-.action-desc { font-size: 0.76rem; color: #777777; font-style: italic; }
+.action-desc { font-size: 0.70rem; color: #777777; font-style: italic; text-decoration: none;}
 .action-tag {
   display: inline-block;
   background-color: #fffbea;
