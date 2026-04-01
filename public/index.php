@@ -2,27 +2,42 @@
 
 declare(strict_types=1);
 
-ini_set('display_errors', 0);
-ini_set('display_startup_errors', 0);
+ini_set('display_errors', '0');
+ini_set('display_startup_errors', '0');
 error_reporting(E_ALL);
 
+// --- Sécurité HTTP ---
 header('X-Frame-Options: SAMEORIGIN');
 header('X-Content-Type-Options: nosniff');
 header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; frame-src 'self'");
+
+// --- Session sécurisée ---
 session_start([
-    'cookie_httponly' => true,   // JS ne peut pas lire le cookie
+    'cookie_httponly' => true,     // JS ne peut pas lire le cookie
     'cookie_samesite' => 'Strict', // Protège contre CSRF
-    'cookie_secure'  => false,    // HTTPS uniquement (si tu as SSL)
+    'cookie_secure'   => false,    // Passer à true en production (HTTPS)
 ]);
 
-// Génère le token une seule fois par session
+// --- Token CSRF (généré une seule fois par session) ---
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
+// --- Autoload ---
 require_once __DIR__ . '/../vendor/autoload.php';
 
-// Controllers
+// --- Variables d'environnement (.env) ---
+$envFile = __DIR__ . '/../.env';
+if (file_exists($envFile)) {
+    foreach (file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
+        if (str_starts_with(trim($line), '#')) continue;
+        if (!str_contains($line, '=')) continue;
+        [$key, $value] = explode('=', $line, 2);
+        $_ENV[trim($key)] = trim($value);
+    }
+}
+
+// --- Controllers ---
 require_once __DIR__ . '/../src/Controller/accueil.php';
 require_once __DIR__ . '/../src/Controller/connexion.php';
 require_once __DIR__ . '/../src/Controller/contactAdmin.php';
@@ -56,25 +71,21 @@ require_once __DIR__ . '/../src/Controller/gestionCompteElevePilote.php';
 require_once __DIR__ . '/../src/Controller/listeCandidaturesPilote.php';
 require_once __DIR__ . '/../src/Controller/file.php';
 
-
-
-
-// Router
+// --- Router ---
 require_once __DIR__ . '/../src/Core/Router.php';
 
-// AppUser
+// --- AppUser ---
 require_once __DIR__ . '/../src/Core/appUser.php';
 
-
-// Twig
+// --- Twig ---
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../templates');
-$twig = new \Twig\Environment($loader, ['debug' => false]);
-$twig->addGlobal('user_role', $_SESSION['utilisateur']['role'] ?? 0);
-$twig->addGlobal('user_nom',  $_SESSION['user_nom']  ?? null);
-$twig->addGlobal('app_user', AppUser::fromSession());
+$twig   = new \Twig\Environment($loader, ['debug' => false]);
+$twig->addGlobal('user_role',      $_SESSION['utilisateur']['role'] ?? 0);
+$twig->addGlobal('user_nom',       $_SESSION['user_nom']            ?? null);
+$twig->addGlobal('app_user',       AppUser::fromSession());
 $twig->addGlobal('app_csrf_token', $_SESSION['csrf_token']);
 
-// Récupération de la route
+// --- Récupération de la route ---
 $requestUri = $_SERVER['REQUEST_URI'];
 $path       = parse_url($requestUri, PHP_URL_PATH);
 $route      = trim($path, '/');
@@ -83,6 +94,6 @@ if ($route === '') {
     $route = 'home';
 }
 
-// Lancement du router
+// --- Lancement du router ---
 $router = new \App\Core\Router($twig);
 $router->handle($route);
