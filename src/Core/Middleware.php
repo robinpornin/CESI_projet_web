@@ -10,7 +10,8 @@ class Middleware
         'home', '', 'connexion', 'invite',
         'rechercheEntreprise', 'rechercheOffre',
         'creationCompte', 'ficheEntreprise', 'offre',
-        'deconnexion', 'suppressionCompte', 'mentionsLegales'
+        'deconnexion', 'suppressionCompte', 'mentionsLegales',
+        'contactAdmin',
     ];
 
     private const ROUTES_PAR_ROLE = [
