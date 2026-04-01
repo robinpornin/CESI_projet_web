@@ -673,7 +673,7 @@ footer span { color: #FFD700; font-weight: bold; }
 /* --- SECTION ACCÈS / BLOCS --- */
 .acces-section,
 .bloc {
-  background-color: #f9f9f9;
+  background-color: #585151;
   border: none;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
   border-radius: 12px;
