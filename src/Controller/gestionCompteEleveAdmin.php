@@ -16,6 +16,11 @@ class PageGestionCompteEleveAdmin
 
     public function render(): void
     {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $this->handleAjax();
+            return;
+        }
+
         $stmt = $this->pdo->query("
             SELECT ID_Utilisateur, Nom, Prenom, Email
             FROM Utilisateurs
@@ -31,5 +36,272 @@ class PageGestionCompteEleveAdmin
             'etudiants' => $etudiants,
             'app_user'  => AppUser::fromSession(),
         ]);
+    }
+
+    private function handleAjax(): void
+    {
+        header('Content-Type: application/json; charset=utf-8');
+
+        try {
+            $input = json_decode(file_get_contents('php://input'), true);
+
+            if (!is_array($input) || !isset($input['action'])) {
+                $this->json([
+                    'success' => false,
+                    'message' => 'Requête invalide.'
+                ]);
+                return;
+            }
+
+            $action = (string)($input['action'] ?? '');
+
+            if ($action === 'create') {
+                $this->createEtudiant($input);
+                return;
+            }
+
+            if ($action === 'update') {
+                $this->updateEtudiant($input);
+                return;
+            }
+
+            if ($action === 'delete') {
+                $this->deleteEtudiant($input);
+                return;
+            }
+
+            if ($action === 'search') {
+                $this->searchEtudiant($input);
+                return;
+            }
+
+            $this->json([
+                'success' => false,
+                'message' => 'Action inconnue.'
+            ]);
+        } catch (Throwable $e) {
+            $this->json([
+                'success' => false,
+                'message' => 'Erreur serveur : ' . $e->getMessage()
+            ]);
+        }
+    }
+
+    private function createEtudiant(array $input): void
+    {
+        $prenom = trim((string)($input['prenom'] ?? ''));
+        $nom    = trim((string)($input['nom'] ?? ''));
+        $email  = trim((string)($input['email'] ?? ''));
+        $mdp    = trim((string)($input['mdp'] ?? ''));
+
+        if ($prenom === '' || $nom === '' || $email === '' || $mdp === '') {
+            $this->json([
+                'success' => false,
+                'message' => 'Tous les champs sont obligatoires.'
+            ]);
+            return;
+        }
+
+        $check = $this->pdo->prepare("
+            SELECT COUNT(*)
+            FROM Utilisateurs
+            WHERE Email = :email
+        ");
+        $check->execute([
+            ':email' => $email
+        ]);
+
+        if ((int)$check->fetchColumn() > 0) {
+            $this->json([
+                'success' => false,
+                'message' => 'Cet email existe déjà.'
+            ]);
+            return;
+        }
+
+        $mdpHash = password_hash($mdp, PASSWORD_DEFAULT);
+
+        $stmt = $this->pdo->prepare("
+            INSERT INTO Utilisateurs (Nom, Prenom, Email, Mdp, Role)
+            VALUES (:nom, :prenom, :email, :mdp, :role)
+        ");
+
+        $stmt->execute([
+            ':nom'    => $nom,
+            ':prenom' => $prenom,
+            ':email'  => $email,
+            ':mdp'    => $mdpHash,
+            ':role'   => 1
+        ]);
+
+        $id = (int)$this->pdo->lastInsertId();
+
+        $etudiant = [
+            'ID_Utilisateur' => $id,
+            'Nom'            => $nom,
+            'Prenom'         => $prenom,
+            'Email'          => $email,
+            'Role'           => 1
+        ];
+
+        $this->json([
+            'success'  => true,
+            'message'  => 'Compte étudiant créé avec succès.',
+            'etudiant' => $etudiant
+        ]);
+    }
+
+    private function updateEtudiant(array $input): void
+    {
+        $id     = (int)($input['id'] ?? 0);
+        $prenom = trim((string)($input['prenom'] ?? ''));
+        $nom    = trim((string)($input['nom'] ?? ''));
+        $email  = trim((string)($input['email'] ?? ''));
+
+        if ($id <= 0 || $prenom === '' || $nom === '' || $email === '') {
+            $this->json([
+                'success' => false,
+                'message' => 'Données invalides pour la modification.'
+            ]);
+            return;
+        }
+
+        $check = $this->pdo->prepare("
+            SELECT COUNT(*)
+            FROM Utilisateurs
+            WHERE Email = :email
+              AND ID_Utilisateur != :id
+        ");
+        $check->execute([
+            ':email' => $email,
+            ':id'    => $id
+        ]);
+
+        if ((int)$check->fetchColumn() > 0) {
+            $this->json([
+                'success' => false,
+                'message' => 'Cet email est déjà utilisé.'
+            ]);
+            return;
+        }
+
+        $stmt = $this->pdo->prepare("
+            UPDATE Utilisateurs
+            SET Nom = :nom,
+                Prenom = :prenom,
+                Email = :email
+            WHERE ID_Utilisateur = :id
+              AND Role = 1
+        ");
+
+        $stmt->execute([
+            ':nom'    => $nom,
+            ':prenom' => $prenom,
+            ':email'  => $email,
+            ':id'     => $id
+        ]);
+
+        if ($stmt->rowCount() === 0) {
+            $exists = $this->pdo->prepare("
+                SELECT COUNT(*)
+                FROM Utilisateurs
+                WHERE ID_Utilisateur = :id
+                  AND Role = 1
+            ");
+            $exists->execute([
+                ':id' => $id
+            ]);
+
+            if ((int)$exists->fetchColumn() === 0) {
+                $this->json([
+                    'success' => false,
+                    'message' => 'Aucun étudiant trouvé à modifier.'
+                ]);
+                return;
+            }
+        }
+
+        $etudiant = [
+            'ID_Utilisateur' => $id,
+            'Nom'            => $nom,
+            'Prenom'         => $prenom,
+            'Email'          => $email,
+            'Role'           => 1
+        ];
+
+        $this->json([
+            'success'  => true,
+            'message'  => 'Compte étudiant modifié avec succès.',
+            'etudiant' => $etudiant
+        ]);
+    }
+
+    private function deleteEtudiant(array $input): void
+    {
+        $id = (int)($input['id'] ?? 0);
+
+        if ($id <= 0) {
+            $this->json([
+                'success' => false,
+                'message' => 'ID invalide.'
+            ]);
+            return;
+        }
+
+        $stmt = $this->pdo->prepare("
+            DELETE FROM Utilisateurs
+            WHERE ID_Utilisateur = :id
+              AND Role = 1
+        ");
+        $stmt->execute([
+            ':id' => $id
+        ]);
+
+        if ($stmt->rowCount() === 0) {
+            $this->json([
+                'success' => false,
+                'message' => 'Aucun étudiant trouvé à supprimer.'
+            ]);
+            return;
+        }
+
+        $this->json([
+            'success' => true,
+            'message' => 'Compte étudiant supprimé avec succès.'
+        ]);
+    }
+
+    private function searchEtudiant(array $input): void
+    {
+        $terme = trim((string)($input['terme'] ?? ''));
+
+        $stmt = $this->pdo->prepare("
+            SELECT ID_Utilisateur, Nom, Prenom, Email, Role
+            FROM Utilisateurs
+            WHERE Role = 1
+              AND (
+                    Nom LIKE :terme
+                 OR Prenom LIKE :terme
+                 OR Email LIKE :terme
+              )
+            ORDER BY Nom ASC, Prenom ASC
+        ");
+
+        $stmt->execute([
+            ':terme' => '%' . $terme . '%'
+        ]);
+
+        $resultats = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $this->json([
+            'success'   => true,
+            'resultats' => $resultats
+        ]);
+    }
+
+    private function json(array $data): void
+    {
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        exit;
     }
 }
