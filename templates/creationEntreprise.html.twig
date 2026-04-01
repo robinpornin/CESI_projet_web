@@ -36,6 +36,7 @@
     {% endif %}
 
     <form method="POST" action="">
+      <input type="hidden" name="csrf_token" value="{{ app_csrf_token }}">
       <span class="section-label">Informations de l'entreprise</span>
 
       <div class="form-grid">

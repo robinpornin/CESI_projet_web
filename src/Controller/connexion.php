@@ -13,21 +13,23 @@ class PageConnexion
     {
         $this->twig = $twig;
         $this->pdo = getPDO();
-
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
     }
 
-    /**
-     * Récupère les données et affiche la page de connexion.
-     */
     public function render(): void
     {
         $erreur = null;
         $message = null;
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            if (
+                empty($_POST['csrf_token']) ||
+                !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])
+            ) {
+                http_response_code(403);
+                die('Requête invalide.');
+            }
+
             $email = trim($_POST['email'] ?? '');
             $motDePasse = $_POST['mot_de_passe'] ?? '';
 
@@ -41,10 +43,7 @@ class PageConnexion
                         WHERE Email = :email";
 
                 $stmt = $this->pdo->prepare($sql);
-                $stmt->execute([
-                    'email' => $email,
-                ]);
-
+                $stmt->execute(['email' => $email]);
                 $utilisateur = $stmt->fetch();
 
                 if (!$utilisateur) {
@@ -52,6 +51,8 @@ class PageConnexion
                 } elseif (!password_verify($motDePasse, $utilisateur['Mdp'])) {
                     $erreur = 'Mot de passe incorrect.';
                 } else {
+                    // session_regenerate_id(true); // commenté temporairement
+
                     $_SESSION['utilisateur'] = [
                         'id'     => $utilisateur['ID_Utilisateur'],
                         'nom'    => $utilisateur['Nom'],

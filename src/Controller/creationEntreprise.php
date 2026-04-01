@@ -55,6 +55,15 @@ class PageCreationEntreprise
         $idUtilisateur = (int) $_SESSION['utilisateur']['id'];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            if (
+                empty($_POST['csrf_token']) ||
+                !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])
+            ) {
+                http_response_code(403);
+                die('Requête invalide.');
+            }
+
             $form['email_entreprise'] = trim($_POST['email_entreprise'] ?? '');
             $form['nom_entreprise'] = trim($_POST['nom_entreprise'] ?? '');
             $form['secteur'] = trim($_POST['secteur'] ?? '');

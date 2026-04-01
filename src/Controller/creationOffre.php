@@ -76,6 +76,15 @@ class PageCreationOffre
         $entreprises = $stmtEntreprises->fetchAll();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            if (
+                empty($_POST['csrf_token']) ||
+                !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])
+            ) {
+                http_response_code(403);
+                die('Requête invalide.');
+            }
+
             $form['titre'] = trim($_POST['titre'] ?? '');
             $form['id_entreprise'] = trim($_POST['id_entreprise'] ?? '');
             $form['ville_cp'] = trim($_POST['ville_cp'] ?? '');

@@ -6,7 +6,19 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-session_start();
+header('X-Frame-Options: SAMEORIGIN');
+header('X-Content-Type-Options: nosniff');
+header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; frame-src 'self'");
+session_start([
+    'cookie_httponly' => true,   // JS ne peut pas lire le cookie
+    'cookie_samesite' => 'Strict', // Protège contre CSRF
+    'cookie_secure'  => false,    // HTTPS uniquement (si tu as SSL)
+]);
+
+// Génère le token une seule fois par session
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -61,6 +73,7 @@ $twig->addExtension(new \Twig\Extension\DebugExtension());
 $twig->addGlobal('user_role', $_SESSION['utilisateur']['role'] ?? 0);
 $twig->addGlobal('user_nom',  $_SESSION['user_nom']  ?? null);
 $twig->addGlobal('app_user', AppUser::fromSession());
+$twig->addGlobal('app_csrf_token', $_SESSION['csrf_token']);
 
 // Récupération de la route
 $requestUri = $_SERVER['REQUEST_URI'];

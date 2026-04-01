@@ -36,6 +36,15 @@ class PageFormulaire
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$erreur) {
+
+            if (
+                empty($_POST['csrf_token']) ||
+                !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])
+            ) {
+                http_response_code(403);
+                die('Requête invalide.');
+            }
+
             $cv = $_FILES['cv'] ?? null;
             $lettre = $_FILES['lettre_motivation'] ?? null;
 

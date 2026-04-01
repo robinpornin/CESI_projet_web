@@ -34,6 +34,7 @@
 
   <form method="POST" action="/modificationEntreprise">
     <input type="hidden" name="id" value="{{ entreprise.ID_Entreprise }}">
+    <input type="hidden" name="csrf_token" value="{{ app_csrf_token }}">
 
     <div class="form-body">
 

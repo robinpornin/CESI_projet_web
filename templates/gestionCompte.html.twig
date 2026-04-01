@@ -21,7 +21,7 @@
 
 
 <form method="post" action="/gestionCompte">
-  
+  <input type="hidden" name="csrf_token" value="{{ app_csrf_token }}">
   <div class="bloc">
     <h2>Nom d'utilisateur</h2>
     <div class="nom-actuel">{{ utilisateur.Prenom }} {{ utilisateur.Nom }}</div>

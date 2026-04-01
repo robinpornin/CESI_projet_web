@@ -99,6 +99,7 @@
 
         <form method="post">
           <input type="hidden" name="note" id="noteInput" value="0">
+          <input type="hidden" name="csrf_token" value="{{ app_csrf_token }}">
 
           <div class="stars" id="starsContainer">
             <span class="star" data-note="1">★</span>

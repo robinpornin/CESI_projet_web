@@ -43,6 +43,7 @@
       {% endif %}
 
       <form method="POST" action="">
+        <input type="hidden" name="csrf_token" value="{{ app_csrf_token }}">
         <span class="section-label">Informations générales</span>
         <div class="form-grid">
           <div class="form-group full">

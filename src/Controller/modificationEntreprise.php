@@ -21,6 +21,15 @@ class PageModificationEntreprise
         $erreur = null;
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            if (
+                empty($_POST['csrf_token']) ||
+                !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])
+            ) {
+                http_response_code(403);
+                die('Requête invalide.');
+            }
+            
             $id = (int) ($_POST['id'] ?? 0);
 
             $nom          = trim($_POST['nom']          ?? '');

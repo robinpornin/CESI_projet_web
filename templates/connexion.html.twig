@@ -23,6 +23,7 @@
   {% endif %}
 
   <form method="POST">
+    <input type="hidden" name="csrf_token" value="{{ app_csrf_token }}">
     <div class="form-fields">
       <div class="inputs">
         <div class="input-group">
