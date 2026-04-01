@@ -18,7 +18,6 @@ class PageConnexion
     public function render(): void
     {
 
-        unset($_SESSION['login_attempts_' . md5($_SERVER['REMOTE_ADDR'] ?? 'unknown')]); // ← temporaire
         $erreur = null;
         $message = null;
 

@@ -21,7 +21,10 @@ class PageFile
 
         $role      = $_SESSION['utilisateur']['role'] ?? 0;
         $basePath  = realpath(__DIR__ . '/../../uploads/');
-        $requested = realpath($basePath . '/' . ($_GET['path'] ?? ''));
+        $rawPath   = rawurldecode($_GET['path'] ?? '');
+        $rawPath   = str_replace("\0", '', $rawPath);
+        $requested = realpath($basePath . '/' . $rawPath);
+
 
         // Anti path traversal
         if (!$requested || !str_starts_with($requested, $basePath)) {
