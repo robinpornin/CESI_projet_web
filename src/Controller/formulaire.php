@@ -12,7 +12,7 @@ class PageFormulaire
     public function __construct(\Twig\Environment $twig)
     {
         $this->twig = $twig;
-        $this->pdo = getPDO();
+        $this->pdo  = getPDO();
 
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
@@ -22,10 +22,10 @@ class PageFormulaire
     public function render(): void
     {
         $message = null;
-        $erreur = null;
+        $erreur  = null;
 
         $idUtilisateur = $_SESSION['utilisateur']['id'] ?? null;
-        $idOffre = (int) ($_GET['id'] ?? 0);
+        $idOffre       = (int) ($_GET['id'] ?? 0);
 
         if (!$idUtilisateur) {
             $erreur = "Vous devez être connecté pour postuler.";
@@ -37,6 +37,7 @@ class PageFormulaire
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$erreur) {
 
+            // Vérification CSRF
             if (
                 empty($_POST['csrf_token']) ||
                 !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])
@@ -45,7 +46,7 @@ class PageFormulaire
                 die('Requête invalide.');
             }
 
-            $cv = $_FILES['cv'] ?? null;
+            $cv     = $_FILES['cv'] ?? null;
             $lettre = $_FILES['lettre_motivation'] ?? null;
 
             if (!$cv || $cv['error'] !== UPLOAD_ERR_OK) {
@@ -53,7 +54,7 @@ class PageFormulaire
             } elseif (!$lettre || $lettre['error'] !== UPLOAD_ERR_OK) {
                 $erreur = "La lettre de motivation est obligatoire.";
             } else {
-                $extensionCv = strtolower(pathinfo($cv['name'], PATHINFO_EXTENSION));
+                $extensionCv     = strtolower(pathinfo($cv['name'], PATHINFO_EXTENSION));
                 $extensionLettre = strtolower(pathinfo($lettre['name'], PATHINFO_EXTENSION));
 
                 if ($extensionCv !== 'pdf') {
@@ -61,6 +62,7 @@ class PageFormulaire
                 } elseif ($extensionLettre !== 'pdf') {
                     $erreur = "La lettre de motivation doit être au format PDF.";
                 } else {
+                    // Vérification doublon
                     $stmt = $this->pdo->prepare("
                         SELECT COUNT(*)
                         FROM Candidatures
@@ -69,7 +71,7 @@ class PageFormulaire
                     ");
                     $stmt->execute([
                         ':id_utilisateur' => $idUtilisateur,
-                        ':id_offre' => $idOffre,
+                        ':id_offre'       => $idOffre,
                     ]);
 
                     $dejaPostule = (int) $stmt->fetchColumn() > 0;
@@ -77,21 +79,21 @@ class PageFormulaire
                     if ($dejaPostule) {
                         $erreur = "Vous avez déjà postulé à cette offre.";
                     } else {
-                        $dossierCv = '/var/www/CESI_projet_web/uploads/cv/';
-                        $dossierLettre = '/var/www/CESI_projet_web/uploads/lettres/';
+                        // ✅ Chemin dynamique (plus de hardcode)
+                        $dossierCv     = realpath(__DIR__ . '/../../uploads') . '/cv/';
+                        $dossierLettre = realpath(__DIR__ . '/../../uploads') . '/lettres/';
 
                         if (!is_dir($dossierCv)) {
-                            mkdir($dossierCv, 0777, true);
+                            mkdir($dossierCv, 0755, true);
                         }
-
                         if (!is_dir($dossierLettre)) {
-                            mkdir($dossierLettre, 0777, true);
+                            mkdir($dossierLettre, 0755, true);
                         }
 
-                        $nomCv = uniqid('cv_', true) . '.pdf';
+                        $nomCv     = uniqid('cv_', true) . '.pdf';
                         $nomLettre = uniqid('lettre_', true) . '.pdf';
 
-                        $cheminCv = $dossierCv . $nomCv;
+                        $cheminCv     = $dossierCv . $nomCv;
                         $cheminLettre = $dossierLettre . $nomLettre;
 
                         if (
@@ -102,17 +104,16 @@ class PageFormulaire
                                 INSERT INTO Candidatures (Lettre_de_motivation, CV, ID_Offre, ID_Utilisateur)
                                 VALUES (:lettre, :cv, :id_offre, :id_utilisateur)
                             ");
-
                             $stmt->execute([
-                                ':lettre' => $nomLettre,
-                                ':cv' => $nomCv,
-                                ':id_offre' => $idOffre,
+                                ':lettre'         => $nomLettre,
+                                ':cv'             => $nomCv,
+                                ':id_offre'       => $idOffre,
                                 ':id_utilisateur' => $idUtilisateur,
                             ]);
 
                             $message = "Votre candidature a bien été envoyée.";
                         } else {
-                            $erreur = "Erreur lors de l'enregistrement des fichiers.";
+                            $erreur = "Erreur lors de l'envoi des fichiers.";
                         }
                     }
                 }
@@ -120,10 +121,9 @@ class PageFormulaire
         }
 
         echo $this->twig->render('formulaire.html.twig', [
-            'page' => 'Formulaire',
-            'title' => 'Candidature',
             'message' => $message,
-            'erreur' => $erreur,
+            'erreur'  => $erreur,
+            'idOffre' => $idOffre,
         ]);
     }
 }

@@ -25,7 +25,6 @@ class PageFile
         $rawPath   = str_replace("\0", '', $rawPath);
         $requested = realpath($basePath . '/' . $rawPath);
 
-
         // Anti path traversal
         if (!$requested || !str_starts_with($requested, $basePath)) {
             http_response_code(403);
@@ -49,19 +48,15 @@ class PageFile
         // Servir le fichier
         $ext  = strtolower(pathinfo($requested, PATHINFO_EXTENSION));
         $mime = match($ext) {
-            'pdf'        => 'application/pdf',
-            'jpg','jpeg' => 'image/jpeg',
-            'png'        => 'image/png',
-            default      => 'application/octet-stream'
+            'pdf'         => 'application/pdf',
+            'jpg', 'jpeg' => 'image/jpeg',
+            'png'         => 'image/png',
+            default       => 'application/octet-stream',
         };
 
         header('Content-Type: ' . $mime);
-        header('Content-Disposition: inline; filename="' . basename($requested) . '"');
         header('Content-Length: ' . filesize($requested));
-        header('Cache-Control: private, max-age=0, must-revalidate');
-        header('Pragma: public');
-        ob_clean();
-        flush();
+        header('X-Content-Type-Options: nosniff');
         readfile($requested);
         exit;
     }
