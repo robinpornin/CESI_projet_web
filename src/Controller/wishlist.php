@@ -64,6 +64,14 @@ class PageWishlist
     {
         header('Content-Type: application/json');
 
+        $headers = getallheaders();
+        $csrfToken = $headers['X-CSRF-Token'] ?? '';
+        if (empty($csrfToken) || !hash_equals($_SESSION['csrf_token'] ?? '', $csrfToken)) {
+            http_response_code(403);
+            echo json_encode(['success' => false, 'message' => 'Token CSRF invalide']);
+            exit;
+        }
+
         $idUtilisateur = $_SESSION['utilisateur']['id'] ?? null;
 
         if (!$idUtilisateur) {
@@ -147,6 +155,14 @@ class PageWishlist
     public function supprimer(): void
     {
         header('Content-Type: application/json');
+
+        $headers = getallheaders();
+        $csrfToken = $headers['X-CSRF-Token'] ?? '';
+        if (empty($csrfToken) || !hash_equals($_SESSION['csrf_token'] ?? '', $csrfToken)) {
+            http_response_code(403);
+            echo json_encode(['success' => false, 'message' => 'Token CSRF invalide']);
+            exit;
+        }
 
         $idUtilisateur = $_SESSION['utilisateur']['id'] ?? null;
 

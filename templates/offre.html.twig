@@ -91,6 +91,7 @@
 
     <script>
       let dansMaWishlist = {{ inWishlist ? 'true' : 'false' }};
+      const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
       async function toggleWishlist() {
           const btn = document.getElementById('btnWishlist');
@@ -100,7 +101,10 @@
           try {
               const res = await fetch(url, {
                   method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
+                  headers: {
+                      'Content-Type': 'application/json',
+                      'X-CSRF-Token': csrfToken
+                  },
                   body: JSON.stringify({ id_offre: idOffre })
               });
 
@@ -120,5 +124,6 @@
           }
       }
     </script>
+
 
 {% endblock %}

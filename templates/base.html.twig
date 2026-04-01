@@ -3,7 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
   <title>{% block title %}CESI-STAGES{% endblock %}</title>
+=======
+<<<<<<< HEAD
+  <title>{% block title %}CESI-STAGES{% endblock %}</title>
+=======
+  <meta name="csrf-token" content="{{ app_csrf_token }}">
+  <title>{% block title %}CESI-STAGES{% endblock %}</title>
+>>>>>>> 9b4edd0 (ajout token CSRF pour wishlist)
+>>>>>>> 6d56e8b (ajout token CSRF pour wishlist)
   <link rel="stylesheet" href="/static/Styles.css">
 </head>
 
@@ -26,7 +35,6 @@
   {% endif %}
 </header>
 
-
 <main>
   {% block content %}{% endblock %}
 </main>
@@ -35,7 +43,7 @@
 
 <footer>
   <p>&copy; 2026 <span>CESI-STAGES</span> — Tous droits réservés</p>
-  <a href ="/mentionsLegales" class="lien-connexion">Mentions Légales</a>
+  <a href="/mentionsLegales" class="lien-connexion">Mentions Légales</a>
 </footer>
 
 <a href="javascript:history.back()" class="btn-retour">&#8592; Retour</a>
