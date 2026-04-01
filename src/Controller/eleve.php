@@ -30,6 +30,7 @@ class PageEleve
             'platform_name' => 'CESI-STAGES',
             'prenom'        => $utilisateur['Prenom'] ?? $prenom,
             'utilisateur'   => $utilisateurSession,
+            'initiale'      => $utilisateur['Prenom'][0] ?? $prenom[0],
         ]);
     }
 }
