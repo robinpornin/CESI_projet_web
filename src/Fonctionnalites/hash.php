@@ -8,14 +8,32 @@ if (session_status() === PHP_SESSION_NONE) {
 
 /*
 |--------------------------------------------------------------------------
-| CONFIGURATION BDD
+| CONFIGURATION BDD — chargée depuis .env
 |--------------------------------------------------------------------------
-| Remplace ces valeurs par les tiennes
 */
-$host = 'localhost';
-$dbname = 'CESI_projet_web';
-$username = 'phpmyadmin';
-$password = 'A2#DevWeb!';
+function loadEnv(string $path): void
+{
+    if (!file_exists($path)) {
+        throw new RuntimeException('.env introuvable : ' . $path);
+    }
+
+    $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    foreach ($lines as $line) {
+        if (str_starts_with(trim($line), '#') || !str_contains($line, '=')) {
+            continue;
+        }
+        [$key, $value] = explode('=', $line, 2);
+        $_ENV[trim($key)] = trim($value);
+    }
+}
+
+loadEnv(__DIR__ . '/../../.env'); // adapte le chemin selon ta structure
+
+$host   = $_ENV['DB_HOST']  ?? 'localhost';
+$dbname = $_ENV['DB_NAME']  ?? '';
+$username = $_ENV['DB_USER'] ?? '';
+$password = $_ENV['DB_PASS'] ?? '';
+
 
 /*
 |--------------------------------------------------------------------------
