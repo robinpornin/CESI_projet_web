@@ -28,6 +28,10 @@ class PageFicheEntreprise
             die("Entreprise introuvable.");
         }
 
+        if (empty($_SESSION['csrf_token'])) {
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        }
+
         $idUtilisateur = $_SESSION['utilisateur']['id'] ?? null;
         $estConnecte = $idUtilisateur !== null;
         $aDejaNote = false;
@@ -47,7 +51,6 @@ class PageFicheEntreprise
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
             if (
                 empty($_POST['csrf_token']) ||
                 !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])
@@ -55,7 +58,7 @@ class PageFicheEntreprise
                 http_response_code(403);
                 die('Requête invalide.');
             }
-            
+
             $note = (int) ($_POST['note'] ?? 0);
 
             if (!$estConnecte) {
@@ -81,7 +84,9 @@ class PageFicheEntreprise
         }
 
         $stmt = $this->pdo->prepare("
-            SELECT * FROM Entreprises WHERE ID_Entreprise = :id
+            SELECT *
+            FROM Entreprises
+            WHERE ID_Entreprise = :id
         ");
         $stmt->execute([':id' => $id]);
         $entreprise = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -91,9 +96,10 @@ class PageFicheEntreprise
         }
 
         $stmt = $this->pdo->prepare("
-            SELECT Titre, Ville_CP, Remuneration, Duree
+            SELECT ID_Offre, Titre, Ville_CP, Remuneration, Duree
             FROM Offres
             WHERE ID_Entreprise = :id
+            ORDER BY Date_ DESC, ID_Offre DESC
         ");
         $stmt->execute([':id' => $id]);
         $offres = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -101,7 +107,7 @@ class PageFicheEntreprise
         $stmt = $this->pdo->prepare("
             SELECT e.Note, u.Nom, u.Prenom
             FROM Evaluations e
-            JOIN Utilisateurs u ON e.ID_Utilisateur = u.ID_Utilisateur
+            INNER JOIN Utilisateurs u ON e.ID_Utilisateur = u.ID_Utilisateur
             WHERE e.ID_Entreprise = :id
             ORDER BY e.ID_Evaluation DESC
         ");
@@ -109,15 +115,16 @@ class PageFicheEntreprise
         $evaluations = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         echo $this->twig->render('ficheEntreprise.html.twig', [
-            'page'        => 'fiche_entreprise',
-            'title'       => 'Fiche entreprise',
-            'entreprise'  => $entreprise,
-            'offres'      => $offres,
-            'evaluations' => $evaluations,
-            'message'     => $message,
-            'erreur'      => $erreur,
-            'estConnecte' => $estConnecte,
-            'aDejaNote'   => $aDejaNote,
+            'page'           => 'fiche_entreprise',
+            'title'          => 'Fiche entreprise',
+            'entreprise'     => $entreprise,
+            'offres'         => $offres,
+            'evaluations'    => $evaluations,
+            'message'        => $message,
+            'erreur'         => $erreur,
+            'estConnecte'    => $estConnecte,
+            'aDejaNote'      => $aDejaNote,
+            'app_csrf_token' => $_SESSION['csrf_token'],
         ]);
     }
 }

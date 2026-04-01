@@ -11,68 +11,93 @@ class PageOffre
     {
         $this->twig = $twig;
         $this->pdo  = getPDO();
+
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
     }
 
     public function render(): void
     {
         $id = (int) ($_GET['id'] ?? 0);
 
-        // Offre + nom entreprise
         $stmt = $this->pdo->prepare("
-            SELECT o.*, e.Nom_entreprise
+            SELECT o.*, e.Nom_entreprise, e.ID_Entreprise
             FROM Offres o
-            JOIN Entreprises e ON o.ID_Entreprise = e.ID_Entreprise
+            INNER JOIN Entreprises e ON o.ID_Entreprise = e.ID_Entreprise
             WHERE o.ID_Offre = :id
         ");
         $stmt->execute([':id' => $id]);
-        $offre = $stmt->fetch();
+        $offre = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Compétences
+        if (!$offre) {
+            die('Offre introuvable.');
+        }
+
         $stmt = $this->pdo->prepare("
             SELECT c.Nom_competence
             FROM Requerir r
-            JOIN Competences c ON r.ID_Competence = c.ID_Competence
+            INNER JOIN Competences c ON r.ID_Competence = c.ID_Competence
             WHERE r.ID_Offre = :id
+            ORDER BY c.Nom_competence ASC
         ");
         $stmt->execute([':id' => $id]);
-        $competences = $stmt->fetchAll();
+        $competences = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // Statistiques
-        $stmtCandidatures = $this->pdo->prepare("SELECT COUNT(*) FROM Candidatures WHERE ID_Offre = :id");
+        $stmtCandidatures = $this->pdo->prepare("
+            SELECT COUNT(*)
+            FROM Candidatures
+            WHERE ID_Offre = :id
+        ");
         $stmtCandidatures->execute([':id' => $id]);
         $nbCandidatures = (int) $stmtCandidatures->fetchColumn();
 
-        $stmtWishlist = $this->pdo->prepare("SELECT COUNT(*) FROM Contenir WHERE ID_Offre = :id");
+        $stmtWishlist = $this->pdo->prepare("
+            SELECT COUNT(*)
+            FROM Contenir
+            WHERE ID_Offre = :id
+        ");
         $stmtWishlist->execute([':id' => $id]);
         $nbWishlist = (int) $stmtWishlist->fetchColumn();
 
-        $tauxWishlist = $nbCandidatures > 0 ? round(($nbWishlist / $nbCandidatures) * 100) : 0;
-
-        // ✅ Vérifier si l'offre est déjà dans la wishlist
-        $inWishlistStmt = $this->pdo->prepare("
-            SELECT COUNT(*) 
-            FROM Contenir c
-            JOIN Wishlists w ON c.ID_Wishlist = w.ID_Wishlist
-            WHERE w.ID_Utilisateur = :user 
-            AND c.ID_Offre = :offre
+        $stmtNote = $this->pdo->prepare("
+            SELECT ROUND(AVG(ev.Note), 1)
+            FROM Evaluations ev
+            WHERE ev.ID_Entreprise = :id_entreprise
         ");
-        $inWishlistStmt->execute([
-            ':user' => $_SESSION['utilisateur']['id'] ?? 0,
-            ':offre' => $id
+        $stmtNote->execute([
+            ':id_entreprise' => $offre['ID_Entreprise']
         ]);
-        $inWishlist = $inWishlistStmt->fetchColumn() > 0;
+        $noteEntreprise = $stmtNote->fetchColumn();
+
+        $inWishlist = false;
+
+        if (!empty($_SESSION['utilisateur']['id'])) {
+            $inWishlistStmt = $this->pdo->prepare("
+                SELECT COUNT(*) 
+                FROM Contenir c
+                INNER JOIN Wishlists w ON c.ID_Wishlist = w.ID_Wishlist
+                WHERE w.ID_Utilisateur = :user 
+                  AND c.ID_Offre = :offre
+            ");
+            $inWishlistStmt->execute([
+                ':user' => (int) $_SESSION['utilisateur']['id'],
+                ':offre' => $id
+            ]);
+            $inWishlist = (int) $inWishlistStmt->fetchColumn() > 0;
+        }
 
         echo $this->twig->render('offre.html.twig', [
             'page'        => 'offre',
-            'title'       => $offre['Titre'] ?? 'Offre de stage',
+            'title'       => $offre['Titre'],
             'offre'       => $offre,
             'competences' => $competences,
             'stats'       => [
-                'nb_vues'        => 0,
-                'nb_candidatures'=> $nbCandidatures,
-                'taux_wishlist'  => $tauxWishlist,
+                'nb_postulations' => $nbCandidatures,
+                'nb_wishlist'     => $nbWishlist,
+                'note_entreprise' => $noteEntreprise ?: null,
             ],
-            'inWishlist' => $inWishlist,
+            'inWishlist'  => $inWishlist,
         ]);
     }
 }

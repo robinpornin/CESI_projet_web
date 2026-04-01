@@ -55,13 +55,13 @@
     <div class="fiche-bloc-body" style="display:flex;flex-direction:column;gap:10px;">
       <div class="offres-liees">
         {% for offre in offres %}
-          <div class="offre-mini">
+          <a href="/offre?id={{ offre.ID_Offre }}" class="offre-mini" style="text-decoration:none;color:inherit;">
             <div class="offre-mini-info">
               <span class="offre-mini-titre">{{ offre.Titre }}</span>
               <span class="offre-mini-meta">{{ offre.Ville_CP }} · {{ offre.Remuneration }} €/mois</span>
             </div>
             <span class="offre-mini-badge">{{ offre.Duree }} semaines</span>
-          </div>
+          </a>
         {% else %}
           <p>Aucune offre disponible pour cette entreprise.</p>
         {% endfor %}
