@@ -16,6 +16,13 @@ class PageGestionComptePiloteAdmin
 
     public function render(): void
     {
+        $appUser = AppUser::fromSession();
+        if (!$appUser || (int)$appUser['role'] !== 3) {
+            http_response_code(403);
+            echo 'Accès refusé.';
+            exit;
+        }
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->handleAjax();
             return;
@@ -34,7 +41,7 @@ class PageGestionComptePiloteAdmin
             'page'     => 'gestion_pilote_admin',
             'title'    => 'Gestion des comptes pilotes',
             'pilotes'  => $pilotes,
-            'app_user' => AppUser::fromSession(),
+            'app_user' => $appUser,
         ]);
     }
 
@@ -42,48 +49,30 @@ class PageGestionComptePiloteAdmin
     {
         header('Content-Type: application/json; charset=utf-8');
 
+        $appUser = AppUser::fromSession();
+        if (!$appUser || (int)$appUser['role'] !== 3) {
+            $this->json(['success' => false, 'message' => 'Accès refusé.']);
+            return;
+        }
+
         try {
             $input = json_decode(file_get_contents('php://input'), true);
 
             if (!is_array($input) || !isset($input['action'])) {
-                $this->json([
-                    'success' => false,
-                    'message' => 'Requête invalide.'
-                ]);
+                $this->json(['success' => false, 'message' => 'Requête invalide.']);
                 return;
             }
 
             $action = (string)($input['action'] ?? '');
 
-            if ($action === 'create') {
-                $this->createPilote($input);
-                return;
-            }
+            if ($action === 'create') { $this->createPilote($input); return; }
+            if ($action === 'update') { $this->updatePilote($input); return; }
+            if ($action === 'delete') { $this->deletePilote($input); return; }
 
-            if ($action === 'update') {
-                $this->updatePilote($input);
-                return;
-            }
+            $this->json(['success' => false, 'message' => 'Action inconnue.']);
 
-            if ($action === 'delete') {
-                $this->deletePilote($input);
-                return;
-            }
-
-            if ($action === 'search') {
-                $this->searchPilote($input);
-                return;
-            }
-
-            $this->json([
-                'success' => false,
-                'message' => 'Action inconnue.'
-            ]);
         } catch (Throwable $e) {
-            $this->json([
-                'success' => false,
-                'message' => 'Erreur serveur : ' . $e->getMessage()
-            ]);
+            $this->json(['success' => false, 'message' => 'Erreur serveur : ' . $e->getMessage()]);
         }
     }
 
@@ -107,9 +96,7 @@ class PageGestionComptePiloteAdmin
             FROM Utilisateurs
             WHERE Email = :email
         ");
-        $check->execute([
-            ':email' => $email
-        ]);
+        $check->execute([':email' => $email]);
 
         if ((int)$check->fetchColumn() > 0) {
             $this->json([
@@ -125,7 +112,6 @@ class PageGestionComptePiloteAdmin
             INSERT INTO Utilisateurs (Nom, Prenom, Email, Mdp, Role)
             VALUES (:nom, :prenom, :email, :mdp, :role)
         ");
-
         $stmt->execute([
             ':nom'    => $nom,
             ':prenom' => $prenom,
@@ -136,18 +122,16 @@ class PageGestionComptePiloteAdmin
 
         $id = (int)$this->pdo->lastInsertId();
 
-        $pilote = [
-            'ID_Utilisateur' => $id,
-            'Nom'            => $nom,
-            'Prenom'         => $prenom,
-            'Email'          => $email,
-            'Role'           => 2
-        ];
-
         $this->json([
             'success' => true,
             'message' => 'Compte pilote créé avec succès.',
-            'pilote'  => $pilote
+            'pilote'  => [
+                'ID_Utilisateur' => $id,
+                'Nom'            => $nom,
+                'Prenom'         => $prenom,
+                'Email'          => $email,
+                'Role'           => 2
+            ]
         ]);
     }
 
@@ -172,10 +156,7 @@ class PageGestionComptePiloteAdmin
             WHERE Email = :email
               AND ID_Utilisateur != :id
         ");
-        $check->execute([
-            ':email' => $email,
-            ':id'    => $id
-        ]);
+        $check->execute([':email' => $email, ':id' => $id]);
 
         if ((int)$check->fetchColumn() > 0) {
             $this->json([
@@ -193,7 +174,6 @@ class PageGestionComptePiloteAdmin
             WHERE ID_Utilisateur = :id
               AND Role = 2
         ");
-
         $stmt->execute([
             ':nom'    => $nom,
             ':prenom' => $prenom,
@@ -208,9 +188,7 @@ class PageGestionComptePiloteAdmin
                 WHERE ID_Utilisateur = :id
                   AND Role = 2
             ");
-            $exists->execute([
-                ':id' => $id
-            ]);
+            $exists->execute([':id' => $id]);
 
             if ((int)$exists->fetchColumn() === 0) {
                 $this->json([
@@ -221,18 +199,16 @@ class PageGestionComptePiloteAdmin
             }
         }
 
-        $pilote = [
-            'ID_Utilisateur' => $id,
-            'Nom'            => $nom,
-            'Prenom'         => $prenom,
-            'Email'          => $email,
-            'Role'           => 2
-        ];
-
         $this->json([
             'success' => true,
             'message' => 'Compte modifié avec succès.',
-            'pilote'  => $pilote
+            'pilote'  => [
+                'ID_Utilisateur' => $id,
+                'Nom'            => $nom,
+                'Prenom'         => $prenom,
+                'Email'          => $email,
+                'Role'           => 2
+            ]
         ]);
     }
 
@@ -253,9 +229,7 @@ class PageGestionComptePiloteAdmin
             WHERE ID_Utilisateur = :id
               AND Role = 2
         ");
-        $stmt->execute([
-            ':id' => $id
-        ]);
+        $stmt->execute([':id' => $id]);
 
         if ($stmt->rowCount() === 0) {
             $this->json([
@@ -265,38 +239,7 @@ class PageGestionComptePiloteAdmin
             return;
         }
 
-        $this->json([
-            'success' => true,
-            'message' => 'Compte supprimé avec succès.'
-        ]);
-    }
-
-    private function searchPilote(array $input): void
-    {
-        $terme = trim((string)($input['terme'] ?? ''));
-
-        $stmt = $this->pdo->prepare("
-            SELECT ID_Utilisateur, Nom, Prenom, Email, Role
-            FROM Utilisateurs
-            WHERE Role = 2
-              AND (
-                    Nom LIKE :terme
-                 OR Prenom LIKE :terme
-                 OR Email LIKE :terme
-              )
-            ORDER BY Nom ASC, Prenom ASC
-        ");
-
-        $stmt->execute([
-            ':terme' => '%' . $terme . '%'
-        ]);
-
-        $resultats = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        $this->json([
-            'success'   => true,
-            'resultats' => $resultats
-        ]);
+        $this->json(['success' => true, 'message' => 'Compte supprimé avec succès.']);
     }
 
     private function json(array $data): void
