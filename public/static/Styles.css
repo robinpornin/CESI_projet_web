@@ -389,19 +389,10 @@ footer span { color: #FFD700; font-weight: bold; }
 .btn-enregistrer:hover { opacity: 0.85; transform: translateY(-2px); }
 
 .btn-supprimer {
-  flex: 1;
   background-color: #ffffff;
   color: #cc0000;
-  border: 2px solid #cc0000;
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 0.85rem;
-  font-weight: 900;
-  font-family: 'Montserrat', sans-serif;
-  cursor: pointer;
-  text-transform: uppercase;
-  transition: background-color 0.2s, color 0.2s;
 }
+
 .btn-supprimer:hover { background-color: #cc0000; color: #ffffff; }
 
 .btn-changement {
@@ -664,6 +655,7 @@ footer span { color: #FFD700; font-weight: bold; }
   align-items: center;
   gap: 5px;
   white-space: nowrap;
+  justify-content: center;
 }
 .btn-offre:hover { opacity: 0.85; transform: translateY(-1px); }
 .btn-voir { background-color: #FFD700; color: #111111; }
@@ -1242,6 +1234,7 @@ footer span { color: #FFD700; font-weight: bold; }
   display: flex;
   flex-direction: column;
   gap: 6px;
+  justify-content: center;
 }
 .offre-card:hover, .offre-card.active { border-color: #FFD700; background-color: #fffbea; transform: translateX(4px); }
 .offre-card.active { border-left: 4px solid #FFD700; }

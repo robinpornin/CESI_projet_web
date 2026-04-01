@@ -27,24 +27,27 @@
 
 <div class="offres-list" id="offresList">
 
-  {% for offre in offres %}
-    <div class="offre-carte" id="offre-{{ offre.ID_Offre }}" data-id="{{ offre.ID_Offre }}">
-      <div class="offre-num">{{ loop.index }}</div>
-      <div class="offre-info">
-        <span class="offre-titre">{{ offre.Titre }}</span>
-        <div class="offre-meta">
-          <span>🏢 {{ offre.Nom_entreprise }}</span>
-          <span>📍 {{ offre.Ville_CP }}</span>
-          <span class="offre-tag">{{ offre.Duree }} mois</span>
-          <span class="offre-tag">{{ offre.Remuneration }} €/mois</span>
-        </div>
-      </div>
-      <div class="offre-actions">
-        <a class="btn-offre btn-voir" href="/offre?id={{ offre.ID_Offre }}">👁️ Voir</a>
-        <button class="btn-offre btn-suppr" onclick="supprimerOffre({{ offre.ID_Offre }})">🗑️ Supprimer</button>
-      </div>
+{% for offre in offres %}
+  <div class="offre-card" id="offre-{{ offre.ID_Offre }}" data-id="{{ offre.ID_Offre }}">
+    <div class="offre-top">
+      <span class="offre-titre">{{ offre.Titre }}</span>
+      <span class="offre-badge">{{ offre.Duree }} mois</span>
     </div>
-  {% endfor %}
+
+    <div class="offre-meta">
+      <span>🏢 {{ offre.Nom_entreprise }}</span>
+      <span>📍 {{ offre.Ville_CP }}</span>
+      <span>💰 {{ offre.Remuneration }} €/mois</span>
+    </div>
+
+    <div class="offre-actions">
+      <a class="btn-offre btn-voir" href="/offre?id={{ offre.ID_Offre }}">👁️ Voir</a>
+      <button class="btn-offre btn-suppr" type="button" onclick="supprimerOffre({{ offre.ID_Offre }})">
+        🗑️ Supprimer
+      </button>
+    </div>
+  </div>
+{% endfor %}
 
 </div>
 
