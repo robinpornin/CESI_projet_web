@@ -1,10 +1,10 @@
 {% extends "base.html.twig" %}
 
-{% block title %} Page de la gestion des offres {% endblock %}
+{% block title %}Page de la gestion des offres{% endblock %}
 
 {% block content %}
 
-<!-- bandeau -->
+  <!-- bandeau -->
   <div class="bandeau">
     <div class="bandeau-icon">📢</div>
     <div class="bandeau-info">
@@ -14,33 +14,75 @@
     </div>
   </div>
 
-  <!-- main -->
-    <div class="separateur"></div>
+  <div class="separateur"></div>
+
+  {% if erreur %}
+    <div class="carte carte-liste">
+      <span class="carte-icon">⚠️</span>
+      <span class="carte-titre">Accès impossible</span>
+      <span class="carte-desc">{{ erreur }}</span>
+    </div>
+  {% else %}
+
+    {% if offres is not empty %}
+      {% for offre in offres %}
+        <div class="grid-main">
+          <div class="carte carte-liste">
+            <span class="carte-icon">📋</span>
+            <span class="carte-titre">{{ offre.Titre }}</span>
+            <span class="carte-desc">{{ offre.Nom_entreprise }} · {{ offre.Ville_CP }}</span>
+            <span class="carte-badge">
+              {{ offre.Remuneration }} € · {{ offre.Date_ }}
+            </span>
+          </div>
+
+          <a class="carte carte-param" href="/parametreOffre?id={{ offre.ID_Offre }}">
+            <span class="carte-icon">⚙️</span>
+            <span class="carte-titre">Paramètres</span>
+          </a>
+        </div>
+      {% endfor %}
+
+      {% if totalPages > 1 %}
+        <div class="pagination">
+          {% if currentPage > 1 %}
+            <a href="?page={{ currentPage - 1 }}" class="page-btn">Précédent</a>
+          {% endif %}
+
+          {% for i in 1..totalPages %}
+            {% if i == currentPage %}
+              <span class="page-btn active">{{ i }}</span>
+            {% else %}
+              <a href="?page={{ i }}" class="page-btn">{{ i }}</a>
+            {% endif %}
+          {% endfor %}
+
+          {% if currentPage < totalPages %}
+            <a href="?page={{ currentPage + 1 }}" class="page-btn">Suivant</a>
+          {% endif %}
+        </div>
+      {% endif %}
+
+    {% else %}
+      <div class="grid-main">
+        <div class="carte carte-liste">
+          <span class="carte-icon">📋</span>
+          <span class="carte-titre">Aucune offre</span>
+          <span class="carte-desc">Vous n'avez encore publié aucune offre.</span>
+          <span class="carte-badge">Créez-en une ci-dessous</span>
+        </div>
+      </div>
+    {% endif %}
 
     <div class="grid-main">
-
-      <!-- liste offres -->
-      <a class="carte carte-liste" href="liste-offres.html">
-        <span class="carte-icon">📋</span>
-        <span class="carte-titre">Listes offres</span>
-        <span class="carte-desc">Consulter et gérer toutes les offres</span>
-        <span class="carte-badge">Voir les offres →</span>
-      </a>
-
-      <!-- paramètres -->
-      <a class="carte carte-param" href="parametres-offre.html">
-        <span class="carte-icon">⚙️</span>
-        <span class="carte-titre">Paramètres</span>
-      </a>
-
-      <!-- créer une offre -->
       <a class="carte carte-creer" href="/creationOffre">
         <span class="carte-icon">➕</span>
         <span class="carte-titre">Créer une offre</span>
         <span class="carte-desc">Publier une nouvelle offre de stage</span>
         <span class="carte-badge light">Nouvelle offre →</span>
       </a>
-
     </div>
+
+  {% endif %}
 
 {% endblock %}

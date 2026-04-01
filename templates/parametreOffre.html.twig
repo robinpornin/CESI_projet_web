@@ -1,10 +1,10 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Page des paramètres de l'offre {% endblock %}
+{% block title %}Page des paramètres de l'offre{% endblock %}
 
 {% block content %}
 
-<!-- bandeau -->
+  <!-- bandeau -->
   <div class="bandeau">
     <div class="bandeau-icon">⚙️</div>
     <div class="bandeau-info">
@@ -14,13 +14,28 @@
     </div>
   </div>
 
-  <!-- main -->
+  <div class="separateur"></div>
 
-    <div class="separateur"></div>
+  {% if erreur %}
+    <div class="carte carte-liste">
+      <span class="carte-icon">⚠️</span>
+      <span class="carte-titre">Erreur</span>
+      <span class="carte-desc">{{ erreur }}</span>
+    </div>
+  {% endif %}
+
+  {% if offre %}
+    <div class="fiche">
+      <div class="fiche-logo">📢</div>
+      <div class="fiche-info">
+        <span class="fiche-nom">{{ offre.Titre }}</span>
+        <span class="fiche-meta">{{ offre.Nom_entreprise }} &nbsp;·&nbsp; {{ offre.Ville_CP }}</span>
+      </div>
+    </div>
+
     <div class="section-titre">Que voulez-vous faire ?</div>
 
-    <!-- modifier -->
-    <a class="action-carte" href="modifier-offre.html">
+    <a class="action-carte" href="/modificationOffre?id={{ offre.ID_Offre }}">
       <span class="action-carte-icon">✏️</span>
       <div class="action-carte-info">
         <span class="action-carte-titre">Modifier l'offre</span>
@@ -31,14 +46,25 @@
 
     <div class="divider"></div>
 
-    <!-- supprimer -->
-    <button class="action-carte danger" onclick="ouvrirModal()">
-      <span class="action-carte-icon">🗑️</span>
-      <div class="action-carte-info">
-        <span class="action-carte-titre">Supprimer l'offre</span>
-        <span class="action-carte-desc">→ Suppression définitive et irréversible</span>
-      </div>
-      <span class="action-carte-arrow">›</span>
-    </button>
+    <form method="post" action="/parametreOffre?id={{ offre.ID_Offre }}" onsubmit="return confirm('Voulez-vous vraiment supprimer cette offre ? Cette action est définitive.');">
+      <input type="hidden" name="id_offre" value="{{ offre.ID_Offre }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+      <button type="submit" class="action-carte danger">
+        <span class="action-carte-icon">🗑️</span>
+        <div class="action-carte-info">
+          <span class="action-carte-titre">Supprimer l'offre</span>
+          <span class="action-carte-desc">→ Suppression définitive et irréversible</span>
+        </div>
+        <span class="action-carte-arrow">›</span>
+      </button>
+    </form>
+  {% else %}
+    <div class="carte carte-liste">
+      <span class="carte-icon">⚠️</span>
+      <span class="carte-titre">Offre introuvable</span>
+      <span class="carte-desc">L'offre demandée n'existe pas ou plus.</span>
+    </div>
+  {% endif %}
 
 {% endblock %}
