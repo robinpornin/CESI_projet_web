@@ -4,7 +4,7 @@
 
 {% block content %}
   <div class="bandeau-admin">
-    <div class="admin-avatar">🛠️</div>
+    <div class="admin-avatar"><strong><h3>{{ initiale_p }}{{initiale_n}}</h3></strong></div>
     <div class="admin-info">
       <span class="admin-nom">{{ utilisateur.Prenom }} {{ utilisateur.Nom }}</span>
       <span class="admin-badge">Administrateur</span>
@@ -15,11 +15,11 @@
   <div class="separateur"></div>
   <div class="section-titre">Que voulez-vous faire ?</div>
 
+  <div> </div>
   <div class="groupe">
     <div class="groupe-label">Recherches</div>
 
     <form method="GET" action="/rechercheEntreprise" class="action-bloc">
-      <div class="action-icon">🏢</div>
       <div class="action-info">
         <span class="action-titre">Rechercher une entreprise</span>
         <span class="action-desc">→ Redirection vers la liste des entreprises</span>
@@ -30,7 +30,6 @@
     </form>
 
     <form method="GET" action="/rechercheOffre" class="action-bloc">
-      <div class="action-icon">📋</div>
       <div class="action-info">
         <span class="action-titre">Rechercher une offre de stage</span>
         <span class="action-desc">→ Redirection vers la liste des offres</span>
@@ -40,6 +39,8 @@
       </div>
     </form>
   </div>
+  <div> </div>
+  <div> </div>
 
   <div class="divider"></div>
 

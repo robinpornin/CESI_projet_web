@@ -32,6 +32,8 @@ class PageAdmin
             'title'       => 'Admin',
             'utilisateur' => $utilisateur,
             'app_user'    => $jwtUser,
+            'initiale_p'      => $utilisateur['Prenom'][0] ?? '',
+            'initiale_n'      => $utilisateur['Nom'][0] ?? '',
         ]);
     }
 }
