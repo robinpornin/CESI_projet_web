@@ -105,16 +105,5 @@
 
     <div class="menu-sep"></div>
 
-
-    {% if user.role != 3 %}
-      <a class="menu-item danger"
-         href="/suppressionCompte"
-         onclick="return confirm('Confirmer la suppression du compte ? Cette action est irréversible.');">
-        <div class="menu-item-info">
-          <span class="menu-item-titre">Supprimer le compte</span>
-        </div>
-      </a>
-    {% endif %}
-
   </div>
 </div>
