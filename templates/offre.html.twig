@@ -54,7 +54,7 @@
 
     <!-- actions -->
     <div class="actions-row">
-      <button class="btn-postuler" onclick="window.location.href='/formulaire'">Postuler</button>
+      <button class="btn-postuler" onclick="window.location.href='/formulaire?id={{ offre.ID_Offre }}'">Postuler</button>
       <button class="btn-wishlist {% if inWishlist %}active{% endif %}" 
               id="btnWishlist" 
               onclick="toggleWishlist()">
@@ -95,7 +95,6 @@
       const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
       async function toggleWishlist() {
-          // 🔒 Si invité → redirection vers l'accueil
           if (estInvite) {
               window.location.href = '/';
               return;
