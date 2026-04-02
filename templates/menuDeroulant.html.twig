@@ -20,7 +20,6 @@
     {% if user.role == 3 %}
 
       <a class="menu-item" href="/gestionCompteEleveAdmin" onclick="closeMenu()">
-        <span class="menu-item-icon">🎓</span>
         <div class="menu-item-info">
           <span class="menu-item-titre">Espace élève</span>
           <span class="menu-item-desc">→ Accéder à l'espace élève</span>
@@ -28,7 +27,6 @@
       </a>
 
       <a class="menu-item" href="/gestionComptePiloteAdmin" onclick="closeMenu()">
-        <span class="menu-item-icon">🧑‍✈️</span>
         <div class="menu-item-info">
           <span class="menu-item-titre">Espace pilote</span>
           <span class="menu-item-desc">→ Accéder à l'espace pilote</span>
@@ -36,7 +34,6 @@
       </a>
 
       <a class="menu-item" href="/gestionEntreprise" onclick="closeMenu()">
-        <span class="menu-item-icon">🏢</span>
         <div class="menu-item-info">
           <span class="menu-item-titre">Espace gestion entreprise</span>
           <span class="menu-item-desc">→ Gérer les entreprises</span>
@@ -44,7 +41,6 @@
       </a>
 
       <a class="menu-item" href="/gestionOffre" onclick="closeMenu()">
-        <span class="menu-item-icon">📋</span>
         <div class="menu-item-info">
           <span class="menu-item-titre">Espace gestion offre</span>
           <span class="menu-item-desc">→ Gérer les offres de stage</span>
@@ -54,7 +50,6 @@
     {% elseif user.role == 2 %}
 
       <a class="menu-item" href="/gestionCompteElevePilote" onclick="closeMenu()">
-        <span class="menu-item-icon">🎓</span>
         <div class="menu-item-info">
           <span class="menu-item-titre">Espace élève</span>
           <span class="menu-item-desc">→ Accéder à l'espace élève</span>
@@ -62,7 +57,6 @@
       </a>
 
       <a class="menu-item" href="/gestionEntreprise" onclick="closeMenu()">
-        <span class="menu-item-icon">🏢</span>
         <div class="menu-item-info">
           <span class="menu-item-titre">Espace gestion entreprise</span>
           <span class="menu-item-desc">→ Gérer les entreprises</span>
@@ -70,7 +64,6 @@
       </a>
 
       <a class="menu-item" href="/gestionOffre" onclick="closeMenu()">
-        <span class="menu-item-icon">📋</span>
         <div class="menu-item-info">
           <span class="menu-item-titre">Espace gestion offre</span>
           <span class="menu-item-desc">→ Gérer les offres de stage</span>
@@ -80,7 +73,6 @@
     {% elseif user.role == 1 %}
 
       <a class="menu-item" href="/listeCandidatures" onclick="closeMenu()">
-        <span class="menu-item-icon">📄</span>
         <div class="menu-item-info">
           <span class="menu-item-titre">Mes candidatures</span>
           <span class="menu-item-desc">→ Voir la liste de mes candidatures</span>
@@ -88,7 +80,6 @@
       </a>
 
       <a class="menu-item" href="/wishlist" onclick="closeMenu()">
-        <span class="menu-item-icon">⭐</span>
         <div class="menu-item-info">
           <span class="menu-item-titre">Ma wish-list</span>
           <span class="menu-item-desc">→ Voir ma liste d'offres favorites</span>
@@ -97,10 +88,16 @@
 
     {% endif %}
 
+    <a class="menu-item" href="/gestionCompte" onclick="closeMenu()">
+      <div class="menu-item-info">
+        <span class="menu-item-titre">Modifier le compte</span>
+      </div>
+    </a>
+
     <div class="menu-sep"></div>
 
+
     <a class="menu-item deconnexion" href="/deconnexion" onclick="closeMenu()">
-      <span class="menu-item-icon">🚪</span>
       <div class="menu-item-info">
         <span class="menu-item-titre">Se déconnecter</span>
       </div>
@@ -108,18 +105,11 @@
 
     <div class="menu-sep"></div>
 
-    <a class="menu-item" href="/gestionCompte" onclick="closeMenu()">
-      <span class="menu-item-icon">✏️</span>
-      <div class="menu-item-info">
-        <span class="menu-item-titre">Modifier le compte</span>
-      </div>
-    </a>
 
     {% if user.role != 3 %}
       <a class="menu-item danger"
          href="/suppressionCompte"
          onclick="return confirm('Confirmer la suppression du compte ? Cette action est irréversible.');">
-        <span class="menu-item-icon">🗑️</span>
         <div class="menu-item-info">
           <span class="menu-item-titre">Supprimer le compte</span>
         </div>
