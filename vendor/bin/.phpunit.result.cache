@@ -1,1 +1,1 @@
-{"version":2,"defects":{"PageAccueilTest::testRenderAvecUtilisateurEnSession":5},"times":{"PageAccueilTest::testRenderSansUtilisateurEnSession":0.01,"PageAccueilTest::testRenderAvecUtilisateurEnSession":0}}
+{"version":2,"defects":{"PageAccueilTest::testRenderAvecUtilisateurEnSession":5},"times":{"PageAccueilTest::testRenderSansUtilisateurEnSession":0.045,"PageAccueilTest::testRenderAvecUtilisateurEnSession":0}}
