@@ -391,6 +391,7 @@ footer span { color: #FFD700; font-weight: bold; }
 .btn-supprimer {
   background-color: #ffffff;
   color: #cc0000;
+  width: 100%;
 }
 
 .btn-supprimer:hover { background-color: #cc0000; color: #ffffff; }
@@ -658,8 +659,8 @@ footer span { color: #FFD700; font-weight: bold; }
   justify-content: center;
 }
 .btn-offre:hover { opacity: 0.85; transform: translateY(-1px); }
-.btn-voir { background-color: #FFD700; color: #111111; }
-.btn-suppr { background-color: #fff0f0; color: #cc0000; border: 1.5px solid #f5c0c0 !important; }
+.btn-voir { background-color: #FFD700; color: #111111; margin-bottom: 10px; }
+.btn-suppr { background-color: #fff0f0; color: #cc0000; border: 1.5px solid #f5c0c0 !important; width:100%;}
 .btn-suppr:hover { background-color: #cc0000 !important; color: #ffffff !important; border-color: #cc0000 !important; }
 
 
