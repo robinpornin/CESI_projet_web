@@ -42,7 +42,6 @@
   <div class="liste-offres">
     <div style="display:flex;justify-content:space-between;align-items:center;">
       <div class="liste-title">Liste des offres</div>
-      <span class="results-count" id="resultsCount"></span>
     </div>
 
     <div id="listeContainer"></div>
@@ -89,10 +88,6 @@
         <span class="fiche-value" id="ficheSecteur">—</span>
       </div>
       <div class="fiche-row">
-        <span class="fiche-label">Ville</span>
-        <span class="fiche-value" id="ficheVille">—</span>
-      </div>
-      <div class="fiche-row">
         <span class="fiche-label">Durée</span>
         <span class="fiche-value" id="ficheDuree">—</span>
       </div>
@@ -119,9 +114,6 @@
 
   function renderOffres(list) {
     const container = document.getElementById('listeContainer');
-    const count = document.getElementById('resultsCount');
-
-    count.textContent = list.length + ' offre(s) trouvée(s)';
     container.innerHTML = '';
 
     if (list.length === 0) {
@@ -138,7 +130,7 @@
           <span class="offre-badge">${o.Duree} semaines</span>
         </div>
         <div class="offre-meta">
-          <span> ${o.Nom_entreprise}</span>
+          <span>${o.Nom_entreprise}</span>
           <span>${o.Ville_CP}</span>
           <span>${o.Remuneration} €/mois</span>
         </div>
@@ -155,7 +147,6 @@
     document.getElementById('fichePoste').textContent = o.Titre;
     document.getElementById('ficheEntreprise').textContent = o.Nom_entreprise;
     document.getElementById('ficheSecteur').textContent = o.Secteur;
-    document.getElementById('ficheVille').textContent = o.Ville_CP;
     document.getElementById('ficheDuree').textContent = o.Duree + ' semaines';
     document.getElementById('ficheGrat').textContent = o.Remuneration + ' €/mois';
     document.getElementById('ficheDate').textContent = o.Date_;

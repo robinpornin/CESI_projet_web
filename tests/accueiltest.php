@@ -41,12 +41,13 @@ final class PageAccueilTest extends TestCase
 
     public function testRenderAvecUtilisateurEnSession(): void
     {
-        $_SESSION['utilisateur'] = [
-            'id' => 1,
-            'nom' => 'Dupont',
-            'prenom' => 'Alice',
-            'email' => 'alice@example.com'
-        ];
+        $utilisateur = new stdClass();
+        $utilisateur->id = 1;
+        $utilisateur->nom = 'Dupont';
+        $utilisateur->prenom = 'Alice';
+        $utilisateur->email = 'alice@example.com';
+
+        $_SESSION['utilisateur'] = $utilisateur;
 
         $twig = $this->createMock(\Twig\Environment::class);
 
@@ -58,12 +59,7 @@ final class PageAccueilTest extends TestCase
                     'page' => 'accueil',
                     'title' => 'Accueil',
                     'platform_name' => 'CESI-STAGES',
-                    'utilisateur' => [
-                        'id' => 1,
-                        'nom' => 'Dupont',
-                        'prenom' => 'Alice',
-                        'email' => 'alice@example.com'
-                    ],
+                    'utilisateur' => $utilisateur,
                 ]
             )
             ->willReturn('<h1>Bienvenue Alice</h1>');
