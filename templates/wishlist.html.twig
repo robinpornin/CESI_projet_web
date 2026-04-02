@@ -51,7 +51,7 @@
 
 </div>
 
-<div class="vide {% if offres | length == 0 %}visible{% endif %}" id="vide">
+<div class="vide {% if offres is empty %}visible{% endif %}" id="vide">
   <span class="vide-titre">Votre wishlist est vide !</span>
   <span class="vide-desc">Explorez les offres disponibles et ajoutez vos favoris !</span>
   <a href="/rechercheOffre" class="btn-explorer">Explorer les offres</a>

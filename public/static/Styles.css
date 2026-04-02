@@ -1770,3 +1770,17 @@ form textarea::placeholder {
 .menu-item.danger .menu-item-titre { color: #cc0000; }
 .menu-item.danger:hover { background-color: #fff0f0; }
 .menu-item.danger:hover { background-color: #fff0f0; }
+
+
+.vide {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.vide.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
