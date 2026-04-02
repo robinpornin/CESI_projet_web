@@ -37,7 +37,6 @@ class PageFormulaire
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$erreur) {
 
-            // Vérification CSRF
             if (
                 empty($_POST['csrf_token']) ||
                 !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])
@@ -62,7 +61,6 @@ class PageFormulaire
                 } elseif ($extensionLettre !== 'pdf') {
                     $erreur = "La lettre de motivation doit être au format PDF.";
                 } else {
-                    // Vérification doublon
                     $stmt = $this->pdo->prepare("
                         SELECT COUNT(*)
                         FROM Candidatures
@@ -79,7 +77,6 @@ class PageFormulaire
                     if ($dejaPostule) {
                         $erreur = "Vous avez déjà postulé à cette offre.";
                     } else {
-                        // ✅ Chemin dynamique (plus de hardcode)
                         $dossierCv     = realpath(__DIR__ . '/../../uploads') . '/cv/';
                         $dossierLettre = realpath(__DIR__ . '/../../uploads') . '/lettres/';
 

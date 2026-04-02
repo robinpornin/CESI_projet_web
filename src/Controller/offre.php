@@ -70,7 +70,6 @@ class PageOffre
         ]);
         $noteEntreprise = $stmtNote->fetchColumn();
 
-        // ✅ Détection invité : pas de session utilisateur connecté
         $estInvite = empty($_SESSION['utilisateur']['id']);
 
         $inWishlist = false;
@@ -101,7 +100,7 @@ class PageOffre
                 'note_entreprise' => $noteEntreprise ?: null,
             ],
             'inWishlist'  => $inWishlist,
-            'estInvite'   => $estInvite, // ✅ Nouveau paramètre
+            'estInvite'   => $estInvite,
         ]);
     }
 }
