@@ -91,9 +91,16 @@
 
     <script>
       let dansMaWishlist = {{ inWishlist ? 'true' : 'false' }};
+      const estInvite = {{ estInvite ? 'true' : 'false' }};
       const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
       async function toggleWishlist() {
+          // 🔒 Si invité → redirection vers l'accueil
+          if (estInvite) {
+              window.location.href = '/';
+              return;
+          }
+
           const btn = document.getElementById('btnWishlist');
           const idOffre = {{ offre.ID_Offre }};
           const url = dansMaWishlist ? '/wishlist/supprimer' : '/wishlist/ajouter';
@@ -124,6 +131,5 @@
           }
       }
     </script>
-
 
 {% endblock %}

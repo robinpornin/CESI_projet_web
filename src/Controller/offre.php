@@ -70,9 +70,12 @@ class PageOffre
         ]);
         $noteEntreprise = $stmtNote->fetchColumn();
 
+        // ✅ Détection invité : pas de session utilisateur connecté
+        $estInvite = empty($_SESSION['utilisateur']['id']);
+
         $inWishlist = false;
 
-        if (!empty($_SESSION['utilisateur']['id'])) {
+        if (!$estInvite) {
             $inWishlistStmt = $this->pdo->prepare("
                 SELECT COUNT(*) 
                 FROM Contenir c
@@ -98,6 +101,7 @@ class PageOffre
                 'note_entreprise' => $noteEntreprise ?: null,
             ],
             'inWishlist'  => $inWishlist,
+            'estInvite'   => $estInvite, // ✅ Nouveau paramètre
         ]);
     }
 }
