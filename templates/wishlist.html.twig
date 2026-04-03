@@ -15,9 +15,10 @@
 
 <div class="barre-titre">
   <span class="titre-section">
-    Wishlist
+    Il y a 
     <span class="compteur-badge" id="compteur">
       {{ offres | length }} {{ offres | length <= 1 ? 'offre' : 'offres' }}
+      dans votre Wishlist
     </span>
   </span>
   <a class="btn-voir-liste" href="/rechercheOffre">
@@ -41,7 +42,7 @@
     </div>
 
     <div class="offre-actions">
-      <a class="btn-offre btn-voir" href="/offre?id={{ offre.ID_Offre }}">👁️ Voir</a>
+      <a class="btn-offre btn-voir" href="/offre?id={{ offre.ID_Offre }}">Voir</a>
       <button class="btn-offre btn-suppr" type="button" onclick="supprimerOffre({{ offre.ID_Offre }})">
         🗑️ Supprimer
       </button>
