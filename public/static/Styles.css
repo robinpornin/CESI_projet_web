@@ -676,6 +676,7 @@ footer span { color: #FFD700; font-weight: bold; }
   padding: 20px 16px;
   max-width: 500px;
   width: 100%;
+  margin: 0 auto;
 }
 
 .acces-section { padding: 20px 16px; max-width: 480px; text-align: center; }
@@ -834,6 +835,11 @@ footer span { color: #FFD700; font-weight: bold; }
 .mdp-bar.medium { background-color: #ff9900; }
 .mdp-bar.strong { background-color: #00aa44; }
 .mdp-hint { font-size: 0.7rem; color: #aaaaaa; font-style: italic; margin-top: 2px; }
+.mdp-criteres { list-style: none; margin-top: 8px; display: flex; flex-direction: column; gap: 4px; }
+.mdp-criteres li { font-size: 0.75rem; color: #aaaaaa; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+.mdp-criteres li .mdp-icone { font-weight: 700; color: #cc3333; font-size: 0.8rem; min-width: 12px; transition: color 0.2s; }
+.mdp-criteres li.valide { color: #444444; }
+.mdp-criteres li.valide .mdp-icone { color: #22aa44; }
 
 /* nom actuel */
 .nom-actuel {
@@ -861,7 +867,7 @@ footer span { color: #FFD700; font-weight: bold; }
 .lien-connexion a:hover { color: #FFD700; }
 
 /* --- CRÉER BLOC (accordéon) --- */
-.creer-bloc { border-radius: 12px; overflow: hidden; }
+.creer-bloc { border-radius: 12px; overflow: hidden; width: 100%; }
 .creer-toggle-btn {
   width: 100%;
   background-color: #111111;
@@ -902,6 +908,7 @@ footer span { color: #FFD700; font-weight: bold; }
   border: 2px solid #111111;
   border-radius: 12px;
   overflow: hidden;
+  width: 100%;
 }
 /*.bloc-header {
   background-color: #111111;
@@ -1273,7 +1280,7 @@ footer span { color: #FFD700; font-weight: bold; }
 .fiche-row.full { grid-column: 1; }
 
 /* fiche étudiant / pilote */
-.fiche-etudiant, .fiche-pilote { background-color: #f9f9f9; border: 2px solid #111111; border-radius: 12px; overflow: hidden; }
+.fiche-etudiant, .fiche-pilote { background-color: #f9f9f9; border: 2px solid #111111; border-radius: 12px; overflow: hidden; width: 100%; }
 .fiche-top { padding: 18px 20px; display: flex; align-items: center; gap: 14px; border-bottom: 2px solid #e0e0e0; background-color: #fffbea; }
 .etudiant-avatar, .pilote-avatar { width: 48px; height: 48px; background-color: #111111; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
 .etudiant-nom, .pilote-nom { font-size: 1rem; font-weight: 900; color: #111111; }

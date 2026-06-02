@@ -43,6 +43,13 @@
       <div class="input-group">
         <label for="new-mdp">Nouveau mot de passe</label>
         <input type="password" id="new-mdp" name="new_mdp" placeholder="Entrer un nouveau mot de passe">
+        <ul class="mdp-criteres" id="criteres-new-mdp">
+          <li data-rule="length"><span class="mdp-icone">✗</span> Au moins 8 caractères</li>
+          <li data-rule="upper"><span class="mdp-icone">✗</span> Au moins une lettre majuscule</li>
+          <li data-rule="lower"><span class="mdp-icone">✗</span> Au moins une lettre minuscule</li>
+          <li data-rule="digit"><span class="mdp-icone">✗</span> Au moins un chiffre</li>
+          <li data-rule="special"><span class="mdp-icone">✗</span> Au moins un caractère spécial</li>
+        </ul>
       </div>
 
       <div class="input-group">
@@ -54,5 +61,9 @@
 
   <button type="submit" class="btn-confirmer">Confirmer les changements</button>
 </form>
+
+<script>
+  initMdpCriteres('new-mdp', 'criteres-new-mdp');
+</script>
 
 {% endblock %}

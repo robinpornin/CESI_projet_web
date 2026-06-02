@@ -29,7 +29,8 @@ class PageFicheEntreprise
 
         $jwtUser       = Middleware::getUtilisateur();
         $idUtilisateur = $jwtUser?->id ?? null;
-        $estConnecte   = $idUtilisateur !== null;
+        $role        = (int) ($jwtUser?->role ?? 0);
+        $estConnecte = $idUtilisateur !== null && $role === 1;
         $aDejaNote     = false;
 
         if ($estConnecte) {

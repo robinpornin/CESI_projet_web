@@ -19,6 +19,7 @@ class PageModificationEntreprise
         $id     = (int) ($_GET['id'] ?? 0);
         $succes = false;
         $erreur = null;
+        $role   = (int) ($_SESSION['utilisateur']['role'] ?? 1);
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -29,15 +30,16 @@ class PageModificationEntreprise
                 http_response_code(403);
                 die('Requête invalide.');
             }
-            
-            $id = (int) ($_POST['id'] ?? 0);
 
-            $nom          = trim($_POST['nom']          ?? '');
-            $secteur      = trim($_POST['secteur']      ?? '');
-            $type         = trim($_POST['type']         ?? '');
-            $email        = trim($_POST['email']        ?? '');
-            $telephone    = trim($_POST['telephone']    ?? '');
-            $description  = trim($_POST['description']  ?? '');
+            $id  = (int) ($_POST['id'] ?? 0);
+            $role = (int) ($_SESSION['utilisateur']['role'] ?? 1);
+
+            $nom         = trim($_POST['nom']         ?? '');
+            $secteur     = trim($_POST['secteur']     ?? '');
+            $type        = trim($_POST['type']        ?? '');
+            $email       = trim($_POST['email']       ?? '');
+            $telephone   = trim($_POST['telephone']   ?? '');
+            $description = trim($_POST['description'] ?? '');
             $nbStagiaires = (int) ($_POST['nb_stagiaires'] ?? 0);
 
             if ($nom === '' || $secteur === '' || $email === '') {

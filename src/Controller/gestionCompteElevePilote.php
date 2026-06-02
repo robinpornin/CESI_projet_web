@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/../../database.php';
+require_once __DIR__ . '/../Fonctionnalites/passwordPolicy.php';
 
 class PageGestionCompteElevePilote
 {
@@ -63,6 +64,12 @@ class PageGestionCompteElevePilote
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $this->json(['success' => false, 'message' => 'Email invalide.']);
+            return;
+        }
+
+        $policyError = validateNewPassword($mdp);
+        if ($policyError !== null) {
+            $this->json(['success' => false, 'message' => $policyError]);
             return;
         }
 

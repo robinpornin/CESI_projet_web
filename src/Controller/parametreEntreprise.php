@@ -40,8 +40,9 @@ class PageParametreEntreprise
         }
 
         $idUtilisateur = (int) $_SESSION['utilisateur']['id'];
-        $id = (int) ($_GET['id'] ?? $_POST['id_entreprise'] ?? 0);
-        $erreur = null;
+        $role          = (int) ($_SESSION['utilisateur']['role'] ?? 1);
+        $id            = (int) ($_GET['id'] ?? $_POST['id_entreprise'] ?? 0);
+        $erreur        = null;
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (
@@ -52,16 +53,26 @@ class PageParametreEntreprise
                 die('Requête invalide.');
             }
 
-            $stmtCheck = $this->pdo->prepare("
-                SELECT ID_Entreprise
-                FROM Entreprises
-                WHERE ID_Entreprise = :id
-                  AND ID_Utilisateur = :id_utilisateur
-            ");
-            $stmtCheck->execute([
-                ':id' => $id,
-                ':id_utilisateur' => $idUtilisateur,
-            ]);
+            // Pilotes and admins can manage any enterprise
+            if ($role >= 2) {
+                $stmtCheck = $this->pdo->prepare("
+                    SELECT ID_Entreprise
+                    FROM Entreprises
+                    WHERE ID_Entreprise = :id
+                ");
+                $stmtCheck->execute([':id' => $id]);
+            } else {
+                $stmtCheck = $this->pdo->prepare("
+                    SELECT ID_Entreprise
+                    FROM Entreprises
+                    WHERE ID_Entreprise = :id
+                      AND ID_Utilisateur = :id_utilisateur
+                ");
+                $stmtCheck->execute([
+                    ':id'            => $id,
+                    ':id_utilisateur' => $idUtilisateur,
+                ]);
+            }
 
             $entrepriseCheck = $stmtCheck->fetch(PDO::FETCH_ASSOC);
 
@@ -76,81 +87,72 @@ class PageParametreEntreprise
                         FROM Offres
                         WHERE ID_Entreprise = :id_entreprise
                     ");
-                    $stmtIdsOffres->execute([
-                        ':id_entreprise' => $id
-                    ]);
+                    $stmtIdsOffres->execute([':id_entreprise' => $id]);
                     $idsOffres = $stmtIdsOffres->fetchAll(PDO::FETCH_COLUMN);
 
                     if (!empty($idsOffres)) {
                         $placeholders = implode(',', array_fill(0, count($idsOffres), '?'));
 
-                        $stmtCandidatures = $this->pdo->prepare("
-                            DELETE FROM Candidatures
-                            WHERE ID_Offre IN ($placeholders)
-                        ");
-                        $stmtCandidatures->execute($idsOffres);
+                        $this->pdo->prepare("
+                            DELETE FROM Candidatures WHERE ID_Offre IN ($placeholders)
+                        ")->execute($idsOffres);
 
-                        $stmtContenir = $this->pdo->prepare("
-                            DELETE FROM Contenir
-                            WHERE ID_Offre IN ($placeholders)
-                        ");
-                        $stmtContenir->execute($idsOffres);
+                        $this->pdo->prepare("
+                            DELETE FROM Contenir WHERE ID_Offre IN ($placeholders)
+                        ")->execute($idsOffres);
 
-                        $stmtRequerir = $this->pdo->prepare("
-                            DELETE FROM Requerir
-                            WHERE ID_Offre IN ($placeholders)
-                        ");
-                        $stmtRequerir->execute($idsOffres);
+                        $this->pdo->prepare("
+                            DELETE FROM Requerir WHERE ID_Offre IN ($placeholders)
+                        ")->execute($idsOffres);
 
-                        $stmtOffres = $this->pdo->prepare("
-                            DELETE FROM Offres
-                            WHERE ID_Offre IN ($placeholders)
-                        ");
-                        $stmtOffres->execute($idsOffres);
+                        $this->pdo->prepare("
+                            DELETE FROM Offres WHERE ID_Offre IN ($placeholders)
+                        ")->execute($idsOffres);
                     }
 
-                    $stmtEvaluations = $this->pdo->prepare("
-                        DELETE FROM Evaluations
-                        WHERE ID_Entreprise = :id_entreprise
-                    ");
-                    $stmtEvaluations->execute([
-                        ':id_entreprise' => $id
-                    ]);
+                    $this->pdo->prepare("
+                        DELETE FROM Evaluations WHERE ID_Entreprise = :id_entreprise
+                    ")->execute([':id_entreprise' => $id]);
 
-                    $stmtEntreprise = $this->pdo->prepare("
-                        DELETE FROM Entreprises
-                        WHERE ID_Entreprise = :id
-                          AND ID_Utilisateur = :id_utilisateur
-                    ");
-                    $stmtEntreprise->execute([
-                        ':id' => $id,
-                        ':id_utilisateur' => $idUtilisateur,
-                    ]);
+                    $this->pdo->prepare("
+                        DELETE FROM Entreprises WHERE ID_Entreprise = :id
+                    ")->execute([':id' => $id]);
 
                     $this->pdo->commit();
 
                     header('Location: /gestionEntreprise');
                     exit;
+
                 } catch (\PDOException $e) {
                     if ($this->pdo->inTransaction()) {
                         $this->pdo->rollBack();
                     }
-
                     $erreur = "Erreur lors de la suppression de l'entreprise : " . $e->getMessage();
                 }
             }
         }
 
-        $stmt = $this->pdo->prepare("
-            SELECT ID_Entreprise, Nom_entreprise, Secteur, Type_
-            FROM Entreprises
-            WHERE ID_Entreprise = :id
-              AND ID_Utilisateur = :id_utilisateur
-        ");
-        $stmt->execute([
-            ':id' => $id,
-            ':id_utilisateur' => $idUtilisateur,
-        ]);
+        // Fetch enterprise info — pilotes/admins can see any
+        if ($role >= 2) {
+            $stmt = $this->pdo->prepare("
+                SELECT ID_Entreprise, Nom_entreprise, Secteur, Type_
+                FROM Entreprises
+                WHERE ID_Entreprise = :id
+            ");
+            $stmt->execute([':id' => $id]);
+        } else {
+            $stmt = $this->pdo->prepare("
+                SELECT ID_Entreprise, Nom_entreprise, Secteur, Type_
+                FROM Entreprises
+                WHERE ID_Entreprise = :id
+                  AND ID_Utilisateur = :id_utilisateur
+            ");
+            $stmt->execute([
+                ':id'            => $id,
+                ':id_utilisateur' => $idUtilisateur,
+            ]);
+        }
+
         $entreprise = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$entreprise && $erreur === null) {

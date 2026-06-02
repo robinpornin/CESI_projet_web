@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/../../database.php';
+require_once __DIR__ . '/../Fonctionnalites/passwordPolicy.php';
 
 class PageGestionComptePiloteAdmin
 {
@@ -87,6 +88,15 @@ class PageGestionComptePiloteAdmin
             $this->json([
                 'success' => false,
                 'message' => 'Tous les champs sont obligatoires.'
+            ]);
+            return;
+        }
+
+        $policyError = validateNewPassword($mdp);
+        if ($policyError !== null) {
+            $this->json([
+                'success' => false,
+                'message' => $policyError
             ]);
             return;
         }

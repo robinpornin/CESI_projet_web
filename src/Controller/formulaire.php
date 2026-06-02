@@ -77,8 +77,8 @@ class PageFormulaire
                     if ($dejaPostule) {
                         $erreur = "Vous avez déjà postulé à cette offre.";
                     } else {
-                        $dossierCv     = realpath(__DIR__ . '/../../uploads') . '/cv/';
-                        $dossierLettre = realpath(__DIR__ . '/../../uploads') . '/lettres/';
+                        $dossierCv     = __DIR__ . '/../../uploads/cv/';
+                        $dossierLettre = __DIR__ . '/../../uploads/lettres/';
 
                         if (!is_dir($dossierCv)) {
                             mkdir($dossierCv, 0755, true);
@@ -87,16 +87,27 @@ class PageFormulaire
                             mkdir($dossierLettre, 0755, true);
                         }
 
+                        // Debug temporaire
+                        error_log('CV tmp: ' . $cv['tmp_name']);
+                        error_log('CV size: ' . $cv['size']);
+                        error_log('CV error code: ' . $cv['error']);
+                        error_log('Dossier CV: ' . $dossierCv);
+                        error_log('Dossier existe: ' . (is_dir($dossierCv) ? 'oui' : 'non'));
+                        error_log('Dossier writable: ' . (is_writable($dossierCv) ? 'oui' : 'non'));
+
                         $nomCv     = uniqid('cv_', true) . '.pdf';
                         $nomLettre = uniqid('lettre_', true) . '.pdf';
 
                         $cheminCv     = $dossierCv . $nomCv;
                         $cheminLettre = $dossierLettre . $nomLettre;
 
-                        if (
-                            move_uploaded_file($cv['tmp_name'], $cheminCv) &&
-                            move_uploaded_file($lettre['tmp_name'], $cheminLettre)
-                        ) {
+                        $moveCv     = move_uploaded_file($cv['tmp_name'], $cheminCv);
+                        $moveLettre = move_uploaded_file($lettre['tmp_name'], $cheminLettre);
+
+                        error_log('Move CV result: ' . ($moveCv ? 'ok' : 'FAILED'));
+                        error_log('Move lettre result: ' . ($moveLettre ? 'ok' : 'FAILED'));
+
+                        if ($moveCv && $moveLettre) {
                             $stmt = $this->pdo->prepare("
                                 INSERT INTO Candidatures (Lettre_de_motivation, CV, ID_Offre, ID_Utilisateur)
                                 VALUES (:lettre, :cv, :id_offre, :id_utilisateur)

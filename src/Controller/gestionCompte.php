@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/../../database.php';
+require_once __DIR__ . '/../Fonctionnalites/passwordPolicy.php';
 
 class PageGestionCompte
 {
@@ -82,6 +83,8 @@ class PageGestionCompte
                         $erreur = "Mot de passe actuel incorrect.";
                     } elseif ($newMdp !== $confirmMdp) {
                         $erreur = "La confirmation du nouveau mot de passe ne correspond pas.";
+                    } elseif (($policyError = validateNewPassword($newMdp)) !== null) {
+                        $erreur = $policyError;
                     } else {
                         $newMdpHash = password_hash($newMdp, PASSWORD_DEFAULT);
 

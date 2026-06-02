@@ -39,6 +39,13 @@
       <div class="form-group full">
         <label class="form-label" for="createPassword">Mot de passe</label>
         <input class="form-input" id="createPassword" type="password" placeholder="••••••••">
+        <ul class="mdp-criteres" id="criteres-createPassword">
+          <li data-rule="length"><span class="mdp-icone">✗</span> Au moins 8 caractères</li>
+          <li data-rule="upper"><span class="mdp-icone">✗</span> Au moins une lettre majuscule</li>
+          <li data-rule="lower"><span class="mdp-icone">✗</span> Au moins une lettre minuscule</li>
+          <li data-rule="digit"><span class="mdp-icone">✗</span> Au moins un chiffre</li>
+          <li data-rule="special"><span class="mdp-icone">✗</span> Au moins un caractère spécial</li>
+        </ul>
       </div>
     </div>
     <button type="button" class="btn-creer" id="btnCreerCompte">Créer le compte</button>
@@ -108,5 +115,8 @@
   const etudiants = {{ etudiants|json_encode|raw }};
 </script>
 <script src="/JavaScript/gestionCompteEleve_Pilote.js"></script>
+<script>
+  initMdpCriteres('createPassword', 'criteres-createPassword');
+</script>
 
 {% endblock %}
